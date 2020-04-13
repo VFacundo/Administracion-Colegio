@@ -109,7 +109,7 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" action="" id="formUpdate">
+        <form id="formUpdate" onSubmit="return false;">
 
                 @csrf
                 <label for="legajo">Legajo:</label>
@@ -124,7 +124,7 @@
                 <label for="id_persona">id_persona :</label>
                 <input type="text" class="form-control" name="id_persona""/>
 
-            <button type="submit" class="btn btn-primary">Modificar Usuario</button>
+            <button type="submit" class="btn btn-primary" onclick="setUpdateUser();">Modificar Usuario</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>
         </form>
     </div>

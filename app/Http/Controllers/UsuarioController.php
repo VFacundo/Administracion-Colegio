@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
@@ -48,7 +49,6 @@ class UsuarioController extends Controller
           'mail' => 'required|max:255',
           'id_persona' => 'required|numeric',
         ]);
-        var_dump($validatedData);
         $show = Usuario::create($validatedData);
         return redirect('/usuarios')->with('success','Usuario Creado Correctamente');
     }
@@ -81,30 +81,54 @@ class UsuarioController extends Controller
         $usuario = Usuario::findOrFail($respuesta['id']);
         //var_dump($_POST);
     return response()->json([
+      'id' => $usuario['id'],
       'legajo' => $usuario['legajo'],
       'username' => $usuario['username'],
       'mail' => $usuario['mail'],
       'id_persona' => $usuario['id_persona']]);
     }
 
+    public function actualizar(Request $request)
+    {
+      $respuesta = $request->post();
+      $validator = Validator::make($request->all(),[
+        'legajo' => 'required|max:255',
+        'username' => 'required|max:255',
+        'mail' => 'required|max:255',
+        'id_persona' => 'required|numeric',
+      ]);
+
+      if($validator->fails()){
+        $errors = $validator->errors();
+        foreach($errors->all() as $message){
+          $arrayErrores[] = $message;
+        }
+        return json_encode($arrayErrores);
+      }else{
+        Usuario::whereId($respuesta['id'])->update($respuesta);
+        return response()->json([
+          'error' => 'no error']);
+      }
+    }
+
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-      $validatedData = $request->validate([
+      $respuesta = $request->post();
+      $validatedData = $respuesta->validate([
         'legajo' => 'required|max:255',
         'username' => 'required|max:255',
         'password' => 'required|max:255',
         'mail' => 'required|max:255',
         'id_persona' => 'required|numeric',
       ]);
-      Usuario::whereId($id)->update($validatedData);
-      return redirect('/usuarios')->with('success','Usuario Modificado Correctamente');
+      Usuario::whereId($request['id'])->update($validatedData);
+      //return redirect('/usuarios')->with('success','Usuario Modificado Correctamente');
     }
 
     /**

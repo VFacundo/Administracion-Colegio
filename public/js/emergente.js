@@ -6,7 +6,9 @@ function activarEmergente(idElement) {
     if(style == 'block'){
       divForm.classList.remove('emergenteActiva');
       divForm.style.display = 'none';
+      divForm.parentNode.style.display='none';
     }else {
+      divForm.parentNode.style.display='flex';
       divForm.style.display='block';
       divForm.classList.add('emergenteActiva');
       //emergenteStyle.innerHTML =
