@@ -16,10 +16,11 @@ class CreateUsuariosTable extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
             //$table->bigIncrements('id');
+            $table->string('mail');
             $table->string('legajo');
             $table->string('username');
             $table->string('password');
-            $table->string('mail');
+
 
             $table->unique('legajo');
 

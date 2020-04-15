@@ -24,8 +24,8 @@ function updateUser_backup(){
       .then(function(text) {
         respuesta = JSON.parse(text);
         formUpdate.legajo.value = respuesta['legajo'];
-        formUpdate.username.value = respuesta['username'];
-        formUpdate.mail.value = respuesta['mail'];
+        formUpdate.name.value = respuesta['name'];
+        formUpdate.email.value = respuesta['email'];
         formUpdate.id_persona.value = respuesta['id_persona'];
         console.log('Request successful', respuesta);
       })
@@ -44,8 +44,8 @@ function setUpdateUser(){
   removeErrors('formUpdate');
   dataRequest = {id:btn.dataset.value,
                   legajo:formUpdate.legajo.value,
-                  username:formUpdate.username.value,
-                  mail:formUpdate.mail.value,
+                  name:formUpdate.name.value,
+                  email:formUpdate.email.value,
                   id_persona:formUpdate.id_persona.value};
   console.log(dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
@@ -95,14 +95,14 @@ function updateUser(){
       id_update = btnUpdate.dataset.value,
       url = '/usuarios/editar', respuesta,dataRequest,text;
 
-      removeErrors('formUpdate'); 
+      removeErrors('formUpdate');
       dataRequest = {id:id_update}; //Datos a Enviar
       respuesta = ajaxRequest(url,dataRequest)
       respuesta.then(response => response.json())
         .then(function(response){
           formUpdate.legajo.value = response['legajo'];
-          formUpdate.username.value = response['username'];
-          formUpdate.mail.value = response['mail'];
+          formUpdate.name.value = response['name'];
+          formUpdate.email.value = response['email'];
           formUpdate.id_persona.value = response['id_persona'];
           document.querySelector('#formUpdate [type="submit"]').dataset.value = response['id'];
         });

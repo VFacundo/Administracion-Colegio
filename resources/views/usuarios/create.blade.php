@@ -27,14 +27,14 @@
               <label for="legajo">Legajo:</label>
               <input type="text" class="form-control" name="legajo"/>
 
-              <label for="username">Username :</label>
-              <input type="text" class="form-control" name="username"/></textarea>
+              <label for="name">Username :</label>
+              <input type="text" class="form-control" name="name"/></textarea>
 
               <label for="password">Password :</label>
               <input type="Password" class="form-control" name="password"/>
 
-              <label for="Mail">Mail :</label>
-              <input type="text" class="form-control" name="mail"/>
+              <label for="email">EMail :</label>
+              <input type="text" class="form-control" name="email"/>
 
               <label for="id_persona">id_persona :</label>
               <input type="text" class="form-control" name="id_persona"/>

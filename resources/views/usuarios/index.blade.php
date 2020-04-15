@@ -22,7 +22,7 @@
           <td>ID</td>
           <td>Legajo</td>
           <td>UserName</td>
-          <td>Mail</td>
+          <td>EMail</td>
           <td>Id_Persona</td>
           <td colspan="2">Action</td>
         </tr>
@@ -32,8 +32,8 @@
         <tr>
             <td>{{$user->id}}</td>
             <td>{{$user->legajo}}</td>
-            <td>{{$user->username}}</td>
-            <td>{{$user->mail}}</td>
+            <td>{{$user->name}}</td>
+            <td>{{$user->email}}</td>
             <td>{{$user->id_persona}}</td>
             <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Edit</a></td>
             <td>
@@ -72,14 +72,14 @@
                 <label for="legajo">Legajo:</label>
                 <input type="text" class="form-control" name="legajo"/>
 
-                <label for="username">Username :</label>
-                <input type="text" class="form-control" name="username"/></textarea>
+                <label for="name">Username :</label>
+                <input type="text" class="form-control" name="name"/></textarea>
 
                 <label for="password">Password :</label>
                 <input type="Password" class="form-control" name="password"/>
 
-                <label for="Mail">Mail :</label>
-                <input type="text" class="form-control" name="mail"/>
+                <label for="email">EMail :</label>
+                <input type="text" class="form-control" name="email"/>
 
                 <label for="id_persona">id_persona :</label>
                 <input type="text" class="form-control" name="id_persona"/>
@@ -115,11 +115,11 @@
                 <label for="legajo">Legajo:</label>
                 <input type="text" class="form-control" name="legajo"/>
 
-                <label for="username">Username :</label>
-                <input type="text" class="form-control" name="username"/></textarea>
+                <label for="name">Username :</label>
+                <input type="text" class="form-control" name="name"/></textarea>
 
-                <label for="Mail">Mail :</label>
-                <input type="text" class="form-control" name="mail"/>
+                <label for="email">EMail :</label>
+                <input type="text" class="form-control" name="email"/>
 
                 <label for="id_persona">id_persona :</label>
                 <input type="text" class="form-control" name="id_persona""/>
