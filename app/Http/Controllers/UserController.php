@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Persona;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
 
+/*
     public function login(){
       return view('usuarios.login');
     }
-
+*/
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +23,10 @@ class UserController extends Controller
     public function index()
     {
         $usuariosRegistrados = User::all();
+        for($i=0;$i<sizeof($usuariosRegistrados);$i++){
+          $persona = Persona::findOrFail($usuariosRegistrados[$i]['id']);
+          $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
+        }
         return view('usuarios.index',compact('usuariosRegistrados'));
     }
 
@@ -43,10 +49,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-          'legajo' => 'required|max:255',
           'name' => 'required|max:255',
           'password' => 'required|max:255',
-          'mail' => 'required|max:255',
+          'email' => 'required|max:255',
           'id_persona' => 'required|numeric',
         ]);
 
@@ -83,9 +88,8 @@ class UserController extends Controller
         //var_dump($_POST);
     return response()->json([
       'id' => $usuario['id'],
-      'legajo' => $usuario['legajo'],
       'name' => $usuario['name'],
-      'mail' => $usuario['mail'],
+      'email' => $usuario['email'],
       'id_persona' => $usuario['id_persona']]);
     }
 
@@ -93,9 +97,8 @@ class UserController extends Controller
     {
       $respuesta = $request->post();
       $validator = Validator::make($request->all(),[
-        'legajo' => 'required|max:255',
         'name' => 'required|max:255',
-        'mail' => 'required|max:255',
+        'email' => 'required|max:255',
         'id_persona' => 'required|numeric',
       ]);
 
@@ -122,10 +125,9 @@ class UserController extends Controller
     {
       $respuesta = $request->post();
       $validatedData = $respuesta->validate([
-        'legajo' => 'required|max:255',
         'name' => 'required|max:255',
         'password' => 'required|max:255',
-        'mail' => 'required|max:255',
+        'email' => 'required|max:255',
         'id_persona' => 'required|numeric',
       ]);
       User::whereId($request['id'])->update($validatedData);

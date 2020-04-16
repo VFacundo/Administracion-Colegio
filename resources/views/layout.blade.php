@@ -8,8 +8,8 @@
   <title>Sistema Administracion Colegio</title>
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="{{ asset('js/emergente.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/ajaxData.js') }}"></script>
 </head>
@@ -17,9 +17,11 @@
   <!--NAV INICIO -->
   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
+        <!--
           <a class="navbar-brand" href="{{ url('/') }}">
-              {{ config('app.name', 'Laravel') }}
+              {{ config('app.name', '-') }}
           </a>
+        -->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -76,8 +78,8 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="list-group">
-            <a href="#" class="list-group-item">Administracion de Personas</a>
-            <a href="#" class="list-group-item">Administracion de Usuarios</a>
+            <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
+            <a href="{{route('usuarios.index')}}" class="list-group-item">Administracion de Usuarios</a>
             <a href="#" class="list-group-item">Administracion de Roles</a>
             <a href="#" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>

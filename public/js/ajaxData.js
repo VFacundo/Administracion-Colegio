@@ -23,7 +23,6 @@ function updateUser_backup(){
       })
       .then(function(text) {
         respuesta = JSON.parse(text);
-        formUpdate.legajo.value = respuesta['legajo'];
         formUpdate.name.value = respuesta['name'];
         formUpdate.email.value = respuesta['email'];
         formUpdate.id_persona.value = respuesta['id_persona'];
@@ -36,6 +35,18 @@ function updateUser_backup(){
   console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 }
 
+function getPersona(id_persona){
+var url = '/personas/getdata', respuesta,dataRequest;
+
+  dataRequest = {id:id_persona};
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+      return response;
+  });
+
+}
+
 function setUpdateUser(){
   var btn = event.target,
       url = '/usuarios/actualizar',
@@ -43,7 +54,6 @@ function setUpdateUser(){
 
   removeErrors('formUpdate');
   dataRequest = {id:btn.dataset.value,
-                  legajo:formUpdate.legajo.value,
                   name:formUpdate.name.value,
                   email:formUpdate.email.value,
                   id_persona:formUpdate.id_persona.value};
@@ -100,7 +110,6 @@ function updateUser(){
       respuesta = ajaxRequest(url,dataRequest)
       respuesta.then(response => response.json())
         .then(function(response){
-          formUpdate.legajo.value = response['legajo'];
           formUpdate.name.value = response['name'];
           formUpdate.email.value = response['email'];
           formUpdate.id_persona.value = response['id_persona'];

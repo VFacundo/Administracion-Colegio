@@ -40,20 +40,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="legajo" class="col-md-4 col-form-label text-md-right">{{ __('Legajo') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="legajo" type="text" class="form-control @error('legajo') is-invalid @enderror" name="legajo" value="{{ old('legajo') }}" required autocomplete="legajo">
-
-                                @error('legajo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

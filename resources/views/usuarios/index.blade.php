@@ -20,10 +20,9 @@
     <thead>
         <tr>
           <td>ID</td>
-          <td>Legajo</td>
           <td>UserName</td>
           <td>EMail</td>
-          <td>Id_Persona</td>
+          <td>Persona</td>
           <td colspan="2">Action</td>
         </tr>
     </thead>
@@ -31,10 +30,9 @@
         @foreach($usuariosRegistrados as $user)
         <tr>
             <td>{{$user->id}}</td>
-            <td>{{$user->legajo}}</td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
-            <td>{{$user->id_persona}}</td>
+            <td><a href="#" onClick="return false;">{{$user->persona}}</a></td>
             <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Edit</a></td>
             <td>
                 <form action="{{ route('usuarios.destroy', $user->id)}}" method="post">
@@ -69,9 +67,6 @@
         <form method="post" action="{{ route('usuarios.store') }}">
 
                 @csrf
-                <label for="legajo">Legajo:</label>
-                <input type="text" class="form-control" name="legajo"/>
-
                 <label for="name">Username :</label>
                 <input type="text" class="form-control" name="name"/></textarea>
 
@@ -112,9 +107,6 @@
         <form id="formUpdate" onSubmit="return false;">
 
                 @csrf
-                <label for="legajo">Legajo:</label>
-                <input type="text" class="form-control" name="legajo"/>
-
                 <label for="name">Username :</label>
                 <input type="text" class="form-control" name="name"/></textarea>
 
