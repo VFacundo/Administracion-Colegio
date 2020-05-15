@@ -7,7 +7,7 @@
   }
 </style>
 <div class="row">
-  <div class="col-sm-8"><h3>Usuarios</h3></div>
+  <div class="col-sm-8"><h3>Personas</h3></div>
   <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>
 <div class="uper">
@@ -50,14 +50,8 @@
             <td>{{$persona->domicilio}}</td>
             <td>{{$persona->fecha_nacimiento}}</td>
             <td>{{$persona->numero_telefono}}</td>
-            <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Edit</a></td>
-            <td>
-                <form action="{{ route('personas.destroy', $persona->id)}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </td>
+            <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
+            <td><a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Delete</a></td>
         </tr>
         @endforeach
     </tbody>
@@ -65,11 +59,11 @@
 <div>
 @endsection
 
-<!--BLOQUE CREAR NUEVO USUARIO -->
+<!--BLOQUE CREAR NUEVA PERSONA -->
 <div class="padreEmergente">
   <div class="emergente" id="emergenteCrear">
     <div class="card-header">
-      Crear Usuario Nuevo
+      Crear Persona Nueva
     </div>
     <div class="card-body">
       @if ($errors->any())
@@ -112,9 +106,9 @@
   </div>
 </div>
 
-<!--FIN BLOQUE CREAR NUEVO USUARIO -->
+<!--FIN BLOQUE CREAR NUEVA PERSONA -->
 
-<!--BLOQUE EDITAR USUARIO -->
+<!--BLOQUE EDITAR PERSONA -->
 <div class="padreEmergente">
   <div class="emergente" id='emergenteUpdate'>
     <div class="card-header">
@@ -133,19 +127,34 @@
         <form id="formUpdate" onSubmit="return false;">
 
                 @csrf
-                <label for="name">Username :</label>
-                <input type="text" class="form-control" name="name"/></textarea>
+                <label for="legajo">Legajo :</label>
+                <input type="text" class="form-control" name="legajo"/>
 
-                <label for="email">EMail :</label>
-                <input type="text" class="form-control" name="email"/>
+                <label for="nombre_persona">Nombre Persona :</label>
+                <input type="text" class="form-control" name="nombre_persona"/>
 
-                <label for="id_persona">id_persona :</label>
-                <input type="text" class="form-control" name="id_persona""/>
+                <label for="apellido_persona">Apellido Persona :</label>
+                <input type="text" class="form-control" name="apellido_persona"/>
 
-            <button type="submit" class="btn btn-primary" onclick="setUpdateUser();">Modificar Usuario</button>
+                <label for="dni_persona">DNI Persona :</label>
+                <input type="text" class="form-control" name="dni_persona"/>
+
+                <label for="domicilio">Domicilio Persona :</label>
+                <input type="text" class="form-control" name="domicilio"/>
+
+                <label for="fecha_nacimiento">Fecha de Nacimiento :</label>
+                <input type="date" class="form-control" name="fecha_nacimiento"/>
+
+                <label for="numero_telefono">Numero de Telefono :</label>
+                <input type="text" class="form-control" name="numero_telefono"/>
+
+                <label for="estado_persona">Estado :</label>
+                <input type="text" class="form-control" name="estado_persona"/>
+
+            <button type="submit" class="btn btn-primary" onclick="setUpdatePersona();">Modificar Persona</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>
         </form>
     </div>
   </div>
 </div>
-<!--FIN BLOQUE EDITAR USUARIO -->
+<!--FIN BLOQUE EDITAR PERSONA -->

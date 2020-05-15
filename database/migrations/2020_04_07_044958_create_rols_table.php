@@ -18,8 +18,8 @@ class CreateRolsTable extends Migration
             $table->string('nombre_rol');
             $table->string('descripcion_rol');
             $table->integer('estado');
-
             $table->primary('nombre_rol');
+            $table->enum('estado_rol',['inactivo','activo']);
             /*
             $table->string('nombre_permiso');
             $table->foreign('nombre_permiso')->references('nombre_permiso')->on('permisos');

@@ -22,7 +22,7 @@ class CreatePersonasTable extends Migration
             $table->string('domicilio');
             $table->date('fecha_nacimiento');
             $table->string('numero_telefono');
-
+            $table->enum('estado_persona',['inactivo','activo']);
             //$table->primary('id');//PrimaryKey
 
             $table->timestamps();

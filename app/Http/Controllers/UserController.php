@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-
-/*
-    public function login(){
-      return view('usuarios.login');
-    }
-*/
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +18,8 @@ class UserController extends Controller
     {
         $usuariosRegistrados = User::all();
         for($i=0;$i<sizeof($usuariosRegistrados);$i++){
-          $persona = Persona::findOrFail($usuariosRegistrados[$i]['id']);
-          $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
+            $persona = Persona::findOrFail($usuariosRegistrados[$i]['id_persona']);
+            $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
         }
         return view('usuarios.index',compact('usuariosRegistrados'));
     }

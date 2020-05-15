@@ -17,7 +17,7 @@ class CreatePermisoRolsTable extends Migration
             //$table->id();
             $table->unsignedBigInteger('id_permiso');
             $table->String('nombre_rol');
-
+            $table->Date('fecha_asignacion_permiso');
             $table->primary(['id_permiso','nombre_rol']);
 
             $table->foreign('nombre_rol')->references('nombre_rol')->on('rols');

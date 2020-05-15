@@ -114,7 +114,7 @@
                 <input type="text" class="form-control" name="email"/>
 
                 <label for="id_persona">id_persona :</label>
-                <input type="text" class="form-control" name="id_persona""/>
+                <input type="text" class="form-control" name="id_persona"/>
 
             <button type="submit" class="btn btn-primary" onclick="setUpdateUser();">Modificar Usuario</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>
