@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -22,11 +24,46 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected function authenticated(){
+/*
+    public function username()
+    {
+    return 'name';
+    }
+*/
+
+/*
+    protected function authenticated2(){
       if(Auth::check()){
-        return redirect()->route('usuarios.index');
+        $userId = Auth::id();
+        $usuario = User::findOrFail($userId);
+                      \Debugbar::warning($usuario);
+          if(strcasecmp($usuario['estado_usuario'],'inactivo') == 0){
+              \Debugbar::info("falso");
+          }else{
+            return redirect()->route('personas.index');
+          }
       }
     }
+*/
+
+    /**
+ * The user has been authenticated.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @param  mixed  $user
+ * @return mixed
+ */
+    protected function authenticated(Request $request, $user){
+      $userId = Auth::id();
+      $usuario = User::findOrFail($userId);
+      if(strcasecmp($usuario['estado_usuario'],'inactivo') == 0){
+        return abort(404);
+      }else{
+        return redirect()->route('personas.index');
+      }
+      //return redirect()->route('personas.index');
+    }
+
 
     /**
      * Where to redirect users after login.

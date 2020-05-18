@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Persona;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,6 +23,8 @@ class UserController extends Controller
             $persona = Persona::findOrFail($usuariosRegistrados[$i]['id_persona']);
             $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
         }
+
+        \Debugbar::info(Auth::user());
         return view('usuarios.index',compact('usuariosRegistrados'));
     }
 
@@ -140,5 +144,27 @@ class UserController extends Controller
         $usuarioRegistrado->delete();
 
         return redirect('/usuarios')->with('success','Usuario Eliminado Correctamente');
+    }
+
+    public function install(){
+      $persona = [
+        'legajo' => '000000',
+        'nombre_persona' => 'Administrador',
+        'apellido_persona' => 'Administrador',
+        'dni_persona' => '00000000',
+        'domicilio' => 'Rawson',
+        'fecha_nacimiento' => '2020/06/06',
+        'numero_telefono' => '0000000000',
+        'estado_persona' => 'activo',
+      ];
+      $personaInsert = Persona::create($persona);
+      $usuario = [
+        'name' => 'admin',
+        'email' => 'admin@colegio.com',
+        'password' => 'admin',
+        'id_persona' => $personaInsert->id,
+      ];
+      $registerUser = new RegisterController();
+      $registerUser->create($usuario);
     }
 }

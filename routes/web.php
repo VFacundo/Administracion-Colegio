@@ -21,7 +21,7 @@ Route::get('/','UserController@index')->middleware('auth');
 Route::get('/usuarios','UserController@index')->name('usuarios.index')->middleware('auth');
 Route::get('/personas','PersonaController@index')->name('personas.index')->middleware('auth');
 Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
-
+Route::get('/install','UserController@install')->name('usuarios.install');
 
 Route::post('/personas/destroy','PersonaController@destroy')->name('personas.destroy');
 Route::post('/usuarios/destroy','UserController@destroy')->name('usuarios.destroy');
