@@ -33,12 +33,12 @@
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td><a href="#" onClick="return false;">{{$user->persona}}</a></td>
-            <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Edit</a></td>
+            <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Editar</a></td>
             <td>
                 <form action="{{ route('usuarios.destroy', $user->id)}}" method="post">
                   @csrf
                   @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Delete</button>
+                  <button class="btn btn-danger" type="submit">Eliminar</button>
                 </form>
             </td>
         </tr>

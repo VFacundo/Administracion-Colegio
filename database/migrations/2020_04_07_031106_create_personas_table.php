@@ -18,13 +18,15 @@ class CreatePersonasTable extends Migration
             $table->string('legajo')->unique();
             $table->string('nombre_persona');
             $table->string('apellido_persona');
+            $table->unsignedBigInteger('tipo_documento');
             $table->string('dni_persona');
+            $table->string('cuil_persona');
             $table->string('domicilio');
             $table->date('fecha_nacimiento');
             $table->string('numero_telefono');
             $table->enum('estado_persona',['inactivo','activo']);
             //$table->primary('id');//PrimaryKey
-
+            $table->foreign('tipo_documento')->references('id')->on('tipo_documentos');
             $table->timestamps();
         });
     }

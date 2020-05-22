@@ -76,7 +76,9 @@ var url = '/personas/editar', respuesta,dataRequest,bModal;
     bModal.insertAdjacentHTML('beforeend','<b> Legajo: '+response['legajo']+'</b><br>'+
                         '<b> Nombre: '+response['nombre_persona']+'</b><br>'+
                         '<b> Apellido: '+response['apellido_persona']+'</b><br>'+
+                        '<b> Tipo Documento: '+response['tipo_documento']+'</b><br>'+                
                         '<b> DNI: '+response['dni_persona']+'</b><br>'+
+                        '<b> CUIL: '+response['cuil_persona']+'</b><br>'+                        
                         '<b> Domicilio: '+response['domicilio']+'</b><br>'+
                         '<b> Fecha Nacimiento: '+response['fecha_nacimiento']+'</b><br>'+
                         '<b> Telefono: '+response['numero_telefono']+'</b><br>');
@@ -145,7 +147,9 @@ function setUpdatePersona(){
                 legajo:formUpdate.legajo.value,
                 nombre_persona:formUpdate.nombre_persona.value,
                 apellido_persona:formUpdate.apellido_persona.value,
+                tipo_documento:formUpdate.tipo_documento.value,
                 dni_persona:formUpdate.dni_persona.value,
+                cuil_persona:formUpdate.cuil_persona.value,
                 domicilio:formUpdate.domicilio.value,
                 fecha_nacimiento:formUpdate.fecha_nacimiento.value,
                 numero_telefono:formUpdate.numero_telefono.value,
@@ -210,7 +214,9 @@ function updatePersona(){
           formUpdate.legajo.value = response['legajo'];
           formUpdate.nombre_persona.value = response['nombre_persona'];
           formUpdate.apellido_persona.value = response['apellido_persona'];
+          formUpdate.tipo_documento.value = response['tipo_documento'];
           formUpdate.dni_persona.value = response['dni_persona'];
+          formUpdate.cuil_persona.value = response['cuil_persona'];
           formUpdate.domicilio.value = response['domicilio'];
           formUpdate.fecha_nacimiento.value = response['fecha_nacimiento'];
           formUpdate.numero_telefono.value = response['numero_telefono'];

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Persona;
+use App\tipo_documento;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Auth\RegisterController;
+
 
 class PersonaController extends Controller
 {
@@ -17,7 +19,8 @@ class PersonaController extends Controller
     public function index()
     {
         $personas = Persona::all();
-        return view('personas.index',compact('personas'));
+        $tipo_documento = tipo_documento::all();
+        return view('personas.index',compact('personas'),compact('tipo_documento'));
     }
 
     /**
@@ -38,11 +41,14 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
           'legajo' => 'required|max:255|',
           'nombre_persona' => 'required|alpha|max:255',
           'apellido_persona' => 'required|alpha|max:255',
+          'tipo_documento' => 'required',
           'dni_persona' => 'required|numeric|digits_between:7,8',
+          'cuil_persona' => 'required|numeric|digits_between:10,11',
           'domicilio' => 'required|max:255',
           'fecha_nacimiento' => 'required|date',
           'numero_telefono' => 'required',
@@ -89,7 +95,9 @@ class PersonaController extends Controller
        'legajo' => $persona['legajo'],
        'nombre_persona' => $persona['nombre_persona'],
        'apellido_persona' => $persona['apellido_persona'],
+       'tipo_documento' => $persona['tipo_documento'],
        'dni_persona' => $persona['dni_persona'],
+       'cuil_persona' => $persona['cuil_persona'],
        'domicilio' => $persona['domicilio'],
        'fecha_nacimiento' => $persona['fecha_nacimiento'],
        'numero_telefono' => $persona['numero_telefono'],
@@ -117,7 +125,9 @@ class PersonaController extends Controller
          'legajo' => 'required|max:255',
          'nombre_persona' => 'required|max:255',
          'apellido_persona' => 'required|max:255',
+         'tipo_documento' => 'required',
          'dni_persona' => 'required|max:255',
+         'cuil_persona' => 'required|numeric|digits_between:10,11',
          'domicilio' => 'required|max:255',
          'fecha_nacimiento' => 'required|date',
          'numero_telefono' => 'required|max:255',

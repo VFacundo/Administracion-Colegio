@@ -32,7 +32,9 @@
           <td>Legajo</td>
           <td>Nombre</td>
           <td>Apellido</td>
-          <td>DNI</td>
+          <td>Tipo de documento</td>    
+          <td>Número de documento</td>
+          <td>CUIL</td>
           <td>Domicilio</td>
           <td>Fecha Nacimiento</td>
           <td>Numero Telefono</td>
@@ -46,12 +48,14 @@
             <td>{{$persona->legajo}}</td>
             <td>{{$persona->nombre_persona}}</td>
             <td>{{$persona->apellido_persona}}</td>
+            <td>{{$persona->tipo_documento}}</td>
             <td>{{$persona->dni_persona}}</td>
+            <td>{{$persona->cuil_persona}}</td>
             <td>{{$persona->domicilio}}</td>
             <td>{{$persona->fecha_nacimiento}}</td>
             <td>{{$persona->numero_telefono}}</td>
-            <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
-            <td><a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Delete</a></td>
+            <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Editar</a></td>
+            <td><a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Eliminar</a></td>
         </tr>
         @endforeach
     </tbody>
@@ -87,8 +91,18 @@
                 <label for="apellido_persona">Apellido :</label>
                 <input type="text" class="form-control" name="apellido_persona" placeholder="Apellido Persona" required/></textarea>
 
-                <label for="dni_persona">DNI :</label>
+                <label for="tipo_documento">Tipo Documento :</label>
+                <select name="tipo_documento" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
+                @foreach($tipo_documento as $tipo_doc)
+                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>  
+                @endforeach   
+                </select></p>
+      
+                <label for="dni_persona">Número de documento :</label>
                 <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
+
+                <label for="cuil_persona">Número de CUIL :</label>
+                <input type="text" class="form-control" name="cuil_persona" placeholder="CUIL Persona" required/></textarea>
 
                 <label for="domicilio">Domicilio :</label>
                 <input type="text" class="form-control" name="domicilio" placeholder="Domicilio Persona" required/></textarea>
@@ -136,8 +150,18 @@
                 <label for="apellido_persona">Apellido Persona :</label>
                 <input type="text" class="form-control" name="apellido_persona"/>
 
-                <label for="dni_persona">DNI Persona :</label>
-                <input type="text" class="form-control" name="dni_persona"/>
+                <label for="tipo_documento">Tipo Documento :</label>
+                <select name="tipo_documento" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
+                @foreach($tipo_documento as $tipo_doc)
+                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>  
+                @endforeach   
+                </select></p>  
+                
+                <label for="dni_persona">Nùmero de documento :</label>
+                <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
+
+                <label for="cuil_persona">Número de CUIL :</label>
+                <input type="text" class="form-control" name="cuil_persona" placeholder="CUIL Persona" required/></textarea>
 
                 <label for="domicilio">Domicilio Persona :</label>
                 <input type="text" class="form-control" name="domicilio"/>
