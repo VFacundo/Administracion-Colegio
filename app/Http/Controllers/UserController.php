@@ -24,8 +24,7 @@ class UserController extends Controller
             $persona = Persona::findOrFail($usuariosRegistrados[$i]['id_persona']);
             $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
         }
-
-        \Debugbar::info(Auth::user());
+        
         return view('usuarios.index',compact('usuariosRegistrados'));
     }
 
@@ -172,7 +171,6 @@ class UserController extends Controller
         'email' => 'admin@colegio.com',
         'password' => 'admin',
         'id_persona' => $personaInsert->id,
-        'estado_usuario' => 'activo',
       ];
       $registerUser = new RegisterController();
       $registerUser->create($usuario);

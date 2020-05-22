@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Rol;
 use App\Permiso;
+use App\Permiso_rol;
 
 class RolController extends Controller
 {
@@ -17,6 +18,13 @@ class RolController extends Controller
     {
         $roles = Rol::all();
         $permisos = Permiso::all();
+
+        $data = Rol::select('Rols.nombre_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
+                        ->join('permiso_rols','Rols.nombre_rol','=','permiso_rols.nombre_rol')
+                        ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                        ->get();
+        \Debugbar::info($data);
+
         return view('roles.index',compact('roles'),compact('permisos'));
     }
 

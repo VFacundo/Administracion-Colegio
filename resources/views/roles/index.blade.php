@@ -6,6 +6,9 @@
     margin-top: 40px;
   }
 </style>
+
+<!--ROLES -->
+
 <div class="row">
   <div class="col-sm-8"><h3>Roles</h3></div>
   <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Rol</a></div>
@@ -30,18 +33,19 @@
         <tr>
           <td>Nombre Rol</td>
           <td>Descripcion Rol</td>
-          <td>estado_rol</td>
+          <td>Estado de Rol</td>
+          <td>Permisos</td>
           <td colspan="2">Accion</td>
         </tr>
     </thead>
     <tbody>
         @foreach($roles as $rol)
         <tr>
-            <td>{{$roles->nombre_rol}}</td>
-            <td>{{$roles->descripcion_rol}}</td>
-            <td>{{$roles->estado_rol}}</td>
-            <td><a id="btnUpdate" data-value="{{ ($roles->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
-            <td><a data-value="{{ ($roles->nombre_rol)}}" onclick="confirmDestroy({{ ($roles->nombre_rol)}})" class="btn btn-danger">Delete</a></td>
+            <td>{{$rol->nombre_rol}}</td>
+            <td>{{$rol->descripcion_rol}}</td>
+            <td>{{$rol->estado_rol}}</td>
+            <td><a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
+            <td><a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroy({{ ($rol->nombre_rol)}})" class="btn btn-danger">Delete</a></td>
         </tr>
         @endforeach
     </tbody>
