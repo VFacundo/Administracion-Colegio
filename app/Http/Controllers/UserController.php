@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Persona;
+use App\tipo_documento;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
@@ -147,6 +148,12 @@ class UserController extends Controller
     }
 
     public function install(){
+      $tipo_documento = [
+        'nombre_tipo' => 'DNI',
+        'descripcion' => 'Documento Nacional de Identidad',
+      ];
+      tipo_documento::create($tipo_documento);
+
       $persona = [
         'legajo' => '000000',
         'nombre_persona' => 'Administrador',
@@ -165,6 +172,7 @@ class UserController extends Controller
         'email' => 'admin@colegio.com',
         'password' => 'admin',
         'id_persona' => $personaInsert->id,
+        'estado_usuario' => 'activo',
       ];
       $registerUser = new RegisterController();
       $registerUser->create($usuario);
