@@ -21,12 +21,18 @@ Route::get('/','UserController@index')->middleware('auth');
 Route::get('/usuarios','UserController@index')->name('usuarios.index')->middleware('auth');
 Route::get('/personas','PersonaController@index')->name('personas.index')->middleware('auth');
 Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
+Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
 Route::get('/install','UserController@install')->name('usuarios.install');
 
 Route::post('/personas/destroy','PersonaController@destroy')->name('personas.destroy');
 Route::post('/usuarios/destroy','UserController@destroy')->name('usuarios.destroy');
 Route::post('/usuarios/store','UserController@store')->name('usuarios.store');
 Route::post('/personas/store','PersonaController@store')->name('personas.store');
+Route::post('/permisos/store','PermisoController@store')->name('permisos.store');
+Route::post('/permisos/update','PermisoController@update')->name('permisos.update');
+Route::post('/permisos/setupdate','PermisoController@setupdate')->name('permisos.setupdate');
+Route::post('/permisos/destroy','PermisoController@destroy')->name('permisos.destroy');
+Route::post('/roles/store','RolController@store')->name('roles.store');
 Route::post('/usuarios/actualizar','UserController@actualizar')->name('usuarios.actualizar');
 Route::post('/usuarios/editar','UserController@editar')->name('usuarios.editar');
 Route::post('/personas/editar','PersonaController@editar')->name('personas.editar');

@@ -76,9 +76,9 @@ var url = '/personas/editar', respuesta,dataRequest,bModal;
     bModal.insertAdjacentHTML('beforeend','<b> Legajo: '+response['legajo']+'</b><br>'+
                         '<b> Nombre: '+response['nombre_persona']+'</b><br>'+
                         '<b> Apellido: '+response['apellido_persona']+'</b><br>'+
-                        '<b> Tipo Documento: '+response['tipo_documento']+'</b><br>'+                
+                        '<b> Tipo Documento: '+response['tipo_documento']+'</b><br>'+
                         '<b> DNI: '+response['dni_persona']+'</b><br>'+
-                        '<b> CUIL: '+response['cuil_persona']+'</b><br>'+                        
+                        '<b> CUIL: '+response['cuil_persona']+'</b><br>'+
                         '<b> Domicilio: '+response['domicilio']+'</b><br>'+
                         '<b> Fecha Nacimiento: '+response['fecha_nacimiento']+'</b><br>'+
                         '<b> Telefono: '+response['numero_telefono']+'</b><br>');
@@ -168,10 +168,13 @@ function setUpdatePersona(){
 
 function ocultarModal(formName,emergente){
   document.getElementsByClassName('modal')[0].remove();
-  console.log(emergente);
+  //console.log(emergente.id);
   //emergente.style.display="none";
   //document.getElementById(emergente).style.display="none";
-  activarEmergente('emergenteUpdate');
+  //activarEmergente('emergenteUpdate');-->antes
+  if(emergente != 'null'){
+        activarEmergente(emergente.id);
+  }
 }
 
 function mostrarModal(formName,mensaje,titulo,emergente){

@@ -32,7 +32,7 @@
           <td>Legajo</td>
           <td>Nombre</td>
           <td>Apellido</td>
-          <td>Tipo de documento</td>    
+          <td>Tipo de documento</td>
           <td>Número de documento</td>
           <td>CUIL</td>
           <td>Domicilio</td>
@@ -94,15 +94,16 @@
                 <label for="tipo_documento">Tipo Documento :</label>
                 <select name="tipo_documento" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
                 @foreach($tipo_documento as $tipo_doc)
-                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>  
-                @endforeach   
+                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>
+                @endforeach
                 </select></p>
-      
+
                 <label for="dni_persona">Número de documento :</label>
                 <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
 
                 <label for="cuil_persona">Número de CUIL :</label>
                 <input type="text" class="form-control" name="cuil_persona" placeholder="CUIL Persona" required/></textarea>
+
 
                 <label for="domicilio">Domicilio :</label>
                 <input type="text" class="form-control" name="domicilio" placeholder="Domicilio Persona" required/></textarea>
@@ -153,10 +154,10 @@
                 <label for="tipo_documento">Tipo Documento :</label>
                 <select name="tipo_documento" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
                 @foreach($tipo_documento as $tipo_doc)
-                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>  
-                @endforeach   
-                </select></p>  
-                
+                   <option value= "{{$tipo_doc->id}}">{{$tipo_doc->nombre_tipo}}</option>
+                @endforeach
+                </select></p>
+
                 <label for="dni_persona">Nùmero de documento :</label>
                 <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
 

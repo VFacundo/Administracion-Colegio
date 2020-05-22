@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rol;
+use App\Permiso;
 
 class RolController extends Controller
 {
@@ -13,7 +15,9 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Rol::all();
+        $permisos = Permiso::all();
+        return view('roles.index',compact('roles'),compact('permisos'));
     }
 
     /**
@@ -32,9 +36,15 @@ class RolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+      $validatedData = $request->validate([
+        'nombre_rol' => 'required|max:255',
+        'descripcion_rol' => 'required|max:255',
+        'estado_rol' => 'required|max:255',
+      ]);
+
+      User::create($validatedData);
+        return redirect('/roles')->with('success','Usuario Creado Correctamente');
     }
 
     /**

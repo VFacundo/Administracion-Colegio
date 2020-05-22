@@ -12,6 +12,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="{{ asset('js/emergente.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/ajaxData.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataRoles.js') }}"></script>
 </head>
 <body>
   <!--NAV INICIO -->
@@ -80,7 +81,7 @@
         <div class="list-group">
             <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
             <a href="{{route('usuarios.index')}}" class="list-group-item">Administracion de Usuarios</a>
-            <a href="#" class="list-group-item">Administracion de Roles</a>
+            <a href="{{route('roles.index')}}" class="list-group-item">Administracion de Roles</a>
             <a href="#" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>
             <a href="#" class="list-group-item">Logout</a>
