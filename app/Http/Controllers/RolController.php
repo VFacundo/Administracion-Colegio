@@ -18,13 +18,36 @@ class RolController extends Controller
     {
         $roles = Rol::all();
         $permisos = Permiso::all();
-
-        $data = Rol::select('Rols.nombre_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
-                        ->join('permiso_rols','Rols.nombre_rol','=','permiso_rols.nombre_rol')
+/*
+        $data = Rol::select('rols.nombre_rol','rols.descripcion_rol','rols.estado_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
+                        ->join('permiso_rols','rols.nombre_rol','=','permiso_rols.nombre_rol')
                         ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
-                        ->get();
-        \Debugbar::info($data);
+                        ->get()->pluck();
+        \Debugbar::info($data[0]);
+*/
+        $dataRoles = Rol::select('rols.nombre_rol','rols.descripcion_rol','rols.estado_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
+                        ->join('permiso_rols','rols.nombre_rol','=','permiso_rols.nombre_rol')
+                        ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                        ->get('rols.*','permiso_rols.id_permiso','permisos.nombre_permiso');
+        \Debugbar::info($dataRoles);
 
+        $dataRolesPr = Permiso_rol::select('permiso_rols.*','permisos.nombre_permiso')
+                                  ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                                  ->where('permiso_rols.nombre_rol','=','admin')
+                                  ->get();
+        \Debugbar::info($dataRolesPr);
+
+        $datRol[] = '';
+        for($i=0;$i<count($roles);$i++){
+          $dataRolesPr = Permiso_rol::select('permiso_rols.*','permisos.nombre_permiso')
+                                    ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                                    ->where('permiso_rols.nombre_rol','=',$roles[$i]['nombre_rol'])
+                                    ->get();
+          //$roles += ['permisos' => $dataRolesPr];
+          $roles[$i]['permisos'] = $dataRolesPr;
+
+        }
+                  \Debugbar::info($roles);
         return view('roles.index',compact('roles'),compact('permisos'));
     }
 
