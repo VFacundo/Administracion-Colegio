@@ -10,6 +10,23 @@ use Illuminate\Support\Facades\Validator;
 
 class RolController extends Controller
 {
+
+  public function rolesArray(){
+    $roles = Rol::all();
+    for($i=0;$i<count($roles);$i++){
+      $dataRolesPr = Permiso_rol::select('permiso_rols.*','permisos.nombre_permiso')
+                                ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                                ->where('permiso_rols.nombre_rol','=',$roles[$i]['nombre_rol'])
+                                ->get();
+      //$roles += ['permisos' => $dataRolesPr];
+      $roles[$i]['permisos'] = $dataRolesPr;
+    }
+    return $roles;
+  }
+
+  public function hola(){
+    return 'hola';
+  }
     /**
      * Display a listing of the resource.
      *
@@ -17,15 +34,10 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Rol::all();
+        //$roles = Rol::all();
         $permisos = Permiso::all();
+
 /*
-        $data = Rol::select('rols.nombre_rol','rols.descripcion_rol','rols.estado_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
-                        ->join('permiso_rols','rols.nombre_rol','=','permiso_rols.nombre_rol')
-                        ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
-                        ->get()->pluck();
-        \Debugbar::info($data[0]);
-*/
         $dataRoles = Rol::select('rols.nombre_rol','rols.descripcion_rol','rols.estado_rol','permiso_rols.id_permiso','permisos.nombre_permiso')
                         ->join('permiso_rols','rols.nombre_rol','=','permiso_rols.nombre_rol')
                         ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
@@ -38,7 +50,6 @@ class RolController extends Controller
                                   ->get();
         \Debugbar::info($dataRolesPr);
 
-        $datRol[] = '';
         for($i=0;$i<count($roles);$i++){
           $dataRolesPr = Permiso_rol::select('permiso_rols.*','permisos.nombre_permiso')
                                     ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
@@ -46,9 +57,10 @@ class RolController extends Controller
                                     ->get();
           //$roles += ['permisos' => $dataRolesPr];
           $roles[$i]['permisos'] = $dataRolesPr;
-
+        $roles = rolesArray();
         }
-                  \Debugbar::info($roles);
+        */
+        $roles = $this->rolesArray();
         return view('roles.index',compact('roles'),compact('permisos'));
     }
 
@@ -57,6 +69,7 @@ class RolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //
@@ -95,11 +108,14 @@ class RolController extends Controller
       }else{
         $rolInsert = rol::create($respuesta);
         foreach ($respuesta['permisos'] as $key => $value) {
-          Permiso_rol::create(['id_permiso'=>$value,'nombre_rol'=>$respuesta['nombre_rol'],'fecha_asignacion'=>'NOW()']);
+          $registroPr = ['id_permiso'=>$value,'nombre_rol'=>$respuesta['nombre_rol'],'fecha_asignacion_permiso'=>date("Y").'/'.date("m").'/'.date("d")];
+          Permiso_rol::create($registroPr);
         }
+        $rolesArrayRespuesta = $this->rolesArray();
+        $rolesArrayRespuesta = $rolesArrayRespuesta[sizeof($rolesArrayRespuesta)-1];
         return response()->json([
         '0' => '500',
-        '1' => $respuesta['nombre_rol'],]);
+        '1' => $rolesArrayRespuesta,]);
         }
     }
 

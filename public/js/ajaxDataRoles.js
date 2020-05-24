@@ -168,14 +168,18 @@ function crearRol(){
       respuesta,
       nuevaFila,
       permisosRol=[],
-      permisosBox;
+      permisosBox =[],
+      nuevoReg,regPermisos;
 
-  //console.log(form.estados.value);
+  //Revisar que cuando, se tiene un solo permiso rompe
   permisosBox = form.permisos_box;
-
+  console.log(form.permisos_box);
+  console.log(permisosBox);
+  console.log(permisosBox.length);
   for (var i = 0; i < permisosBox.length; i++) {
     if(permisosBox[i].checked){
       permisosRol[permisosRol.length] = permisosBox[i].value;
+      console.log(permisosRol);
     }
   }
   dataRequest = {
@@ -184,15 +188,30 @@ function crearRol(){
     estado_rol:form.estados.value,
     permisos:permisosRol,
   }
+  console.log(dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
     if(response[0] != 500){
       console.log("error");
-      //displayErrors(response,'formAltaPermiso');
+      displayErrors(response,'formAltaPermiso');
        //btnDestroy.classList.remove("toDestroy");
     }else{
       console.log("ok");
+
+      for (var i = 0; i < response[1]['permisos'].length; i++) {
+        regPermisos = '<td>'+response[1]['permisos'][i]['nombre_permiso']+' | '+response[1]['permisos'][i]['fecha_asignacion_permiso']+'</td>';
+      }
+      console.log(response[1]);
+      nuevoReg = '<td>'+response[1]['nombre_rol']+'</td>'+
+                 '<td>'+response[1]['descripcion_rol']+'</td>'+
+                 '<td>'+response[1]['estado_rol']+'</td>'+
+                 regPermisos;
+
+      document.getElementById('tablaRoles').children[1].insertAdjacentHTML('beforeend','<tr>'+
+        +nuevoReg+'<tr>');
+        console.log(nuevoReg);
+        activarEmergente('emergenteCrear');
     }
   });
 }

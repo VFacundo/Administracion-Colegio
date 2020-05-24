@@ -28,7 +28,7 @@
       </ul>
     </div><br/>
   @endif
-  <table class="table table-striped">
+  <table class="table table-striped" id="tablaRoles">
     <thead>
         <tr>
           <td>Nombre Rol</td>
@@ -120,7 +120,7 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" onSubmit="return false;" id="form1">
+        <form method="post" onSubmit="return false;" id="formAltaRol">
 
                 @csrf
                 <label for="nombre_rol">Nombre Rol :</label>
