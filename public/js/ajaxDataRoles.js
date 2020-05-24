@@ -157,3 +157,42 @@ var respuesta,
     }
   });
 }
+
+////////////ROLES
+
+function crearRol(){
+  var btn = event.target,
+      form = btn.parentNode,
+      dataRequest,
+      url = '/roles/store',
+      respuesta,
+      nuevaFila,
+      permisosRol=[],
+      permisosBox;
+
+  //console.log(form.estados.value);
+  permisosBox = form.permisos_box;
+
+  for (var i = 0; i < permisosBox.length; i++) {
+    if(permisosBox[i].checked){
+      permisosRol[permisosRol.length] = permisosBox[i].value;
+    }
+  }
+  dataRequest = {
+    nombre_rol:form.nombre_rol.value,
+    descripcion_rol:form.descripcion_rol.value,
+    estado_rol:form.estados.value,
+    permisos:permisosRol,
+  }
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    if(response[0] != 500){
+      console.log("error");
+      //displayErrors(response,'formAltaPermiso');
+       //btnDestroy.classList.remove("toDestroy");
+    }else{
+      console.log("ok");
+    }
+  });
+}

@@ -44,6 +44,11 @@
             <td>{{$rol->nombre_rol}}</td>
             <td>{{$rol->descripcion_rol}}</td>
             <td>{{$rol->estado_rol}}</td>
+            <td>
+            @foreach($rol['permisos'] as $perm)
+              {{$perm->nombre_permiso}} | {{$perm->fecha_asignacion_permiso}}
+            @endforeach
+            </td>
             <td><a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
             <td><a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroy({{ ($rol->nombre_rol)}})" class="btn btn-danger">Delete</a></td>
         </tr>
@@ -115,7 +120,7 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" onSubmit="return false;">
+        <form method="post" onSubmit="return false;" id="form1">
 
                 @csrf
                 <label for="nombre_rol">Nombre Rol :</label>
@@ -125,9 +130,19 @@
                 <input type="text" class="form-control" name="descripcion_rol" placeholder="Descripcion" required/></textarea>
 
                 <label for="estado_rol">Estado :</label>
-                <input type="text" class="form-control" name="estado_rol" placeholder="Estado Rol" required/></textarea>
+                <select name="estados">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select></br>
 
-            <button type="submit" class="btn btn-primary">Crear Rol</button>
+                <label for="permisos_box">Permisos :</label>
+                <div style="min-height:80px;width:120px;border:1px solid #ccc;overflow:auto;">
+                  @foreach($permisos as $permiso)
+                    <input type="checkbox" name="permisos_box" value="{{ ($permiso->id)}}">
+                    <label for="permisos_box">{{ ($permiso->nombre_permiso)}}</label><br>
+                  @endforeach
+                </div>
+            <button type="submit" class="btn btn-primary" onclick="crearRol();">Crear Rol</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrear');">Cancelar</button>
         </form>
     </div>

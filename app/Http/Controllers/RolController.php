@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Rol;
 use App\Permiso;
 use App\Permiso_rol;
+use Illuminate\Support\Facades\Validator;
 
 class RolController extends Controller
 {
@@ -68,14 +69,38 @@ class RolController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-      $validatedData = $request->validate([
-        'nombre_rol' => 'required|max:255',
+      $respuesta = $request->post();
+
+      //Validador Custom para los estados
+      Validator::extend('estado_correcto', function($attribute, $value){
+        if ((strcasecmp($value, "activo") === 0) || (strcasecmp($value, "inactivo") === 0)){
+          return true;
+        }else{
+          return false;
+        }
+       });
+
+      $validator = Validator::make($request->all(),[
+        'nombre_rol' => 'required|unique:rols|max:255',
         'descripcion_rol' => 'required|max:255',
         'estado_rol' => 'required|max:255',
       ]);
 
-      User::create($validatedData);
-        return redirect('/roles')->with('success','Usuario Creado Correctamente');
+      if($validator->fails()){
+        $errors = $validator->errors();
+        foreach($errors->all() as $message){
+          $arrayErrores[] = $message;
+        }
+        return json_encode($arrayErrores);
+      }else{
+        $rolInsert = rol::create($respuesta);
+        foreach ($respuesta['permisos'] as $key => $value) {
+          Permiso_rol::create(['id_permiso'=>$value,'nombre_rol'=>$respuesta['nombre_rol'],'fecha_asignacion'=>'NOW()']);
+        }
+        return response()->json([
+        '0' => '500',
+        '1' => $respuesta['nombre_rol'],]);
+        }
     }
 
     /**

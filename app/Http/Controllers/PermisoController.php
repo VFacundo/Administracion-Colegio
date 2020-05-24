@@ -20,7 +20,7 @@ class PermisoController extends Controller
        });
 
       $validator = Validator::make($request->all(),[
-        'nombre_permiso' => 'required|unique:Permisos|max:255',
+        'nombre_permiso' => 'required|unique:permisos|max:255',
         'funcionalidad_permiso' => 'required|max:255',
         'estado_permiso' => 'required|estado_correcto',
         'descripcion_permiso' => 'required|max:255',
@@ -33,7 +33,7 @@ class PermisoController extends Controller
         }
         return json_encode($arrayErrores);
       }else{
-        $permisoInsert = Permiso::create($respuesta);
+        $permisoInsert = permiso::create($respuesta);
         return response()->json([
           '0' => '500',
           '1' => $permisoInsert->id,]);
