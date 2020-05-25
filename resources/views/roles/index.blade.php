@@ -232,7 +232,7 @@
                   @endforeach
                 </div>
 
-            <button type="submit" class="btn btn-primary" onclick="setUpdatePersona();">Modificar Persona</button>
+            <button type="submit" class="btn btn-primary" onclick="setUpdateRol();">Modificar Rol</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>
         </form>
     </div>

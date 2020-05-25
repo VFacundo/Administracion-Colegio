@@ -51,3 +51,23 @@
     align-self: auto;
     top: 10%;
   }
+
+tr{
+	font-size: 0.8em;
+	max-width: 90%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.container-noMargin{
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+table ,th ,td,tr{
+	border: 1px solid black !important;
+}
+
+table tr:first-child{
+	background-color: #99BAAA;
+}

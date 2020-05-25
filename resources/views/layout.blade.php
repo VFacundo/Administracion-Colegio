@@ -15,9 +15,10 @@
     <script type="text/javascript" src="{{ asset('js/ajaxDataRoles.js') }}"></script>
 </head>
 <body>
+<div class="container-fluid container-noMargin">
   <!--NAV INICIO -->
   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-      <div class="container">
+      <div class="container-fluid">
         <!--
           <a class="navbar-brand" href="{{ url('/') }}">
               {{ config('app.name', '-') }}
@@ -69,15 +70,15 @@
       </div>
   </nav>
   <!-- NAV FIN -->
-
   <div class="jumbotron text-center">
     <h1>Sistema de Administracion</h1>
     <p>-Colegio Nro 2 Rawson-</p>
   </div>
+</div>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-2">
         <div class="list-group">
             <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
             <a href="{{route('usuarios.index')}}" class="list-group-item">Administracion de Usuarios</a>
@@ -88,8 +89,10 @@
           </div>
         </div>
 
-        <div class="col-sm-8">
+        <div class="col-10">
+          <div class="tab-content" id="nav-tabContent">
           @yield('content')
+        </div>
         </div>
     </div>
   </div>

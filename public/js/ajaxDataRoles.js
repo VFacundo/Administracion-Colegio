@@ -123,7 +123,7 @@ function modalBodyCreate(id,controlador){
   respuesta.then(response => response.json())
   .then(function(response){
     Object.keys(response).forEach(function(elemento,indice,array){
-      if(elemento != 'id'){
+      if((elemento != 'id') && (elemento !='permisos')){
         nombreCampo = elemento.replace('_',' ');
         modalCode += '<b> '+nombreCampo+': '+response[elemento]+'</b><br>';
       }
@@ -150,7 +150,7 @@ var respuesta,
       console.log("error");
       btnDestroy.classList.remove("toDestroy");
       document.getElementsByClassName('modal')[0].remove();
-      mostrarModal('formUpdatePermisos','No se puede Eliminar el Permiso Seleccionado!','Eliminar Permiso','null');
+      mostrarModal('tablaPermisos','No se puede Eliminar el Permiso Seleccionado!','Eliminar Permiso','null');
     }else{
       btnDestroy.parentNode.parentNode.remove();
       document.getElementsByClassName('modal')[0].remove();
@@ -231,7 +231,7 @@ var btnUpdate = event.target,
         formUpdate.nombre_rol.value = response['nombre_rol'];
         formUpdate.descripcion_rol.value = response['descripcion_rol'];
         formUpdate.estados.value = response['estado_rol'];
-        document.querySelector('#formUpdatePermisos [type="submit"]').dataset.value = response['nombre_rol'];
+        document.querySelector('#formUpdate [type="submit"]').dataset.value = response['nombre_rol'];
         checkBox = document.getElementsByName("permisos_box");
         for (var i = 0; i < response['permisos'].length; i++) {
           console.log(response['permisos']);
@@ -246,4 +246,37 @@ var btnUpdate = event.target,
         console.log(response);
       });
       console.log("editar permisos");
+}
+
+function setUpdateRol(){
+  var btn = event.target,
+      url = '/roles/setupdate',
+      formUpdate = document.getElementById('formUpdate'),respuesta,permisosBox=[],permisosRol=[];
+
+  removeErrors('formUpdatePermisos');
+  permisosBox = formUpdate.permisos_box;
+  for (var i = 0; i < permisosBox.length; i++) {
+    if(permisosBox[i].checked){
+      permisosRol[permisosRol.length] = permisosBox[i].value;
+      console.log(permisosRol);
+    }
+  }
+  dataRequest = {
+    id:btn.dataset.value,
+    nombre_rol:formUpdate.nombre_rol.value,
+    descripcion_rol:formUpdate.descripcion_rol.value,
+    estado_rol:formUpdate.estados.value,
+    permisos:permisosRol,
+  };
+
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+   .then(function(response){
+     if(response[0] != 500){
+       console.log('error');
+      displayErrors(response,'formUpdate');
+    }else{
+      mostrarModal('formUpdate','Modificado Correctamente!','Modificar Permiso','emergenteUpdate');
+    }
+    });
 }

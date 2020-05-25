@@ -155,8 +155,7 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request){
       $respuesta = $request->post();
       $rol = Rol::select('rols.*')
             ->where('rols.nombre_rol','=',$respuesta['id'])
@@ -168,6 +167,50 @@ class RolController extends Controller
         'estado_rol'=>$rol[0]['estado_rol'],
         'permisos' => $this->rolesArrayId($rol[0]['nombre_rol']),
       ]);
+    }
+
+    public function setUpdate(Request $request){
+      $respuesta = $request->post();
+      //validador custom estado
+      Validator::extend('estado_correcto', function($attribute, $value){
+        if ((strcasecmp($value, "activo") === 0) || (strcasecmp($value, "inactivo") === 0)){
+          return true;
+        }else{
+          return false;
+        }
+       });
+       ////
+       if($respuesta['id'] == $respuesta['nombre_rol']){
+         $validator = Validator::make($request->all(),[
+           'descripcion_rol' => 'required|max:255',
+           'estado_rol' => 'required|estado_correcto',
+         ]);
+       }else{
+         $validator = Validator::make($request->all(),[
+            'nombre_rol' => 'required|unique:rols|max:255',
+           'descripcion_rol' => 'required|max:255',
+           'estado_rol' => 'required|estado_correcto',
+         ]);
+       }
+       if($validator->fails()){
+         $errors = $validator->errors();
+         foreach($errors->all() as $message){
+           $arrayErrores[] = $message;
+         }
+         return json_encode($arrayErrores);
+       }else{
+         $rolUpdate = ['nombre_rol'=>$respuesta['nombre_rol'],'descripcion_rol'=>$respuesta['descripcion_rol'],'estado_rol'=>$respuesta['estado_rol']];
+         Permiso_rol::where('nombre_rol','=',$respuesta['id'])->delete();
+         Rol::where('nombre_rol','=',$respuesta['id'])->update($rolUpdate);
+
+         foreach ($respuesta['permisos'] as $key => $value) {
+           $registroPr = ['id_permiso'=>$value,'nombre_rol'=>$respuesta['nombre_rol'],'fecha_asignacion_permiso'=>date("Y").'/'.date("m").'/'.date("d")];
+           Permiso_rol::create($registroPr);
+         }
+
+         return response()->json([
+           '0' => '500',]);
+       }
     }
 
     /**
@@ -182,7 +225,6 @@ class RolController extends Controller
         //$rol->delete();
         Permiso_rol::where('nombre_rol','=',$respuesta['id'])->delete();
         $rol = Rol::where('nombre_rol','=',$respuesta['id'])->delete();
-          \Debugbar::info($rol);
         return response()->json([
             '0' => '500']);
       } catch (\Exception $e) {
