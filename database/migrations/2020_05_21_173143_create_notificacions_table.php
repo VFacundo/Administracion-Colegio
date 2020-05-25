@@ -18,7 +18,7 @@ class CreateNotificacionsTable extends Migration
             $table->string('motivo');
             $table->string('descripcion');
             $table->date('fecha_origen');
-            $table->date('fecha_visto');
+            $table->date('fecha_visto')->nullable();
             $table->enum('estado_notificacion',['inactivo','activo']);
             $table->unsignedBigInteger('usuarios_destino');
             $table->unsignedBigInteger('usuarios_generador');

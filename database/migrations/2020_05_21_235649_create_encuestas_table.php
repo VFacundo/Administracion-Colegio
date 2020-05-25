@@ -18,15 +18,12 @@ class CreateEncuestasTable extends Migration
             $table->unsignedBigInteger('id_curso');
             $table->date('fecha_creacion');
             $table->date('fecha_resolucion');
-            $table->integer('id_alumno');
-            $table->unsignedBigInteger('preguntas');
             $table->unsignedBigInteger('id_encuestado');
             $table->unsignedBigInteger('id_encuestador');
-            $table->enum('objetivo',['inactivo','activo']);
+            $table->enum('objetivo',['Alumnos','Docentes', 'Todos']);
             $table->foreign('id_curso')->references('id')->on('cursos');
             $table->foreign('id_encuestado')->references('id')->on('users');
             $table->foreign('id_encuestador')->references('id')->on('users');
-            $table->foreign('preguntas')->references('id')->on('preguntas');
             $table->timestamps();
         });
     }

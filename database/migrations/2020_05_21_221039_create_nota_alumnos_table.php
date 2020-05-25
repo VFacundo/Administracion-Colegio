@@ -15,12 +15,13 @@ class CreateNotaAlumnosTable extends Migration
     {
         Schema::create('nota_alumnos', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_materia');
+            $table->unsignedBigInteger('id_materia');
             $table->double('nota');
             $table->string('comentario');
             $table->integer('trimestre');
             $table->unsignedBigInteger('id_alumno_curso');
             $table->unsignedBigInteger('id_tipo_nota');
+            $table->foreign('id_materia')->references('id')->on('materias');
             $table->foreign('id_tipo_nota')->references('id')->on('tipo_notas');
             $table->foreign('id_alumno_curso')->references('id')->on('alumno_cursos');
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHorarioMateriasTable extends Migration
+class CreateProgramaMateriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateHorarioMateriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('horario_materias', function (Blueprint $table) {
+        Schema::create('programa_materias', function (Blueprint $table) {
             $table->id();
-            $table->time('hora_inicio');
-            $table->time('hora_fin');
-            $table->string('dia_semana');
+            $table->string('nombre_archivo');
+            $table->string('localizacion_archivo');
+            $table->date('fecha_subida');
+            $table->date('vigente_desde');
+            $table->date('vigente_hasta');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateHorarioMateriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('horario_materias');
+        Schema::dropIfExists('programa_materias');
     }
 }

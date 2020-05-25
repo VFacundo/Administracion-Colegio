@@ -19,8 +19,8 @@ class CreateAlumnosTable extends Migration
             $table->unsignedBigInteger('persona_asociada'); 
             $table->unsignedBigInteger('id_calendario');
             $table->unsignedBigInteger('persona_tutor');
-            $table->foreign('persona_tutor')->references('id')->on('users');
-            $table->foreign('persona_asociada')->references('id')->on('users');
+            $table->foreign('persona_tutor')->references('id')->on('personas');
+            $table->foreign('persona_asociada')->references('id')->on('personas');
             $table->foreign('id_calendario')->references('id')->on('calendarios');
 
             $table->timestamps();

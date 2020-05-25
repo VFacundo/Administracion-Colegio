@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
+use App\Persona;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -18,11 +19,20 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+
+
+	//$id_persona = App\Persona::all()->unique()->random()->id;
+	$id_persona = $faker->unique()->numberBetween(1,Persona::count());
+	$persona = Persona::findOrFail($id_persona);
+
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+
+        'name' => $persona['legajo'],
+        'email' => $persona['nombre_persona'] . $persona['apellido_persona'] . '@gmail.com',
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => $persona['dni_persona'], 
+        'id_persona'=> $id_persona,
+        'estado_usuario'=> $faker->randomElement(['activo','inactivo']),
         'remember_token' => Str::random(10),
     ];
 });

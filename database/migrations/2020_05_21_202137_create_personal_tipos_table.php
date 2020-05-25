@@ -18,7 +18,7 @@ class CreatePersonalTiposTable extends Migration
             $table->unsignedBigInteger('id_personal');
             $table->unsignedBigInteger('id_tipo_personal');
             $table->date('fecha_desde');
-            $table->date('fecha_hasta');
+            $table->date('fecha_hasta')->nullable();
             $table->foreign('id_personal')->references('id')->on('personals');
             $table->foreign('id_tipo_personal')->references('id')->on('tipo_personals');
             
