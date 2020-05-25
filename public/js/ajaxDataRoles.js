@@ -104,7 +104,7 @@ document.body.insertAdjacentHTML('afterend','<div class="modal" tabindex="-1" ro
               '<b></b><br>'+
               '</div>'+
               '<div class="modal-footer">'+
-                '<button type="button" class="btn btn-primary" onclick="'+metodo+'('+id+','+"'"+controlador+"'"+');">Confirmar</button>'+
+                '<button type="button" class="btn btn-primary" onclick="'+metodo+'('+"'"+id+"'"+','+"'"+controlador+"'"+');">Confirmar</button>'+
                 '<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="deleteModalD()">Cancelar</button>'+
               '</div>'+
               '</div>'+
@@ -198,20 +198,52 @@ function crearRol(){
        //btnDestroy.classList.remove("toDestroy");
     }else{
       console.log("ok");
-
-      for (var i = 0; i < response[1]['permisos'].length; i++) {
-        regPermisos = '<td>'+response[1]['permisos'][i]['nombre_permiso']+' | '+response[1]['permisos'][i]['fecha_asignacion_permiso']+'</td>';
+      for (var i = 0; i < response[1].length; i++) {
+        regPermisos = response[1][i]['nombre_permiso']+' | '+response[1][i]['fecha_asignacion_permiso']+'<br>';
       }
-      console.log(response[1]);
-      nuevoReg = '<td>'+response[1]['nombre_rol']+'</td>'+
-                 '<td>'+response[1]['descripcion_rol']+'</td>'+
-                 '<td>'+response[1]['estado_rol']+'</td>'+
-                 regPermisos;
-
-      document.getElementById('tablaRoles').children[1].insertAdjacentHTML('beforeend','<tr>'+
-        +nuevoReg+'<tr>');
+      nuevoReg ='<tr>'+
+                  '<td>'+dataRequest['nombre_rol']+'</td>'+
+                  '<td>'+dataRequest['descripcion_rol']+'</td>'+
+                  '<td>'+dataRequest['estado_rol']+'</td>'+
+                  '<td>'+regPermisos+'</td>'+
+                '</tr>';
+                // regPermisos;
+      document.getElementById('tablaRoles').children[1].insertAdjacentHTML('beforeend',nuevoReg);
         console.log(nuevoReg);
         activarEmergente('emergenteCrear');
     }
   });
+}
+
+///Display infor. de Permisos
+function updateRol(){
+var btnUpdate = event.target,
+    formUpdate = document.getElementById('formUpdate'),
+    id_update = btnUpdate.dataset.value,
+    url = '/roles/update',respuesta,dataRequest,checkBox;
+
+    removeErrors('formUpdatePermisos');
+    dataRequest = {id:id_update}; //Datos a Enviar
+    respuesta = ajaxRequest(url,dataRequest)
+    respuesta.then(response => response.json())
+      .then(function(response){
+        console.log(response);
+        formUpdate.nombre_rol.value = response['nombre_rol'];
+        formUpdate.descripcion_rol.value = response['descripcion_rol'];
+        formUpdate.estados.value = response['estado_rol'];
+        document.querySelector('#formUpdatePermisos [type="submit"]').dataset.value = response['nombre_rol'];
+        checkBox = document.getElementsByName("permisos_box");
+        for (var i = 0; i < response['permisos'].length; i++) {
+          console.log(response['permisos']);
+          console.log(response['permisos'][0]);
+          for (var j = 0; j < checkBox.length; j++) {
+            if(checkBox[j].value == response['permisos'][i]['id_permiso']){
+              checkBox[j].checked = true;
+            }
+          }
+          response['permisos'][i]
+        }
+        console.log(response);
+      });
+      console.log("editar permisos");
 }

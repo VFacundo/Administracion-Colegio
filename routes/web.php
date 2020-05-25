@@ -29,7 +29,9 @@ Route::post('/usuarios/destroy','UserController@destroy')->name('usuarios.destro
 Route::post('/usuarios/store','UserController@store')->name('usuarios.store');
 Route::post('/personas/store','PersonaController@store')->name('personas.store');
 Route::post('/permisos/store','PermisoController@store')->name('permisos.store');
-Route::post('/roles/store','PolController@store')->name('roles.store');
+Route::post('/roles/update','RolController@update')->name('roles.store');
+Route::post('/roles/destroy','RolController@destroy')->name('roles.update');
+Route::post('/roles/destroy','RolController@destroy')->name('roles.destroy');
 Route::post('/permisos/update','PermisoController@update')->name('permisos.update');
 Route::post('/permisos/setupdate','PermisoController@setupdate')->name('permisos.setupdate');
 Route::post('/permisos/destroy','PermisoController@destroy')->name('permisos.destroy');

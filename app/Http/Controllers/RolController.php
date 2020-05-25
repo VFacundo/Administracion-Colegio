@@ -24,9 +24,16 @@ class RolController extends Controller
     return $roles;
   }
 
-  public function hola(){
-    return 'hola';
+  public function rolesArrayId($id){
+      $dataRolesPr = Permiso_rol::select('permiso_rols.*','permisos.nombre_permiso')
+                                ->join('permisos','permisos.id','=','permiso_rols.id_permiso')
+                                ->where('permiso_rols.nombre_rol','=',$id)
+                                ->get();
+      //$roles += ['permisos' => $dataRolesPr];
+      //$roles[$i]['permisos'] = $dataRolesPr;
+    return $dataRolesPr;
   }
+
     /**
      * Display a listing of the resource.
      *
@@ -111,8 +118,8 @@ class RolController extends Controller
           $registroPr = ['id_permiso'=>$value,'nombre_rol'=>$respuesta['nombre_rol'],'fecha_asignacion_permiso'=>date("Y").'/'.date("m").'/'.date("d")];
           Permiso_rol::create($registroPr);
         }
-        $rolesArrayRespuesta = $this->rolesArray();
-        $rolesArrayRespuesta = $rolesArrayRespuesta[sizeof($rolesArrayRespuesta)-1];
+        $rolesArrayRespuesta = $this->rolesArrayId($respuesta['nombre_rol']);
+        //$rolesArrayRespuesta = $rolesArrayRespuesta[sizeof($rolesArrayRespuesta)];
         return response()->json([
         '0' => '500',
         '1' => $rolesArrayRespuesta,]);
@@ -148,9 +155,19 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $respuesta = $request->post();
+      $rol = Rol::select('rols.*')
+            ->where('rols.nombre_rol','=',$respuesta['id'])
+            ->get();
+      //$rol = Rol::findOrFail($nombre_rol);
+      return response()->json([
+        'nombre_rol'=>$rol[0]['nombre_rol'],
+        'descripcion_rol'=>$rol[0]['descripcion_rol'],
+        'estado_rol'=>$rol[0]['estado_rol'],
+        'permisos' => $this->rolesArrayId($rol[0]['nombre_rol']),
+      ]);
     }
 
     /**
@@ -159,8 +176,19 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Request $request){
+      $respuesta = $request->post();
+      try {
+        //$rol->delete();
+        Permiso_rol::where('nombre_rol','=',$respuesta['id'])->delete();
+        $rol = Rol::where('nombre_rol','=',$respuesta['id'])->delete();
+          \Debugbar::info($rol);
+        return response()->json([
+            '0' => '500']);
+      } catch (\Exception $e) {
+        return response()->json([
+            '0' => 'error']);
+      }
+
     }
 }

@@ -93,7 +93,7 @@ class PermisoController extends Controller
         $permiso->delete();
         return response()->json([
             '0' => '500']);
-      }catch(Exception $e){
+      }catch(\Exception $e){
         return response()->json([
             '0' => 'error']);
       }

@@ -46,11 +46,11 @@
             <td>{{$rol->estado_rol}}</td>
             <td>
             @foreach($rol['permisos'] as $perm)
-              {{$perm->nombre_permiso}} | {{$perm->fecha_asignacion_permiso}}
+              {{$perm->nombre_permiso}} | {{date("d/m/Y", strtotime($perm->fecha_asignacion_permiso))}} <br>
             @endforeach
             </td>
-            <td><a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Edit</a></td>
-            <td><a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroy({{ ($rol->nombre_rol)}})" class="btn btn-danger">Delete</a></td>
+            <td><a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updateRol()" class="btn btn-primary">Editar</a></td>
+            <td><a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroyModal('{{ ($rol->nombre_rol)}}','eliminarRegistro','roles')" class="btn btn-danger">Eliminar</a></td>
         </tr>
         @endforeach
     </tbody>
@@ -94,8 +94,8 @@
               <td>{{$permiso->funcionalidad_permiso}}</td>
               <td>{{$permiso->descripcion_permiso}}</td>
               <td>{{$permiso->estado_permiso}}</td>
-              <td><a id="btnUpdate" data-value="{{ ($permiso->id)}}" onclick="activarEmergente('emergentePermisoUpdate'); updatePermiso();" class="btn btn-primary">Edit</a></td>
-              <td><a data-value="{{ ($permiso->id)}}" onclick="confirmDestroyModal({{ ($permiso->id)}},'eliminarRegistro','permisos')" class="btn btn-danger">Delete</a></td>
+              <td><a id="btnUpdate" data-value="{{ ($permiso->id)}}" onclick="activarEmergente('emergentePermisoUpdate'); updatePermiso();" class="btn btn-primary">Editar</a></td>
+              <td><a data-value="{{ ($permiso->id)}}" onclick="confirmDestroyModal({{ ($permiso->id)}},'eliminarRegistro','permisos')" class="btn btn-danger">Eliminar</a></td>
           </tr>
           @endforeach
       </tbody>
@@ -212,8 +212,25 @@
         <form id="formUpdate" onSubmit="return false;">
 
                 @csrf
-                <label for="legajo">Legajo :</label>
-                <input type="text" class="form-control" name="legajo"/>
+                <label for="nombre_rol">Nombre Rol :</label>
+                <input type="text" class="form-control" name="nombre_rol" placeholder="Nombre Rol" required/></textarea>
+
+                <label for="descripcion_rol">Descripcion :</label>
+                <input type="text" class="form-control" name="descripcion_rol" placeholder="Descripcion" required/></textarea>
+
+                <label for="estado_rol">Estado :</label>
+                <select name="estados">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select></br>
+
+                <label for="permisos_box">Permisos :</label>
+                <div style="min-height:80px;width:120px;border:1px solid #ccc;overflow:auto;">
+                  @foreach($permisos as $permiso)
+                    <input type="checkbox" name="permisos_box" value="{{ ($permiso->id)}}">
+                    <label for="permisos_box">{{ ($permiso->nombre_permiso)}}</label><br>
+                  @endforeach
+                </div>
 
             <button type="submit" class="btn btn-primary" onclick="setUpdatePersona();">Modificar Persona</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>
