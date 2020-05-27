@@ -136,7 +136,7 @@
                 </select></br>
 
                 <label for="permisos_box">Permisos :</label>
-                <div style="min-height:80px;width:120px;border:1px solid #ccc;overflow:auto;">
+                <div style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
                   @foreach($permisos as $permiso)
                     <input type="checkbox" name="permisos_box" value="{{ ($permiso->id)}}">
                     <label for="permisos_box">{{ ($permiso->nombre_permiso)}}</label><br>
@@ -225,7 +225,7 @@
                 </select></br>
 
                 <label for="permisos_box">Permisos :</label>
-                <div style="min-height:80px;width:120px;border:1px solid #ccc;overflow:auto;">
+                <div style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
                   @foreach($permisos as $permiso)
                     <input type="checkbox" name="permisos_box" value="{{ ($permiso->id)}}">
                     <label for="permisos_box">{{ ($permiso->nombre_permiso)}}</label><br>

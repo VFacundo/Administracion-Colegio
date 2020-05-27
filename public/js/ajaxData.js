@@ -35,6 +35,44 @@ function updateUser_backup(){
   console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 }
 
+function eliminarUser(id,controlador){
+    console.log(id,controlador);
+}
+
+function crearUser(){
+  var btn = event.target,
+      form = btn.parentNode,
+      dataRequest,
+      url = '/usuarios/store',
+      respuesta,nuevaFila,rolesBox,rolesUser =[];
+
+      rolesBox = form.roles_box;
+      for (var i = 0; i < rolesBox.length; i++) {
+        if(rolesBox[i].checked){
+          rolesUser[rolesUser.length] = rolesBox[i].value;
+        }
+      }
+      dataRequest = {
+        name:form.name.value,
+        password:form.password.value,
+        email:form.email.value,
+        id_persona:form.id_persona.value,
+        roles:rolesUser,
+      }
+      console.log(dataRequest);
+      respuesta = ajaxRequest(url,dataRequest);
+      respuesta.then(response => response.json())
+      .then(function(response){
+        if(response[0] != 500){
+          console.log("error");
+          displayErrors(response,'formAltaUser');
+           //btnDestroy.classList.remove("toDestroy");
+        }else{
+          console.log("ok");
+          activarEmergente('emergenteCrear');
+        }
+      });
+}
 /////////////////CONFIRMAR ELIMINAR PERSONA ///////////////////
 function confirmDestroy(id_persona){
 var cModal, btnDestroy = event.target;
@@ -116,6 +154,8 @@ function eliminarPersona(id_persona){
     if(response[0] != 500){
       console.log("error");
       btnDestroy.classList.remove("toDestroy");
+      document.getElementsByClassName('modal')[0].remove();
+      mostrarModal('tablaPersonas','No fue posible eliminar la Persona Seleccionada!','Eliminar Persona','null');
     }else{
       btnDestroy.parentNode.parentNode.remove();
     }
@@ -233,22 +273,63 @@ function updatePersona(){
 function setUpdateUser(){
   var btn = event.target,
       url = '/usuarios/actualizar',
-      formUpdate = document.getElementById('formUpdate');
+      formUpdate = document.getElementById('formUpdate'),rolesBox,rolesUser = [];
 
   removeErrors('formUpdate');
+
+  rolesBox = form.roles_box;
+  for (var i = 0; i < rolesBox.length; i++) {
+    if(rolesBox[i].checked){
+      rolesUser[rolesUser.length] = rolesBox[i].value;
+    }
+  }
+
   dataRequest = {id:btn.dataset.value,
                   name:formUpdate.name.value,
                   email:formUpdate.email.value,
-                  id_persona:formUpdate.id_persona.value};
-  console.log(dataRequest);
+                  id_persona:formUpdate.id_persona.value,
+                  roles:rolesUser,};
   respuesta = ajaxRequest(url,dataRequest);
-  console.log(respuesta);
   respuesta.then(response => response.json())
    .then(function(response){
      if(response[0] != '500'){
        console.log(response[0]);
       displayErrors(response,'formUpdate');
-     }
+    }else{
+      mostrarModal('formUpdate','Modificado Correctamente!','Modificar Usuario','emergenteUpdate');
+      javascript:location.reload();
+    }
+    });
+}
+
+function refreshTable(){
+  var url = '/usuarios/refreshTable',dataRequest,rolesU = '',fila;
+
+  dataRequest = {id:1};
+  respuesta = ajaxRequest(url,dataRequest);
+  console.log(respuesta);
+  respuesta.then(response => response.json())
+   .then(function(response){
+      console.log(response);
+      document.getElementById("userTable").innerHTML="";
+      for (var i = 0; i < response[0].length; i++) {
+        for (var j = 0; j < response[0]['rolesUser'].length; j++) {
+          rolesU += response[0]['rolesUser']['nombre_rol'] + '<br>';
+        }
+        fila = '<td>'+ response[0][i]['id'] +'</td>'+
+         '<td>'+ response[0][i]['name'] +'</td>'+
+         '<td>'+ response[0][i]['email'] +'</td>'+
+         '<td>'+ response[0][i]['persona'] +'</td>'+
+         '<td>'+ rolesU + '</td>'+
+         '<td>'+
+             '<form action="{{ route('+'usuarios.destroy'+', $user->id)}}" method="post">'+
+               '@csrf'+
+               '@method('+'DELETE'+')'+
+               '<button class="btn btn-danger" type="submit">Eliminar</button>'+
+             '</form>'+
+         '</td>';
+         document.getElementById("userTable").insertAdjacentHTML("beforeend",fila);
+      }
     });
 }
 
@@ -292,7 +373,7 @@ function updateUser(){
   var btnUpdate = event.target,
       formUpdate = document.getElementById('formUpdate'),
       id_update = btnUpdate.dataset.value,
-      url = '/usuarios/editar', respuesta,dataRequest,text;
+      url = '/usuarios/editar', respuesta,dataRequest,text,rolesBox;
 
       removeErrors('formUpdate');
       dataRequest = {id:id_update}; //Datos a Enviar
@@ -302,6 +383,17 @@ function updateUser(){
           formUpdate.name.value = response['name'];
           formUpdate.email.value = response['email'];
           formUpdate.id_persona.value = response['id_persona'];
+
+          rolesBox = formUpdate.roles_box;
+          for(var j=0;j<response['roles'].length;j++){
+
+            for (var i = 0; i < rolesBox.length; i++) {
+              if(rolesBox[i].value == response['roles'][j]['nombre_rol']){
+                rolesBox[i].checked = true;
+                }
+              }
+          }
+          btnUpdate.parentNode.classList.add('aEditar');
           document.querySelector('#formUpdate [type="submit"]').dataset.value = response['id'];
         });
 }

@@ -23,23 +23,25 @@
           <td>UserName</td>
           <td>EMail</td>
           <td>Persona</td>
+          <td>Roles</td>
           <td colspan="2">Action</td>
         </tr>
     </thead>
     <tbody>
         @foreach($usuariosRegistrados as $user)
-        <tr>
+        <tr id="userTable">
             <td>{{$user->id}}</td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td><a href="#" onClick="return false;">{{$user->persona}}</a></td>
+            <td>
+              @foreach($user['rolesUser'] as $roles)
+                {{$roles->nombre_rol}} <br>
+              @endforeach
+            </td>
             <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Editar</a></td>
             <td>
-                <form action="{{ route('usuarios.destroy', $user->id)}}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-danger" type="submit">Eliminar</button>
-                </form>
+              <a class="btn btn-danger" onclick="confirmDestroyModal({{$user->id}},'eliminarRegistro','usuarios')">Eliminar</a>
             </td>
         </tr>
         @endforeach
@@ -64,7 +66,7 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" action="{{ route('usuarios.store') }}">
+        <form method="post" onSubmit="return false;" id="formAltaUser">
 
                 @csrf
                 <label for="name">Username :</label>
@@ -79,7 +81,14 @@
                 <label for="id_persona">id_persona :</label>
                 <input type="text" class="form-control" name="id_persona"/>
 
-            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                <label for="roles_box">Roles :</label>
+                <div style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
+                  @foreach($rolesT as $rolT)
+                    <input type="checkbox" name="roles_box" value="{{($rolT->nombre_rol)}}">
+                    <label for="roles_box">{{($rolT->nombre_rol)}}</label><br>
+                  @endforeach
+                </div>
+            <button type="submit" class="btn btn-primary" onclick="crearUser();">Crear Usuario</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrear');">Cancelar</button>
         </form>
     </div>
@@ -115,6 +124,14 @@
 
                 <label for="id_persona">id_persona :</label>
                 <input type="text" class="form-control" name="id_persona"/>
+
+                <label for="roles_box">Roles :</label>
+                <div style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
+                  @foreach($rolesT as $rolT)
+                    <input type="checkbox" name="roles_box" value="{{($rolT->nombre_rol)}}">
+                    <label for="roles_box">{{($rolT->nombre_rol)}}</label><br>
+                  @endforeach
+                </div>
 
             <button type="submit" class="btn btn-primary" onclick="setUpdateUser();">Modificar Usuario</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>

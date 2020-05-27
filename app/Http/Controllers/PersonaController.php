@@ -175,9 +175,15 @@ class PersonaController extends Controller
     {
         $respuesta = $request->post();
         $persona = Persona::findOrFail($respuesta['id']);
-        $persona->delete();
 
-        return response()->json([
-            '0' => '500']);
+        try{
+          $persona->delete();
+          return response()->json([
+              '0' => '500']);
+        } catch (\Exception $e) {
+          return response()->json([
+              '0' => 'error']);
+        }
+
     }
 }

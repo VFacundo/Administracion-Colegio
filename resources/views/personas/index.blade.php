@@ -25,7 +25,7 @@
       </ul>
     </div><br/>
   @endif
-  <table class="table table-striped">
+  <table class="table table-striped" id="tablaPersonas">
     <thead>
         <tr>
           <td>ID</td>

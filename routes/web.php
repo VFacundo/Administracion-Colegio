@@ -31,6 +31,8 @@ Route::get('/curso/{id}','CursoController@index')->name('curso.index');
 Route::post('/personas/destroy','PersonaController@destroy')->name('personas.destroy');
 Route::post('/usuarios/destroy','UserController@destroy')->name('usuarios.destroy');
 Route::post('/usuarios/store','UserController@store')->name('usuarios.store');
+Route::post('/usuarios/update','UserController@update')->name('usuarios.update');
+Route::post('/usuarios/refreshTable','UserController@refreshTable')->name('usuarios.refreshTable');
 Route::post('/personas/store','PersonaController@store')->name('personas.store');
 Route::post('/permisos/store','PermisoController@store')->name('permisos.store');
 Route::post('/roles/store','RolController@store')->name('roles.store');

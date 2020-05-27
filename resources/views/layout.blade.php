@@ -51,6 +51,20 @@
                           </li>
                       @endif
                   @else
+
+                  <li class="nav-item dropdown">
+                      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <span class="glyphicon glyphicon-bell">Notificaciones<span class="badge">{{count(auth()->user()->unreadNotifications)}}</span>
+                      </a>
+                      <ul class="dropdown-menu" role="menu">
+                        <li>
+                          @foreach(auth()->user()->unreadNotifications as $notification)
+                            <a href="#">{{$notification->data['mensaje']}}</a>
+                          @endforeach
+                        </li>
+                      </ul>
+                  </li>
+
                       <li class="nav-item dropdown">
                           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                               {{ Auth::user()->name }} <span class="caret"></span>
