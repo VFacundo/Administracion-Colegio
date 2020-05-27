@@ -11,6 +11,6 @@ class personal_tipoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\personal_tipo::class, 9)->create();
+        factory(App\personal_tipo::class, 30)->create();
     }
 }

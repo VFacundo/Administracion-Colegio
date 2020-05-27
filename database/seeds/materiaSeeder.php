@@ -18,7 +18,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,     
+			'curso_correspondiente' => 'Primero'      
         ]);      
 
  		DB::table('materias')->insert([
@@ -27,7 +28,9 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Segundo'      
+
         ]);
 
          DB::table('materias')->insert([
@@ -36,7 +39,9 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Tercero'      
+
         ]);
 
          DB::table('materias')->insert([
@@ -45,7 +50,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Cuarto'           
         ]);
         
          DB::table('materias')->insert([
@@ -54,7 +60,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Quinto'          
         ]);
 
          DB::table('materias')->insert([
@@ -63,7 +70,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Sexto'           
         ]);
 
          DB::table('materias')->insert([
@@ -72,7 +80,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Primero'           
         ]);
 
          DB::table('materias')->insert([
@@ -81,7 +90,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Cuarto'           
         ]);
 
          DB::table('materias')->insert([
@@ -90,7 +100,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Sexto'           
         ]);
 
          DB::table('materias')->insert([
@@ -99,7 +110,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Primero'           
         ]);
 
          DB::table('materias')->insert([
@@ -108,7 +120,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Segundo'           
         ]);
 
          DB::table('materias')->insert([
@@ -117,7 +130,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Tercero'           
         ]);
 
          DB::table('materias')->insert([
@@ -126,7 +140,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Cuarto'           
         ]);
 
          DB::table('materias')->insert([
@@ -135,7 +150,8 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11           
+			'horario_materia'=>	11,
+			'curso_correspondiente' => 'Sexto'          
         ]); 
 
 

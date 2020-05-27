@@ -12,6 +12,6 @@ class alumnoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\alumno::class, 5)->create();
+        factory(App\alumno::class, 100)->create();
     }
 }

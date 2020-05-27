@@ -13,6 +13,10 @@
   <script type="text/javascript" src="{{ asset('js/emergente.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/ajaxData.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataRoles.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataCiclo.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataMateria.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataAlumno.js') }}"></script>
+
 </head>
 <body>
 <div class="container-fluid container-noMargin">
@@ -83,6 +87,7 @@
             <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
             <a href="{{route('usuarios.index')}}" class="list-group-item">Administracion de Usuarios</a>
             <a href="{{route('roles.index')}}" class="list-group-item">Administracion de Roles</a>
+            <a href="{{route('ciclo.index')}}" class="list-group-item">Administracion de Ciclo Lectivo</a>
             <a href="#" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>
             <a href="#" class="list-group-item">Logout</a>

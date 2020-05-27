@@ -9,8 +9,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\alumno_curso::class, function (Faker $faker) {
 
-	$id_alumno = $faker->unique()->numberBetween(1,Alumno::count());
-	$id_curso = $faker->unique()->numberBetween(1,Curso::count());
+	$id_alumno = $faker->numberBetween(1,Alumno::count());
+	$id_curso = $faker->numberBetween(1,Curso::count());
 
     return [
 			

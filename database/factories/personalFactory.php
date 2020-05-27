@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\personal::class, function (Faker $faker) {
 	
-	$id_persona = $faker->unique()->numberBetween(11,Persona::count());
+	$id_persona = $faker->unique()->numberBetween(150,Persona::count());
 
     return [
         'id_persona'=> $id_persona,

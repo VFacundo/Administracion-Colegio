@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramaMateriasTable extends Migration
+class CreateCicloLectivoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateProgramaMateriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('programa_materias', function (Blueprint $table) {
+        Schema::create('ciclo_lectivos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_archivo');
-            $table->string('localizacion_archivo');
-            $table->date('fecha_subida');
-            $table->date('vigente_desde');
-            $table->date('vigente_hasta')->nullable;
+            $table->year('anio');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateProgramaMateriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('programa_materias');
+        Schema::dropIfExists('ciclo_lectivos');
     }
 }
