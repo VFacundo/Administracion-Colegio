@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\nota_alumno_final::class, function (Faker $faker) {
 
-	$id_alumno_curso = $faker->unique()->numberBetween(1,alumno_curso::count());
+	$id_alumno_curso = $faker->numberBetween(1,alumno_curso::count());
 
 	//con pocos datos tira error el unique
 

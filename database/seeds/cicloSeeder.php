@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class personal_tipoSeeder extends Seeder
+class cicloSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,9 @@ class personal_tipoSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\personal_tipo::class, 10)->create();
+      DB::table('ciclo_lectivos')->insert([
+      'anio' => '2020',
+      'nombre' => 'Ciclo Lectivo 2020',
+        ]);
     }
 }

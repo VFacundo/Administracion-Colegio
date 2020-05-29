@@ -8,8 +8,8 @@ use App\materia;
 use Faker\Generator as Faker;
 
 $factory->define(App\personal_materia::class, function (Faker $faker) {
-    
- 	$id_personal = $faker->unique()->numberBetween(1,personal::count());
+
+ 	$id_personal = $faker->numberBetween(1,personal::count());
 	$id_materia = $faker->numberBetween(1,materia::count());
 
     return [

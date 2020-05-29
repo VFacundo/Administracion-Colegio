@@ -11,6 +11,6 @@ class personalSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\personal::class, 31)->create();
+        factory(App\personal::class, 10)->create();
     }
 }

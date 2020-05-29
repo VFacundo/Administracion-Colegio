@@ -56,11 +56,11 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user){
       $userId = Auth::id();
       $usuario = User::findOrFail($userId);
-      if(strcasecmp($usuario['estado_usuario'],'inactivo') == 0){
-        return abort(404);
-      }else{
+      //if(strcasecmp($usuario['estado_usuario'],'inactivo') == 0){
+      //  return abort(404);
+    //  }else{
         return redirect()->route('personas.index');
-      }
+    //  }
       //return redirect()->route('personas.index');
     }
 

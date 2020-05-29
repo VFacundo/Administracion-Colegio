@@ -17,16 +17,17 @@ use Illuminate\Support\Facades\Route;
 //Route::resource('roles','RolController');
 
 //Route::get('/','Auth\LoginController@login');
-Route::get('/','UserController@index')->middleware('auth');
-Route::get('/usuarios','UserController@index')->name('usuarios.index')->middleware('auth');
-Route::get('/personas','PersonaController@index')->name('personas.index')->middleware('auth');
-Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
-Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/install','UserController@install')->name('usuarios.install');
-Route::get('/ciclo','CicloController@index')->name('ciclo.index');
-Route::get('/curso/{id}','CursoController@index')->name('curso.index');
-
-
+Route::group(['middleware' => ['role:admin'],'auth'], function()
+{
+  Route::get('/usuarios','UserController@index')->name('usuarios.index');
+  Route::get('/personas','PersonaController@index')->name('personas.index');
+  Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
+  Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
+  Route::get('/ciclo','CicloController@index')->name('ciclo.index');
+  Route::get('/curso/{id}','CursoController@index')->name('curso.index');
+});
 
 Route::post('/personas/destroy','PersonaController@destroy')->name('personas.destroy');
 Route::post('/usuarios/destroy','UserController@destroy')->name('usuarios.destroy');
@@ -53,7 +54,7 @@ Route::post('/materia/listar','MateriaController@listar')->name('materia.listar'
 Route::post('/materia/agregarMateriaCurso','MateriaController@agregarMateriaCurso')->name('materia.agregarMateriaCurso');
 Route::post('/alumno/listar','AlumnoController@listar')->name('alumno.listar');
 
-
+Auth::routes();
 
 //Route::post('/usuarios/editar',['uses'=>'UsuarioController@editar']);
 
@@ -64,7 +65,5 @@ Route::get('/', function () {
     return view('usuarios.login');
 });
 */
-
-Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
