@@ -97,13 +97,21 @@
 -->
 
 <!-- CAROUSEL FIN -->
-<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+<div id="carouselColegio" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Patio_Rectorado_de_la_Universidad_Nacional_de_Córdoba.JPG" class="d-block w-100" style="width: auto; max-height:200px !important" alt="...">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Patio_Rectorado_de_la_Universidad_Nacional_de_Córdoba.JPG" class="d-block w-100 img-fluid" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>Sistema de Administracion</h3>
+        <p>-Colegio Nro 2 Rawson-</p>
+      </div>
     </div>
     <div class="carousel-item">
-      <img src="https://www.vivanicaragua.com.ni/contenido/archivos/2018/03/Simulacro-ante-desastres-colegio-Público-República-de-Argentina-Managua.jpg" class="d-block w-100" style="width: auto; max-height:200px !important" alt="...">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Escuela_766_Perito_Moreno.jpg" class="d-block w-100 img-fluid" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>Sistema de Administracion</h3>
+        <p>-Colegio Nro 2 Rawson-</p>
+      </div>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">

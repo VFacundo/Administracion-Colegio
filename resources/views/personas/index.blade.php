@@ -7,8 +7,8 @@
   }
 </style>
 <div class="row">
-  <div class="col-sm-8"><h3>Personas</h3></div>
-  <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
+  <div class="col-sm-10"><h3>Personas</h3></div>
+  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
@@ -25,6 +25,7 @@
       </ul>
     </div><br/>
   @endif
+  <div class="table-responsive">
   <table class="table table-striped" id="tablaPersonas">
     <thead>
         <tr>
@@ -60,6 +61,7 @@
         @endforeach
     </tbody>
   </table>
+  <div>
 <div>
 @endsection
 

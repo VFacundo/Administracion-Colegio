@@ -75,3 +75,27 @@ table ,th ,td,tr{
 table tr:first-child{
 	background-color: #99BAAA;
 }
+
+.carousel-item,
+.carousel-inner,
+.carousel-inner img {
+  height: 100%;
+  width: auto;
+}
+
+.carousel-item {
+  text-align: center;
+}
+
+.carousel {
+  height: 200px;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: auto;
+}
+
+#carouselColegio{
+	padding-bottom:0.5em;
+}

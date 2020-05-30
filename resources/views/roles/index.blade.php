@@ -28,6 +28,7 @@
       </ul>
     </div><br/>
   @endif
+  <div class="table-responsive">
   <table class="table table-striped" id="tablaRoles">
     <thead>
         <tr>
@@ -55,7 +56,7 @@
         @endforeach
     </tbody>
   </table>
-
+<div>
 <!--PERMISOS -->
 
   <div class="row">
@@ -77,6 +78,7 @@
         </ul>
       </div><br/>
     @endif
+    <div class="table-responsive">
     <table class="table table-striped" id="tablaPermisos">
       <thead>
           <tr>
@@ -100,7 +102,7 @@
           @endforeach
       </tbody>
     </table>
-
+    <div>
 <div>
 @endsection
 
