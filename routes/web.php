@@ -15,16 +15,17 @@ use Illuminate\Support\Facades\Route;
 //Route::resource('usuarios','UserController');
 //Route::resource('personas','PersonaController');
 //Route::resource('roles','RolController');
-
-//Route::get('/','Auth\LoginController@login');
-Route::get('/','UserController@index')->middleware('auth');
-Route::get('/usuarios','UserController@index')->name('usuarios.index')->middleware('auth');
-Route::get('/personas','PersonaController@index')->name('personas.index')->middleware('auth');
-Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
-Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
 Route::get('/install','UserController@install')->name('usuarios.install');
-Route::get('/ciclo','CicloController@index')->name('ciclo.index');
-Route::get('/curso/{id}','CursoController@index')->name('curso.index');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['role:admin'],'auth'], function(){
+  Route::get('/usuarios','UserController@index')->name('usuarios.index')->middleware('auth');
+  Route::get('/personas','PersonaController@index')->name('personas.index')->middleware('auth');
+  Route::get('/home','PersonaController@index')->name('personas.index')->middleware('auth');
+  Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
+  Route::get('/ciclo','CicloController@index')->name('ciclo.index');
+  Route::get('/curso/{id}','CursoController@index')->name('curso.index');
+});
 
 
 
@@ -57,18 +58,4 @@ Route::post('/alumno/editar','AlumnoController@editar')->name('alumno.editar');
 Route::post('/alumno/destroy','AlumnoController@destroy')->name('alumno.destroy');
 Route::post('/curso/agregarCursoCiclo','CursoController@agregarCursoCiclo')->name('alumno.agregarCursoCiclo');
 
-
-
-//Route::post('/usuarios/editar',['uses'=>'UsuarioController@editar']);
-
-//Route::resource('usuarios','UserController');
-
-/*
-Route::get('/', function () {
-    return view('usuarios.login');
-});
-*/
-
 Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');
