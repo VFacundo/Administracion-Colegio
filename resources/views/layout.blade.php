@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<div class="container-fluid container-noMargin">
+<div class="container container-noMargin divNavbar">
   <!--NAV INICIO -->
   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container-fluid">
@@ -93,32 +93,32 @@
     <h1>Sistema de Administracion</h1>
     <p>-Colegio Nro 2 Rawson-</p>
   </div>
-</div>
--->
 
-<!-- CAROUSEL FIN -->
+-->
+</div>
+<!-- CAROUSEL -->
 <div id="carouselColegio" class="carousel slide carousel-fade" data-ride="carousel">
   <div class="carousel-inner">
+
     <div class="carousel-item active">
       <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Patio_Rectorado_de_la_Universidad_Nacional_de_Córdoba.JPG" class="d-block w-100 img-fluid" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h3>Sistema de Administracion</h3>
-        <p>-Colegio Nro 2 Rawson-</p>
-      </div>
     </div>
+
     <div class="carousel-item">
       <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Escuela_766_Perito_Moreno.jpg" class="d-block w-100 img-fluid" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h3>Sistema de Administracion</h3>
-        <p>-Colegio Nro 2 Rawson-</p>
-      </div>
     </div>
+
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+
+  <div class="carousel-caption d-none d-md-block">
+    <h3>Sistema de Administracion</h3>
+    <p>-Colegio Nro 2 Rawson-</p>
+  </div>
+  <a class="carousel-control-prev" href="#carouselColegio" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+  <a class="carousel-control-next" href="#carouselColegio" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
