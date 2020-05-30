@@ -158,9 +158,5 @@ class materiaSeeder extends Seeder
 			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Sexto'
         ]);
-
-
-
-
     }
 }

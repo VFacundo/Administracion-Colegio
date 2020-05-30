@@ -13,20 +13,10 @@ class tipo_personalSeeder extends Seeder
     {
         DB::table('tipo_personals')->insert([
             'nombre_tipo' => 'Docente',
-        ]);      
-
-        DB::table('tipo_personals')->insert([
-            'nombre_tipo' => 'Director',
-        ]);      
+        ]);
 
         DB::table('tipo_personals')->insert([
             'nombre_tipo' => 'Preceptor',
-        ]);      
-
-        DB::table('tipo_personals')->insert([
-            'nombre_tipo' => 'Secretaria',
-        ]);      
- 		
-
+        ]);
     }
 }

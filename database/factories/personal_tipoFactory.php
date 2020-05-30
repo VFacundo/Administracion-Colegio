@@ -14,7 +14,7 @@ $factory->define(App\personal_tipo::class, function (Faker $faker) {
 
     return [
         'id_personal'=> $id_personal,
-        'id_tipo_personal'=> 1,
+        'id_tipo_personal'=> $faker->numberBetween(1,tipo_personal::count()),
         'fecha_desde'=> $faker->date(),
         'fecha_hasta'=> null
     ];

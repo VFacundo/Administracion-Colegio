@@ -5,12 +5,12 @@
 use App\Model;
 use Faker\Generator as Faker;
 
-$factory->define(App\persona::class, function (Faker $faker) {
+$factory->define(App\Persona::class, function (Faker $faker) {
 
 	$dni = $faker->unique()->numberBetween(1,99999999);
 	$cuil = $faker->numberBetween(21,27) . $dni . $faker->numberBetween(1,9);
     return [
-    	'legajo'=> $faker->unique()->numberBetween(1,999999),
+    		'legajo'=> $faker->numberBetween(1,999999),
         'nombre_persona' => $faker->firstname($gender=null),
         'apellido_persona' => $faker->lastname,
         'tipo_documento' => App\tipo_documento::all()->random()->id,

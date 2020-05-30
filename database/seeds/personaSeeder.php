@@ -1,5 +1,5 @@
 <?php
-
+use App\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,6 +12,6 @@ class personaSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\persona::class, 50)->create();
+        factory(App\Persona::class, 80)->create();
     }
 }

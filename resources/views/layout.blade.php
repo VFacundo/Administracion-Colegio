@@ -88,11 +88,34 @@
       </div>
   </nav>
   <!-- NAV FIN -->
+  <!--
   <div class="jumbotron text-center">
     <h1>Sistema de Administracion</h1>
     <p>-Colegio Nro 2 Rawson-</p>
   </div>
 </div>
+-->
+
+<!-- CAROUSEL FIN -->
+<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Patio_Rectorado_de_la_Universidad_Nacional_de_Córdoba.JPG" class="d-block w-100" style="width: auto; max-height:200px !important" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.vivanicaragua.com.ni/contenido/archivos/2018/03/Simulacro-ante-desastres-colegio-Público-República-de-Argentina-Managua.jpg" class="d-block w-100" style="width: auto; max-height:200px !important" alt="...">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<!-- CAROUSEL FIN -->
 
   <div class="container-fluid">
     <div class="row">

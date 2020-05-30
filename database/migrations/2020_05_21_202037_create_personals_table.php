@@ -15,9 +15,9 @@ class CreatePersonalsTable extends Migration
     {
         Schema::create('personals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_persona');          
+            $table->unsignedBigInteger('id_persona');
             $table->date('fecha_alta');
-            $table->date('fecha_baja');
+            $table->date('fecha_baja')->nullable();
             $table->enum('manejo_de_grupo',['excelente','bueno','regular','malo']);
             $table->integer('legajo_personal');
             $table->foreign('id_persona')->references('id')->on('personas');

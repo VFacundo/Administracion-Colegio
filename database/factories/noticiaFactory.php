@@ -3,12 +3,12 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Model;
-use App\user;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(App\noticia::class, function (Faker $faker) {
-	
-	$id_usuario_generador = $faker->numberBetween(1,user::count());
+
+	$id_usuario_generador = $faker->numberBetween(1,User::count());
 
     return [
         'descripcion_noticia' => Str::random(5),
