@@ -1,13 +1,27 @@
 @extends('layout')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
+
+<div class="row table-before-row">
+<!-- Barra de Busqueda -->
+  <div class="col-sm-10">
+    <nav class="navbar">
+      <button class="navbar-brand boton-menu" onclick="mostrarMenu();">X</button>
+      <a class="navbar-brand">Personas</a>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success my-2 my-sm-0 glyphicon glyphicon-search" type="submit"></button>
+      </form>
+    </nav>
+  </div>
+
+  <script>
+  function mostrarMenu(){
+    var menu = document.getElementsByClassName("nav-menu")[0];
+    menu.style.display="flex";
   }
-</style>
-<div class="row">
-  <div class="col-sm-10"><h3>Personas</h3></div>
+  </script>
+<!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>
 <div class="uper">

@@ -107,3 +107,52 @@ table tr:first-child{
 	opacity: 0.8;
 	width: auto !important;
 }
+
+.nav-menu{
+
+}
+
+.table-before-row{
+	margin-bottom: 0;
+}
+
+.row-nav-menu{
+	margin-top: 20px !important;
+}
+
+h3{
+	margin: 0.5em;
+}
+
+#btnEmergente{
+		margin-top: 0.5em;
+}
+
+.form-inline{
+	margin-top: 0.5em;
+	min-width:80%;
+}
+
+.form-inline input{
+	box-sizing: border-box !important;
+	min-width: 80% !important;
+}
+
+/***********
+NAV MENU list
+/************/
+
+@media (min-width: 1000px) {
+	.boton-menu{
+		display: none !important;
+	}
+}
+
+@media (max-width: 1000px) {
+  .nav-menu {
+    display: none;
+  }
+	.boton-menu{
+		display: inline;
+	}
+}

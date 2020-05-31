@@ -127,6 +127,27 @@
 
   <div class="container-fluid">
     <div class="row">
+
+      <!--NAV INICIO MENU-->
+
+      <div class="col-2 nav-menu">
+        <div class="row row-nav-menu"></div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="list-group">
+            <a href="{{route('personas.index')}}" class="list-group-item">Personas</a>
+            <a href="{{route('usuarios.index')}}" class="list-group-item">Usuarios</a>
+            <a href="{{route('roles.index')}}" class="list-group-item">Roles y Permisos</a>
+            <a href="{{route('ciclo.index')}}" class="list-group-item">Ciclo Lectivo</a>
+            <a href="#" class="list-group-item">Noticias</a>
+            <a href="#" class="list-group-item">Notificaciones</a>
+            <a href="#" class="list-group-item">Logout</a>
+          </div>
+        </div>
+      <!-- NAV FIN -->
+
+      <!--
       <div class="col-2">
         <div class="list-group">
             <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
@@ -138,12 +159,29 @@
             <a href="#" class="list-group-item">Logout</a>
           </div>
         </div>
+      -->
 
-        <div class="col-10">
+        <div class="col-10" id="cuerpo-tabla">
           <div class="tab-content" id="nav-tabContent">
           @yield('content')
         </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        $(window).on('resize', function() {
+          var win = $(this);
+          if (win.width() > 1000) {
+
+          $('#cuerpo-tabla').addClass('col-10');
+          $('#cuerpo-tabla').removeClass('col-12');
+
+          } else {
+            $('#cuerpo-tabla').addClass('col-12');
+            $('#cuerpo-tabla').removeClass('col-10');
+          }
+          });
+        </script>
+
     </div>
   </div>
   <script src="{{ asset('js/app.js') }}" type="text/js"></script>
