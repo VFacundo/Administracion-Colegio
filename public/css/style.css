@@ -108,9 +108,6 @@ table tr:first-child{
 	width: auto !important;
 }
 
-.nav-menu{
-
-}
 
 .table-before-row{
 	margin-bottom: 0;
@@ -138,6 +135,22 @@ h3{
 	min-width: 80% !important;
 }
 
+.div-btn-menu{
+	position: absolute;
+	z-index: 10;
+	margin-left: 10px;
+	top : 80%;
+}
+
+.div-btn-menu button{
+	border:none;
+	background-color: transparent;
+	font-size: 10px;
+}
+
+.div-btn-menu .glyphicon{
+	font-size: 2em !important;
+}
 /***********
 NAV MENU list
 /************/
@@ -146,12 +159,25 @@ NAV MENU list
 	.boton-menu{
 		display: none !important;
 	}
+	.nav-menu {
+		display: block !important;
+		position: relative !important;
+		top: 4em;
+		/* width: 2000px !important; */
+	}
 }
 
 @media (max-width: 1000px) {
   .nav-menu {
     display: none;
+    z-index: 10;
+		max-width: 100% !important;
+    /* width: 2000px !important; */
   }
+
+	.nav-menu .list-group{
+		width: 100%;
+	}
 	.boton-menu{
 		display: inline;
 	}

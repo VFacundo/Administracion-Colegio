@@ -122,6 +122,7 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
+  <div class="div-btn-menu"><button class="boton-menu glyphicon glyphicon-chevron-down" onclick="mostrarMenu();"></button></div>
 </div>
 <!-- CAROUSEL FIN -->
 
@@ -131,18 +132,13 @@
       <!--NAV INICIO MENU-->
 
       <div class="col-2 nav-menu">
-        <div class="row row-nav-menu"></div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="list-group">
-            <a href="{{route('personas.index')}}" class="list-group-item">Personas</a>
+            <a href="{{route('personas.index')}}" class="list-group-item active">Personas</a>
             <a href="{{route('usuarios.index')}}" class="list-group-item">Usuarios</a>
             <a href="{{route('roles.index')}}" class="list-group-item">Roles y Permisos</a>
             <a href="{{route('ciclo.index')}}" class="list-group-item">Ciclo Lectivo</a>
             <a href="#" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>
-            <a href="#" class="list-group-item">Logout</a>
           </div>
         </div>
       <!-- NAV FIN -->
@@ -167,19 +163,34 @@
         </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <script>
         $(window).on('resize', function() {
           var win = $(this);
           if (win.width() > 1000) {
-
-          $('#cuerpo-tabla').addClass('col-10');
-          $('#cuerpo-tabla').removeClass('col-12');
-
+            $('#cuerpo-tabla').addClass('col-10');
+            $('#cuerpo-tabla').removeClass('col-12');
           } else {
             $('#cuerpo-tabla').addClass('col-12');
             $('#cuerpo-tabla').removeClass('col-10');
           }
           });
+        </script>
+
+        <script>
+        function mostrarMenu(){
+          var menu = document.getElementsByClassName("nav-menu")[0], btn = event.target;
+          if(menu.style.display == "flex"){
+            menu.style.display="none";
+            btn.classList.remove("glyphicon-chevron-up");
+            btn.classList.add("glyphicon-chevron-down");
+          }else{
+            menu.style.display="flex";
+            menu.style.position="absolute";
+            btn.classList.remove("glyphicon-chevron-down");
+            btn.classList.add("glyphicon-chevron-up");
+          }
+        }
         </script>
 
     </div>

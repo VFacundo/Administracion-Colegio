@@ -6,7 +6,6 @@
 <!-- Barra de Busqueda -->
   <div class="col-sm-10">
     <nav class="navbar">
-      <button class="navbar-brand boton-menu" onclick="mostrarMenu();">X</button>
       <a class="navbar-brand">Personas</a>
       <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
@@ -15,12 +14,9 @@
     </nav>
   </div>
 
-  <script>
-  function mostrarMenu(){
-    var menu = document.getElementsByClassName("nav-menu")[0];
-    menu.style.display="flex";
-  }
-  </script>
+  @section('buscador')
+      @include('..partials.buscador')
+  @stop
 <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>
