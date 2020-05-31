@@ -7,58 +7,22 @@ function setUpdateCiclo(){
   removeErrors('formUpdate');
   dataRequest = {id:btn.dataset.value,
                 anio:formUpdate.anio.value,
-                nombre:formUpdate.nombre.value,
+                nombre:'Ciclo Lectivo ' + form.anio.value,
                 };
   console.log(dataRequest);              
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
    .then(function(response){
      if(response[0] != 500){
+      tnUpdate.classList.remove("toUpdate");
       displayErrors(response,'formUpdate');
     }else{
+      btnUpdate.classList.remove("toUpdate");
       mostrarModal('formUpdate','Modificado Correctamente!','Modificar Ciclo Lectivo','emergenteUpdate');
-   
     }
     });
 
 }
-
-function ocultarModal(formName,emergente){
-  document.getElementsByClassName('modal')[0].remove();
-  //console.log(emergente.id);
-  //emergente.style.display="none";
-  //document.getElementById(emergente).style.display="none";
-  //activarEmergente('emergenteUpdate');-->antes
-  if(emergente != 'null'){
-        activarEmergente(emergente.id);
-  }
-}
-
-function mostrarModal(formName,mensaje,titulo,emergente){
-  var nDiv = document.createElement("div"),
-      modal = document.getElementsByClassName('modal');
-
-document.getElementById(formName).parentNode.insertAdjacentHTML('afterend','<div class="modal" tabindex="-1" role="dialog">'+
-                      '<div class="modal-dialog" role="document">'+
-                        '<div class="modal-content">'+
-                          '<div class="modal-header">'+
-                              '<h5 class="modal-title">' + titulo + '</h5>'+
-                              '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
-                              '<span aria-hidden="true">&times;</span>'+
-                              '</button>'+
-                          '</div>'+
-                          '<div class="modal-body">'+
-                            '<p>' + mensaje + '</p>'+
-                          '</div>'+
-                          '<div class="modal-footer">'+
-                            '<button type="button" class="btn btn-primary" onclick="ocultarModal('+ formName + ',' + emergente +');">Aceptar</button>'+
-                            '</div>'+
-                          '</div>'+
-                        '</div>'+
-                      '</div>');
-modal[0].style.display = "block";
-}
-
 ////////////////////DISPLAY DATA DE CICLO //////
 function updateCiclo(){
   var btnUpdate = event.target,
@@ -73,13 +37,13 @@ function updateCiclo(){
         .then(function(response){
           console.log(response);
           formUpdate.anio.value = response['anio'];
-          formUpdate.nombre.value = response['nombre'];
+          btnUpdate.classList.add("toUpdate");
           document.querySelector('#formUpdate [type="submit"]').dataset.value = response['id'];
+
         });
         console.log("editar ciclo");
 }
 
-////////////////// ENVIAR DATOS ACTUALIZADOS USUARIOS ////////////////////
 
 ///////////////// CREAR CICLO LECTIVO ///////////////////////////////////
 
@@ -90,28 +54,30 @@ function crearCiclo(){
       url = '/ciclo/store',
       respuesta,
       nuevaFila;
-
  
   //console.log(form.estados.value);
   dataRequest = {
     anio:form.anio.value,
-    nombre:form.nombre.value,
+    nombre:'Ciclo Lectivo ' + form.anio.value,
   }
-  console.log(dataRequest);
-
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
     if(response[0] != 500){
-      console.log("error");
       displayErrors(response,'formAltaCiclo');
-       //btnDestroy.classList.remove("toDestroy");
     }else{
-
- 
-
-      activarEmergente('emergenteCrear');
+      console.log(response);
+      emergente = "'emergenteUpdate'";
+      document.getElementById("tablaCiclos").insertRow(-1).innerHTML =
+      '<td>'+ response[1] +'</td>' +
+      '<td>'+ form.anio.value +'</td>' +
+      '<td>Ciclo Lectivo ' + form.anio.value +'</td>' +
+      '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a></td>' +
+      '<td><a data-value="'+ response[1] +'" href="curso/'+ response[1] +'" class= "btn btn-primary">Ver Cursos</a></td>' +
+      '<td><a data-value="'+ response[1] +'" onclick="" class="btn btn-danger">Eliminar</a></td>';
+      mostrarModal('formAltaCiclo','El ciclo lectivo se creo exitosamente!','Crear Ciclo Lectivo','emergenteCrear');
     }
   });
-  console.log(dataRequest);
 }
+
+

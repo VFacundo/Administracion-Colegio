@@ -42,7 +42,7 @@
             <td>{{$ciclo->nombre}}</td>
             <td><a id="btnUpdate" data-value="{{$ciclo->id}}" onclick="activarEmergente('emergenteUpdate'); updateCiclo(); " class="btn btn-primary">Editar</a></td>
             <td><a data-value="{{$ciclo->id}}" href="{{route('curso.index', $ciclo->id)}}" class= 'btn btn-primary'>Ver Cursos</a></td>
-            <td><a data-value="{{$ciclo->id}}" onclick="" class="btn btn-danger">Eliminar</a></td>
+            <td><a data-value="{{$ciclo->id}}" onclick="confirmDestroy({{ ($ciclo->id )}})" class="btn btn-danger">Eliminar</a></td>
          </tr>
         <tr></tr>
       @endforeach
@@ -67,14 +67,10 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" action="{{ route('ciclo.store') }}" id="formAltaCiclo">
-
+        <form method="post" onSubmit="return false;" id="formAltaCiclo">
                 @csrf
                 <label for="anio">Año :</label>
                 <input type="text" class="form-control" name="anio" placeholder="Año" required/></textarea>
-
-                <label for="nombre">Nombre :</label>
-                <input type="text" class="form-control" name="nombre" placeholder="Nombre del Ciclo Lectivo" required/></textarea>
 
             <button type="submit" class="btn btn-primary" onclick="crearCiclo();">Crear Ciclo Lectivo</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrear');">Cancelar</button>
@@ -108,9 +104,6 @@
                 @csrf
                 <label for="anio">Año :</label>
                 <input type="text" disable class="form-control" name="anio"/>
-
-                <label for="nombre">Nombre Ciclo Lectivo :</label>
-                <input type="text" class="form-control" name="nombre"/>
 
             <button type="submit" class="btn btn-primary" onclick="setUpdateCiclo();">Modificar Ciclo Lectivo</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdate');">Cancelar</button>

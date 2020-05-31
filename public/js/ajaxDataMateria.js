@@ -24,17 +24,13 @@ function listarMaterias(id_curso) {
       			id_materia = response['materia_curso'][i]['id'];
       			nombre_materia = response['materia_curso'][i]['nombre'];
       			texto = '<input type="checkbox" name="materias" value="'+ id_materia +'">' +
-                '<label for="materias">   '+ nombre_materia +'</label><br>';
+                '<label for="materias"> '+ nombre_materia +'</label><br>';
                 document.getElementById('listaMaterias').insertAdjacentHTML('beforeend', texto);
     	}
         
         boton_crear = '<button data-value="'+ id_curso +'" id="boton_crear"type="submit" onclick="asignarMateriaCurso();"class="btn btn-primary">Agregar a curso</button>'
 
-        document.getElementById('listaMaterias').insertAdjacentHTML('afterend', boton_crear);
-
-
-
-    
+        document.getElementById('listaMaterias').insertAdjacentHTML('afterend', boton_crear);  
     });
 }
 
@@ -56,14 +52,18 @@ function asignarMateriaCurso(){
 		materias_a_agregar[0] = materiasBox.value;
 	}
 
-
-
 	dataRequest = {materias: materias_a_agregar, id_curso: boton.dataset.value};
 	respuesta = ajaxRequest(url,dataRequest);
   	respuesta.then(response => response.json())
    	.then(function(response){
-   	console.log(response);
-   	activarEmergente('emergenteAgregarMateria');
-    
+   	 if(response[0] != 500){
+      	console.log("error");
+
+      	displayErrors(response,'formAsignarMateria');
+       //btnDestroy.classList.remove("toDestroy");
+    }else{	
+   		console.log(response);
+   		activarEmergente('emergenteAgregarMateria');
+    }
     });
 }

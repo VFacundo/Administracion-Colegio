@@ -29,7 +29,8 @@ class CursoController extends Controller
             ->join('materias', 'materia_cursos.id_materia' , '=', 'materias.id')
             ->where('cursos.id', '=', $cursos[$i]['id'] )->get();
 
-            $cursos[$i]['alumnos_curso'] = alumno::select('alumnos.*','personas.*')
+            $cursos[$i]['alumnos_curso'] = alumno::select('alumnos.*','personas.legajo','personas.nombre_persona'
+                                                            ,'personas.apellido_persona','personas.dni_persona', 'alumno_cursos.id_curso')
             ->join('alumno_cursos', 'alumno_cursos.id_alumno', '=', 'alumnos.id')
             ->join('personas', 'personas.id' , '=', 'alumnos.persona_asociada')
             ->where('alumno_cursos.id_curso', '=', $cursos[$i]['id'] )->get('alumnos.*','personas.*');
@@ -39,7 +40,6 @@ class CursoController extends Controller
 
           }
 
-        \Debugbar::info($cursos);
         return view('curso.index',compact('cursos'),compact('ciclo'));
         
     }
@@ -116,5 +116,12 @@ class CursoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function agregarCursoCiclo(Request $request){
+        $respuesta = $request->post();
+        \Debugbar::info($respuesta);
+        return response()->json([
+            '0' => '500',]);
     }
 }

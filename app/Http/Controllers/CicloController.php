@@ -63,12 +63,31 @@ class CicloController extends Controller
 
     public function store(Request $request){
         $respuesta = $request->post();
-      \Debugbar::info($respuesta);
-       $cicloInsert = ciclo_lectivo::create($respuesta);
-         return response()->json([
-          '0' => '500',
-          '1' => $cicloInsert->id,]);
+        $validator = Validator::make($respuesta,[
+            'anio' => 'required|min:4|max:4',
+        ]);
+        $cicloExistente = ciclo_lectivo::where('ciclo_lectivos.anio', '=' , $respuesta['anio'])->get();
+
+        if (($cicloExistente->isNotEmpty())){
+            return response()->json([
+                    '0' => 'El ciclo lectivo ya existe',]);
+        }else{
+            if($validator->fails()){
+                $errors = $validator->errors();
+                    foreach($errors->all() as $message){
+                        $arrayErrores[] = $message;
+            }
+                return json_encode($arrayErrores);
+            }else{
+                $cicloInsert = ciclo_lectivo::create($respuesta);
+                return response()->json([
+                    '0' => '500',
+                    '1' => $cicloInsert->id,]);
+            }                    
+        }
+    
     }
+     
     /**
      * Display the specified resource.
      *
@@ -126,12 +145,29 @@ class CicloController extends Controller
     }
 
     public function actualizar(Request $request) {
-      $respuesta = $request->post();
+        $respuesta = $request->post();
+        $validator = Validator::make($respuesta,[
+            'anio' => 'required|min:4|max:4',
+        ]);
+        $cicloExistente = ciclo_lectivo::where('ciclo_lectivos.anio', '=' , $respuesta['anio'])->get();
 
-    ciclo_lectivo::whereId($respuesta['id'])->update($respuesta);
-         return response()->json([
-            '0'=>'500',
-           ]);
-    }   
+        if (($cicloExistente->isNotEmpty())){
+            return response()->json([
+                    '0' => 'El ciclo lectivo ya existe',]);
+        }else{
+            if($validator->fails()){
+                $errors = $validator->errors();
+                    foreach($errors->all() as $message){
+                        $arrayErrores[] = $message;
+            }
+                return json_encode($arrayErrores);
+            }else{
+                ciclo_lectivo::whereId($respuesta['id'])->update($respuesta);
+                return response()->json([
+                '0'=>'500',
+                '1'=> $respuesta['anio'],]);
+            }
+        }
+    }       
 
 }

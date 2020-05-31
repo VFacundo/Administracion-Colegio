@@ -8,7 +8,7 @@
 </style>
 <div class="row">
   <div class="col-sm-8"><h3>{{($ciclo[0]->nombre)}}</h3></div>
-  <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Crear Curso</a></div>
+  <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
@@ -83,7 +83,7 @@
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}{{$curso->id}}" aria-expanded="false" aria-controls="collapse">
                               Alumnos 
                             </button>
-                              <a data-value="{{$curso->id}}" onclick="activarEmergente('emergenteAgregarAlumno'); listarAlumnos();" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar alumno</a>
+                              <a data-value="{{$curso->id}}" onclick="activarEmergente('emergenteAgregarAlumno'); listarAlumnos({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar alumno</a>
 
                           </h5>
                         </div>
@@ -104,7 +104,7 @@
                                           <td>{{$alumno_curso->legajo_alumno}}</td>
                                           <td>{{$alumno_curso->nombre_persona}} {{$alumno_curso->apellido_persona}}</td>
                                           <td>{{$alumno_curso->dni_persona}}</td>
-                                          <td><a data-value="" onclick="" style="color:white;"class="btn btn-danger">Eliminar del curso</a></td>
+                                          <td><a data-value="" onclick="confirmDestroyAlumno('{{$alumno_curso->id}}','{{$alumno_curso->persona_asociada}}','{{$alumno_curso->id_curso}}')" style="color:white;"class="btn btn-danger">Eliminar del curso</a></td>
                                        </tr>
                                       <tr></tr>
                                     @endforeach
@@ -251,11 +251,9 @@
         </div><br />
       @endif
         <form method="post" onSubmit="return false;" id="formAsignarAlumno">
-
                 @csrf
                 <label for="alumnos">Alumno :</label>
                 <div id="listaAlumnos"style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
-                  
                 </div>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteAgregarAlumno');">Cancelar</button>
         </form>
@@ -264,3 +262,54 @@
 </div>
 
 <!--FIN BLOQUE AGREGAR ALUMNO A CURSO -->
+
+
+<!--BLOQUE AGREGAR CURSO CICLO LECTIVO-->
+<div class="padreEmergente">
+  <div class="emergente" id="emergenteCrearCurso">
+    <div class="card-header">
+      Agregar Curso al Ciclo Lectivo
+    </div>
+    <div class="card-body">
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+        </div><br />
+      @endif
+        <form method="post" onSubmit="return false;" id="formAgregarCursoCiclo">
+                @csrf
+
+                <label for="curso">Curso :</label>
+                <select name="curso" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
+                   <option value= "Primero">Primero</option>
+                   <option value= "Segundo">Segundo</option>
+                   <option value= "Tercero">Tercero</option>
+                   <option value= "Cuarto">Cuarto</option>
+                   <option value= "Quinto">Quinto</option>
+                   <option value= "Sexto">Sexto</option>
+                </select></p>
+
+                <label for="division">Division :</label>
+                <select name="division" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
+                   <option value= "A">A</option>
+                   <option value= "B">B</option>
+                </select></p>
+
+                <label for="aula">Aula :</label>
+                <input type="text" class="form-control" name="aula" placeholder="Aula" required/></textarea>
+
+
+            <button type="submit" class="btn btn-primary" onclick="agregarCursoCiclo({{$ciclo[0]->anio}});">Agregar Curso </button>
+            <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrearCurso');">Cancelar</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+<!--FIN BLOQUE AGREGAR CURSO CICLO LECTIVO -->
+
+
