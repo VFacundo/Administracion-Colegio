@@ -120,8 +120,20 @@ class CursoController extends Controller
 
     public function agregarCursoCiclo(Request $request){
         $respuesta = $request->post();
-        \Debugbar::info($respuesta);
-        return response()->json([
-            '0' => '500',]);
+        $curso_existente = curso::where('cursos.nombre_curso', '=', $respuesta['nombre_curso'])
+                                ->where('cursos.anio', '=', $respuesta['anio'])
+                                ->where('cursos.division', '=', $respuesta['division'])->get();
+
+        if ($curso_existente->isNotEmpty()){
+                    return response()->json([
+                    '0' => 'El curso ya existe',
+                    ]);
+        }else{
+                $cursoInsert = curso::create($respuesta);
+                return response()->json([
+                    '0' => '500',
+                    '1' => $cursoInsert,   
+                    ]);
+        }                    
     }
 }

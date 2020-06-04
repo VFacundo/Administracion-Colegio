@@ -25,6 +25,7 @@ Route::group(['middleware' => ['role:admin'],'auth'], function(){
   Route::get('/roles','RolController@index')->name('roles.index')->middleware('auth');
   Route::get('/ciclo','CicloController@index')->name('ciclo.index');
   Route::get('/curso/{id}','CursoController@index')->name('curso.index');
+  Route::get('/materias','MateriaController@index')->name('materia.index');
 });
 
 
@@ -50,6 +51,8 @@ Route::post('/personas/actualizar','PersonaController@actualizar')->name('person
 Route::post('/ciclo/store','CicloController@store')->name('ciclo.store');
 Route::post('/ciclo/actualizar','CicloController@actualizar')->name('ciclo.actualizar');
 Route::post('/ciclo/editar','CicloController@editar')->name('ciclo.editar');
+Route::post('/ciclo/destroy','CicloController@destroy')->name('ciclo.destroy');
+Route::post('/ciclo/restaurarCiclo','CicloController@restaurarCiclo')->name('ciclo.restaurarCiclo');
 Route::post('/materia/listar','MateriaController@listar')->name('materia.listar');
 Route::post('/materia/agregarMateriaCurso','MateriaController@agregarMateriaCurso')->name('materia.agregarMateriaCurso');
 Route::post('/alumno/listar','AlumnoController@listar')->name('alumno.listar');
@@ -57,5 +60,6 @@ Route::post('/alumno/agregarAlumnoCurso','AlumnoController@agregarAlumnoCurso')-
 Route::post('/alumno/editar','AlumnoController@editar')->name('alumno.editar');
 Route::post('/alumno/destroy','AlumnoController@destroy')->name('alumno.destroy');
 Route::post('/curso/agregarCursoCiclo','CursoController@agregarCursoCiclo')->name('alumno.agregarCursoCiclo');
+Route::post('/materias/store','MateriaController@store')->name('materia.store');
 
 Auth::routes();

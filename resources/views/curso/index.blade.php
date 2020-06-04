@@ -300,10 +300,22 @@
                 </select></p>
 
                 <label for="aula">Aula :</label>
-                <input type="text" class="form-control" name="aula" placeholder="Aula" required/></textarea>
+                <select name="aula" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
+                   <option value= "1">1</option>
+                   <option value= "2">2</option>
+                   <option value= "3">3</option>
+                   <option value= "4">4</option>
+                   <option value= "5">5</option>
+                   <option value= "6">6</option>
+                   <option value= "7">7</option>
+                   <option value= "8">8</option>
+                   <option value= "9">9</option>
+                   <option value= "10">10</option>
+                </select></p>
 
 
-            <button type="submit" class="btn btn-primary" onclick="agregarCursoCiclo({{$ciclo[0]->anio}});">Agregar Curso </button>
+
+            <button type="submit" class="btn btn-primary" onclick="agregarCursoCiclo({{$ciclo[0]}});">Agregar Curso </button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrearCurso');">Cancelar</button>
         </form>
     </div>

@@ -42,7 +42,7 @@
             <td>{{$ciclo->nombre}}</td>
             <td><a id="btnUpdate" data-value="{{$ciclo->id}}" onclick="activarEmergente('emergenteUpdate'); updateCiclo(); " class="btn btn-primary">Editar</a></td>
             <td><a data-value="{{$ciclo->id}}" href="{{route('curso.index', $ciclo->id)}}" class= 'btn btn-primary'>Ver Cursos</a></td>
-            <td><a data-value="{{$ciclo->id}}" onclick="confirmDestroy({{ ($ciclo->id )}})" class="btn btn-danger">Eliminar</a></td>
+            <td><a data-value="{{$ciclo->id}}" onclick="confirmDestroyCiclo({{ ($ciclo->id )}})" class="btn btn-danger">Eliminar</a></td>
          </tr>
         <tr></tr>
       @endforeach

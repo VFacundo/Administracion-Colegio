@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\materia;
 use App\materia_curso;
-
+use App\personal;
+use App\programa_materia;
 class MateriaController extends Controller
 {
     /**
@@ -15,7 +16,11 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        $materias = materia::all();
+        $programas = programa_materia::all();
+        $personal = personal::select('personals.*','personas.nombre_persona','personas.apellido_persona')
+                            ->join('personas', 'personas.id', '=' ,'personals.id_persona')->get();
+        return view('materias.index',compact(['materias','personal','programas']));
     }
 
     /**
@@ -36,7 +41,7 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \Debugbar::info('store');
     }
 
     /**

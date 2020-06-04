@@ -17,7 +17,8 @@ class CicloController extends Controller
      */
     public function index()
     {
-        $ciclos = ciclo_lectivo::all();
+        $ciclos = ciclo_lectivo::select('ciclo_lectivos.*')
+                                ->whereNull('ciclo_lectivos.fecha_baja')->get();
         $cursos = curso::all();
         return view('ciclos.index',compact('ciclos'),compact('cursos'));
     }
@@ -67,10 +68,18 @@ class CicloController extends Controller
             'anio' => 'required|min:4|max:4',
         ]);
         $cicloExistente = ciclo_lectivo::where('ciclo_lectivos.anio', '=' , $respuesta['anio'])->get();
-
-        if (($cicloExistente->isNotEmpty())){
-            return response()->json([
-                    '0' => 'El ciclo lectivo ya existe',]);
+        $ciclos_baja = ciclo_lectivo::select('ciclo_lectivos.*')
+                                     ->where('ciclo_lectivos.fecha_baja', "<>", null)
+                                     ->where('ciclo_lectivos.anio', '=', $respuesta['anio'])
+                                     ->get();
+        if (($cicloExistente->isNotEmpty()) && ($ciclos_baja->isNotEmpty())){
+                    return response()->json([
+                    '0' => '1',
+                    '1' => $cicloExistente,
+                    ]);
+        }elseif (($cicloExistente->isNotEmpty())){ 
+                return response()->json([
+                '0' => 'El ciclo lectivo ya existe',]);           
         }else{
             if($validator->fails()){
                 $errors = $validator->errors();
@@ -128,11 +137,7 @@ class CicloController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
-
+    
     public function editar(Request $Request) {
          $respuesta = $Request->post();
          $ciclo = ciclo_lectivo::findOrFail($respuesta['id']);
@@ -165,9 +170,40 @@ class CicloController extends Controller
                 ciclo_lectivo::whereId($respuesta['id'])->update($respuesta);
                 return response()->json([
                 '0'=>'500',
-                '1'=> $respuesta['anio'],]);
+                '1'=> $respuesta['anio'],
+                '2'=> $respuesta['id'],]);
             }
         }
     }       
+
+  public function destroy(Request $request)
+    {
+        $respuesta = $request->post();
+        $ciclo_lectivo = ciclo_lectivo::select('ciclo_lectivos.*')
+                                      ->join('cursos', 'cursos.id_ciclo_lectivo' , '=', 'ciclo_lectivos.id')
+                                      ->where('ciclo_lectivos.id' , '=' , $respuesta['id_ciclo'])
+                                      ->get();
+
+        if ($ciclo_lectivo->isNotEmpty()){
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['fecha_baja' => '2013-01-01 08:00:00']);
+            return response()->json([
+                '0' => 'error']);
+        }else{
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->delete();
+            return response()->json([
+                '0' => '500']);
+        }
+    } 
+
+    public function restaurarCiclo(Request $request){
+        $respuesta = $request->post();
+        ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['fecha_baja' => null]);
+        $ciclo = ciclo_lectivo::findOrFail($respuesta['id_ciclo']);
+        return response()->json([
+            '0' => '500',
+            '1' => $ciclo,
+            ]);
+    }
+
 
 }

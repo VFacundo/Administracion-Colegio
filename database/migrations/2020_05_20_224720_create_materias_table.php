@@ -20,7 +20,6 @@ class CreateMateriasTable extends Migration
             $table->date('fecha_creacion');
             $table->unsignedBigInteger('programa_materia');
             $table->enum('estado_materia',['inactivo','activo']);
-            $table->integer('horario_materia');
             $table->string('curso_correspondiente');
             $table->foreign('programa_materia')->references('id')->on('programa_materias');
 

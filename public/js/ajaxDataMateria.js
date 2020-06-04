@@ -67,3 +67,48 @@ function asignarMateriaCurso(){
     }
     });
 }
+
+
+function agregarHorario(){
+var boton = event.target;
+
+  
+
+  horario =  '<div><label for="dias">Dias : </label>' +
+                '<select name="hora_inicio" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value="lunes"> Lunes </option>'+
+                   '<option value="martes"> Martes </option>'+
+                   '<option value="miercoles"> Miercoles</option>' + 
+                  ' <option value="jueves"> Jueves </option>'+
+                  ' <option value="viernes"> Viernes</option>'+
+                '</select>'+
+
+                  '<label for="hora_inicio">Hora Inicio :</label>'+
+                  '<select name="hora_inicio" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value= "13">13:00</option>'+
+                   '<option value= "14">14:00</option>'+
+                   '<option value= "15">15:10</option>'+
+                   '<option value= "16">16:10</option>'+
+                   '<option value= "17">17:15</option>'+
+                '</select>'+
+
+                '<label for="hora_fin">Hora Fin :</label>'+
+                '<select name="hora_fin" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value= "14">14:00</option>'+
+                   '<option value= "15">15:00</option>'+
+                   '<option value= "16">16:10</option>'+
+                   '<option value= "17">17:10</option>'+
+                   '<option value= "18">18:15</option>'+
+                '</select>'+
+
+              '<button type="submit" class="btn btn-primary glyphicon glyphicon-remove" onclick=""></button>'+
+              '</div>';
+        
+        
+        document.getElementById('btn_mas').insertAdjacentHTML('beforebegin', horario);
+     
+        
+       
+
+
+}
