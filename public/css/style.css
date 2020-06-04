@@ -151,6 +151,11 @@ h3{
 .div-btn-menu .glyphicon{
 	font-size: 2em !important;
 }
+
+.navbar-toggler{
+	margin-left: auto;
+}
+
 /***********
 NAV MENU list
 /************/
@@ -174,11 +179,34 @@ NAV MENU list
 		max-width: 100% !important;
     /* width: 2000px !important; */
   }
-
 	.nav-menu .list-group{
 		width: 100%;
 	}
 	.boton-menu{
 		display: inline;
+	}
+	.navbar-brand{
+		font-size: 0.8em !important;
+		left: auto;
+	}
+	.form-inline input{
+		box-sizing: border-box !important;
+		padding-left: 0 !important;
+		padding-right: 5px !important;
+		max-width: 75% !important;
+	}
+	.form-inline{
+		margin-top: 0px !important;
+	}
+	.table-before-row{
+		display: inline;
+	}
+	.col-sm-2{
+		width: auto !important;
+		max-width: 25% !important;
+	}
+	#btnEmergente{
+		font-size: 0.8em;
+		right: 14px !important;
 	}
 }

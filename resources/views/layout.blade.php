@@ -21,7 +21,7 @@
 <body>
 <div class="container container-noMargin divNavbar">
   <!--NAV INICIO -->
-  <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <nav id="navNoti" class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container-fluid">
         <!--
           <a class="navbar-brand" href="{{ url('/') }}">
@@ -130,10 +130,9 @@
     <div class="row">
 
       <!--NAV INICIO MENU-->
-
       <div class="col-2 nav-menu">
         <div class="list-group">
-            <a href="{{route('personas.index')}}" class="list-group-item active">Personas</a>
+            <a href="{{route('personas.index')}}" class="list-group-item">Personas</a>
             <a href="{{route('usuarios.index')}}" class="list-group-item">Usuarios</a>
             <a href="{{route('roles.index')}}" class="list-group-item">Roles y Permisos</a>
             <a href="{{route('ciclo.index')}}" class="list-group-item">Ciclo Lectivo</a>
@@ -143,20 +142,6 @@
         </div>
       <!-- NAV FIN -->
 
-      <!--
-      <div class="col-2">
-        <div class="list-group">
-            <a href="{{route('personas.index')}}" class="list-group-item">Administracion de Personas</a>
-            <a href="{{route('usuarios.index')}}" class="list-group-item">Administracion de Usuarios</a>
-            <a href="{{route('roles.index')}}" class="list-group-item">Administracion de Roles</a>
-            <a href="{{route('ciclo.index')}}" class="list-group-item">Administracion de Ciclo Lectivo</a>
-            <a href="#" class="list-group-item">Noticias</a>
-            <a href="#" class="list-group-item">Notificaciones</a>
-            <a href="#" class="list-group-item">Logout</a>
-          </div>
-        </div>
-      -->
-
         <div class="col-10" id="cuerpo-tabla">
           <div class="tab-content" id="nav-tabContent">
           @yield('content')
@@ -164,6 +149,26 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+        <!--Si la res es menor a 1000px la tabla ocupa toda la pantalla-->
+        <script>
+        $(document).ready(function(){
+          var win = $(this);
+          $(document).keyup(function(e) {
+            if (e.key === "Escape") { // escape key maps to keycode `27`
+              if($('.emergenteActiva').length != 0){
+                activarEmergente($('.emergenteActiva')[0].id);
+              }
+            }
+            });
+            
+          if (win.width() < 1000) {
+            $('#cuerpo-tabla').addClass('col-12');
+            $('#cuerpo-tabla').removeClass('col-10');
+          }
+        });
+        </script>
+
+        <!--Si la res cambia a menor 1000px la tabla ocupa toda la pantalla-->
         <script>
         $(window).on('resize', function() {
           var win = $(this);

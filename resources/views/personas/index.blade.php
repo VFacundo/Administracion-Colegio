@@ -2,21 +2,9 @@
 
 @section('content')
 
-<div class="row table-before-row">
+<div class="d-flex flex-row table-before-row">
 <!-- Barra de Busqueda -->
-  <div class="col-sm-10">
-    <nav class="navbar">
-      <a class="navbar-brand">Personas</a>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-        <button class="btn btn-outline-success my-2 my-sm-0 glyphicon glyphicon-search" type="submit"></button>
-      </form>
-    </nav>
-  </div>
-
-  @section('buscador')
-      @include('..partials.buscador')
-  @stop
+@include('partials.buscador',['section'=>'Personas'])
 <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>

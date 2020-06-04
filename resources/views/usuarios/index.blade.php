@@ -1,14 +1,12 @@
 @extends('layout')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
-<div class="row">
-  <div class="col-sm-8"><h3>Usuarios</h3></div>
-  <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Usuarios</a></div>
+
+<div class="row table-before-row">
+  <!-- Barra de Busqueda -->
+  @include('partials.buscador',['section'=>'Usuarios'])
+  <!-- Barra de Busqueda FIN-->
+  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Usuario</a></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
