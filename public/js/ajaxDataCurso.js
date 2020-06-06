@@ -25,8 +25,9 @@ function agregarCursoCiclo(ciclo){
       console.log(response);
       displayErrors(response,'formAgregarCursoCiclo');
     }else{
-      
+
       mostrarModal('formAgregarCursoCiclo','El curso se agrego correctamente!','Agregar Curso al Ciclo Lectivo','emergenteCrearCurso');
+      javascript:location.reload();
     }
   });
 

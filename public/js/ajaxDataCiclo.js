@@ -214,7 +214,4 @@ function restaurarCiclo(id_ciclo){
     }
  
   });
- 
-    
-    
 }

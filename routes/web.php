@@ -60,6 +60,11 @@ Route::post('/alumno/agregarAlumnoCurso','AlumnoController@agregarAlumnoCurso')-
 Route::post('/alumno/editar','AlumnoController@editar')->name('alumno.editar');
 Route::post('/alumno/destroy','AlumnoController@destroy')->name('alumno.destroy');
 Route::post('/curso/agregarCursoCiclo','CursoController@agregarCursoCiclo')->name('alumno.agregarCursoCiclo');
-Route::post('/materias/store','MateriaController@store')->name('materia.store');
+Route::post('/materia/store','MateriaController@store')->name('materia.store');
+Route::post('/materia/destroy','MateriaController@destroy')->name('materia.destroy');
+Route::post('/materia/editar','MateriaController@editar')->name('materia.editar');
+Route::post('/materia/restaurarMateria','MateriaController@restaurarMateria')->name('materia.restaurarMateria');
+Route::post('/materia/actualizar','MateriaController@actualizar')->name('materia.actualizar');
+
 
 Auth::routes();
