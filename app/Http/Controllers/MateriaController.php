@@ -7,11 +7,8 @@ use App\materia;
 use App\materia_curso;
 use App\personal;
 use App\programa_materia;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Validator;
 
-=======
->>>>>>> Stashed changes
 class MateriaController extends Controller
 {
     /**
@@ -21,11 +18,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-<<<<<<< Updated upstream
         $materias = materia::whereNull('materias.fecha_baja')->get();
-=======
-        $materias = materia::all();
->>>>>>> Stashed changes
         $programas = programa_materia::all();
         $personal = personal::select('personals.*','personas.nombre_persona','personas.apellido_persona')
                             ->join('personas', 'personas.id', '=' ,'personals.id_persona')->get();
@@ -50,7 +43,6 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< Updated upstream
         $respuesta = $request->post();
 
         $materia_existente = materia::where('materias.nombre', '=', $respuesta['nombre'])
@@ -70,7 +62,7 @@ class MateriaController extends Controller
                 '0' => '1',
                 '1' => $materia_existente,
             ]);
-        }elseif ($cicloExistente->isNotEmpty()) {
+        }elseif ($materia_existente->isNotEmpty()) {
             return response()->json([
                 '0' => 'La materia ya existe para este curso',
                 ]);     
@@ -91,9 +83,6 @@ class MateriaController extends Controller
                     '2' => $materiaInsert->estado_materia,]);
             }
         }                        
-=======
-        \Debugbar::info('store');
->>>>>>> Stashed changes
     }
 
     /**
@@ -146,7 +135,6 @@ class MateriaController extends Controller
     public function agregarMateriaCurso(Request $request){
 
         $respuesta = $request->post();
-        \Debugbar::info($respuesta);
         for ($i = 0; $i < count($respuesta['materias']); $i++ ){
             $mat_cur = materia_curso::where('materia_cursos.id_curso', '=',$respuesta['id_curso'] )
                                       ->where('materia_cursos.id_materia' , '=', $respuesta['materias'][$i])->get();
@@ -215,8 +203,6 @@ class MateriaController extends Controller
                                      ->where('materias.nombre', '=', $respuesta['nombre'])
                                      ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente']) 
                                      ->get();
-
-        \Debugbar::info($materia_enCurso);                             
 
         $materia_existente = materia::where('materias.nombre', '=', $respuesta['nombre'])
                             ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente'])

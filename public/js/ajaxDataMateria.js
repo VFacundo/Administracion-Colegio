@@ -138,7 +138,7 @@ function crearMateria(){
         document.getElementById("emergenteCrearMateria").insertAdjacentHTML('beforeend', boton_no);
       }else {
         console.log(response);
-        displayErrors(response,'formAltaCiclo');
+        displayErrors(response,'formCrearMateria');
       } 
     }else{
         console.log(response);
