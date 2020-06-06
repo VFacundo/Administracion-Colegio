@@ -23,7 +23,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Primero'
         ]);
 
@@ -33,7 +32,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Segundo'
 
         ]);
@@ -44,7 +42,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Tercero'
 
         ]);
@@ -55,7 +52,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Cuarto'
         ]);
 
@@ -65,7 +61,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Quinto'
         ]);
 
@@ -75,7 +70,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Sexto'
         ]);
 
@@ -85,7 +79,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Primero'
         ]);
 
@@ -95,7 +88,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Cuarto'
         ]);
 
@@ -105,7 +97,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Sexto'
         ]);
 
@@ -115,7 +106,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Primero'
         ]);
 
@@ -125,7 +115,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Segundo'
         ]);
 
@@ -135,7 +124,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Tercero'
         ]);
 
@@ -145,7 +133,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Cuarto'
         ]);
 
@@ -155,7 +142,6 @@ class materiaSeeder extends Seeder
 			'fecha_creacion' => '2005-05-20',
 			'programa_materia' => 1,
 			'estado_materia'=> 'activo',
-			'horario_materia'=>	11,
 			'curso_correspondiente' => 'Sexto'
         ]);
     }

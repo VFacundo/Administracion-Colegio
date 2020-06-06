@@ -28,6 +28,7 @@ class UserController extends Controller
         for($i=0;$i<sizeof($usuariosRegistrados);$i++){
             $persona = Persona::findOrFail($usuariosRegistrados[$i]['id_persona']);
             $usuariosRegistrados[$i]['persona'] = $persona['nombre_persona'] . ' ' . $persona['apellido_persona'];
+            $usuariosRegistrados[$i]['personaString'] = "Cuil: " . $persona['cuil_persona'] . "<br>" . "Domicilio: " . $persona['domicilio'] . "<br>" . "Fecha Nac.: " . $persona['fecha_nacimiento'];
             $rolUser = Rol_usuario::select('rol_usuarios.*')->where('rol_usuarios.id_usuario','=',$usuariosRegistrados[$i]['id'])->get();
             $usuariosRegistrados[$i]['rolesUser'] = $rolUser;
         }

@@ -111,8 +111,7 @@ var url = '/personas/editar', respuesta,dataRequest,bModal;
   respuesta.then(response => response.json())
   .then(function(response){
     console.log(response);
-    bModal.insertAdjacentHTML('beforeend','<b> Legajo: '+response['legajo']+'</b><br>'+
-                        '<b> Nombre: '+response['nombre_persona']+'</b><br>'+
+    bModal.insertAdjacentHTML('beforeend','<b> Nombre: '+response['nombre_persona']+'</b><br>'+
                         '<b> Apellido: '+response['apellido_persona']+'</b><br>'+
                         '<b> Tipo Documento: '+response['tipo_documento']+'</b><br>'+
                         '<b> DNI: '+response['dni_persona']+'</b><br>'+
@@ -184,12 +183,11 @@ function setUpdatePersona(){
 
   removeErrors('formUpdate');
   dataRequest = {id:btn.dataset.value,
-                legajo:formUpdate.legajo.value,
                 nombre_persona:formUpdate.nombre_persona.value,
                 apellido_persona:formUpdate.apellido_persona.value,
                 tipo_documento:formUpdate.tipo_documento.value,
                 dni_persona:formUpdate.dni_persona.value,
-                cuil_persona:formUpdate.cuil_persona.value,
+                cuil_persona:formUpdate.numeroPre.value+formUpdate.dni_persona.value+formUpdate.numeroPost.value,
                 domicilio:formUpdate.domicilio.value,
                 fecha_nacimiento:formUpdate.fecha_nacimiento.value,
                 numero_telefono:formUpdate.numero_telefono.value,
@@ -247,19 +245,21 @@ function updatePersona(){
   var btnUpdate = event.target,
       formUpdate = document.getElementById('formUpdate'),
       id_update = btnUpdate.dataset.value,
-      url = '/personas/editar', respuesta,dataRequest,text;
+      url = '/personas/editar', respuesta,dataRequest,text,splitCuil;
 
       removeErrors('formUpdate');
       dataRequest = {id:id_update}; //Datos a Enviar
       respuesta = ajaxRequest(url,dataRequest)
       respuesta.then(response => response.json())
         .then(function(response){
-          formUpdate.legajo.value = response['legajo'];
           formUpdate.nombre_persona.value = response['nombre_persona'];
           formUpdate.apellido_persona.value = response['apellido_persona'];
           formUpdate.tipo_documento.value = response['tipo_documento'];
           formUpdate.dni_persona.value = response['dni_persona'];
-          formUpdate.cuil_persona.value = response['cuil_persona'];
+          splitCuil = response['cuil_persona'].split("", 11);
+          formUpdate.numeroPre.value = splitCuil[0]+splitCuil[1];
+          formUpdate.dniCuilNumero.value = response['dni_persona'];
+          formUpdate.numeroPost.value = splitCuil[10];
           formUpdate.domicilio.value = response['domicilio'];
           formUpdate.fecha_nacimiento.value = response['fecha_nacimiento'];
           formUpdate.numero_telefono.value = response['numero_telefono'];

@@ -23,16 +23,21 @@
           <td>EMail</td>
           <td>Persona</td>
           <td>Roles</td>
-          <td colspan="2">Action</td>
+          <td colspan="2">Accion</td>
         </tr>
     </thead>
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+    </script>
     <tbody>
         @foreach($usuariosRegistrados as $user)
         <tr id="userTable">
             <td>{{$user->id}}</td>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
-            <td><a href="#" onClick="return false;">{{$user->persona}}</a></td>
+            <td>  <a href="#" onClick="return false;" title="Persona" data-toggle="popover" data-trigger="hover" data-html="true" data-content="{{$user->personaString}}">{{$user->persona}}</a></td>
             <td>
               @foreach($user['rolesUser'] as $roles)
                 {{$roles->nombre_rol}} <br>

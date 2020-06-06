@@ -19,8 +19,16 @@ class PersonaController extends Controller
     public function index()
     {
         $personas = Persona::all();
+        for($i=0;$i<sizeof($personas);$i++){
+          $nombreDocu = tipo_documento::findOrFail($personas[$i]['tipo_documento']);
+          $personas[$i]['nombreDocumento'] = $nombreDocu['nombre_tipo'];
+        }
         $tipo_documento = tipo_documento::all();
         return view('personas.index',compact('personas'),compact('tipo_documento'));
+    }
+
+    public function getNombreDocumento(){
+
     }
 
     /**
@@ -43,7 +51,6 @@ class PersonaController extends Controller
     {
 
         $validatedData = $request->validate([
-          'legajo' => 'required|max:255|',
           'nombre_persona' => 'required|alpha|max:255',
           'apellido_persona' => 'required|alpha|max:255',
           'tipo_documento' => 'required',
@@ -55,7 +62,7 @@ class PersonaController extends Controller
         ]);
           $personaInsert = Persona::create($validatedData);
           $usuario = [
-            'name' => $validatedData['legajo'],
+            'name' => $validatedData['dni_persona'],
             'email' => $validatedData['nombre_persona'] . '@' . $validatedData['legajo'] . '.com',
             'password' => $validatedData['dni_persona'],
             'id_persona' => $personaInsert->id,
@@ -92,7 +99,7 @@ class PersonaController extends Controller
          //var_dump($_POST);
      return response()->json([
        'id' => $persona['id'],
-       'legajo' => $persona['legajo'],
+       //'legajo' => $persona['legajo'],
        'nombre_persona' => $persona['nombre_persona'],
        'apellido_persona' => $persona['apellido_persona'],
        'tipo_documento' => $persona['tipo_documento'],
@@ -122,7 +129,7 @@ class PersonaController extends Controller
         });
 
        $validator = Validator::make($request->all(),[
-         'legajo' => 'required|max:255',
+         //'legajo' => 'required|max:255',
          'nombre_persona' => 'required|max:255',
          'apellido_persona' => 'required|max:255',
          'tipo_documento' => 'required',

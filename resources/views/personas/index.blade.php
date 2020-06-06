@@ -28,7 +28,6 @@
     <thead>
         <tr>
           <td>ID</td>
-          <td>Legajo</td>
           <td>Nombre</td>
           <td>Apellido</td>
           <td>Tipo de documento</td>
@@ -44,14 +43,13 @@
         @foreach($personas as $persona)
         <tr>
             <td>{{$persona->id}}</td>
-            <td>{{$persona->legajo}}</td>
             <td>{{$persona->nombre_persona}}</td>
             <td>{{$persona->apellido_persona}}</td>
-            <td>{{$persona->tipo_documento}}</td>
+            <td>{{$persona->nombreDocumento}}</td>
             <td>{{$persona->dni_persona}}</td>
             <td>{{$persona->cuil_persona}}</td>
             <td>{{$persona->domicilio}}</td>
-            <td>{{$persona->fecha_nacimiento}}</td>
+            <td>{{date("d-m-Y", strtotime($persona->fecha_nacimiento))}}</td>
             <td>{{$persona->numero_telefono}}</td>
             <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Editar</a></td>
             <td><a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Eliminar</a></td>
@@ -82,8 +80,6 @@
         <form method="post" action="{{ route('personas.store') }}">
 
                 @csrf
-                <label for="legajo">Legajo :</label>
-                <input type="text" class="form-control" name="legajo" placeholder="Legajo Persona" required/></textarea>
 
                 <label for="nombre_persona">Nombre :</label>
                 <input type="text" class="form-control" name="nombre_persona" placeholder="Nombre Persona" required/></textarea>
@@ -99,11 +95,14 @@
                 </select></p>
 
                 <label for="dni_persona">Número de documento :</label>
-                <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
+                <input type="text" id="numero_dni" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
 
-                <label for="cuil_persona">Número de CUIL :</label>
-                <input type="text" class="form-control" name="cuil_persona" placeholder="CUIL Persona" required/></textarea>
-
+                <label for="numeroPre">Número de CUIL :</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="numeroPre" placeholder="00" pattern="[0-9]{2}" required/>
+                  <input type="text" id="formDniCuil" name="dniCuilNumero" class="form-control" disabled required/>
+                  <input type="text" class="form-control" name="numeroPost" placeholder="0" pattern="[0-9]{1}" required/>
+                </div>
 
                 <label for="domicilio">Domicilio :</label>
                 <input type="text" class="form-control" name="domicilio" placeholder="Domicilio Persona" required/></textarea>
@@ -112,7 +111,7 @@
                 <input type="date" class="form-control" name="fecha_nacimiento" max="<?php echo date("Y") . '-12' . '-31' ;?>" placeholder="Fecha Nacimiento Persona" required/></textarea>
 
                 <label for="numero_telefono">Telefono :</label>
-                <input type="text" class="form-control" name="numero_telefono" placeholder="Telefono Persona (Codigo de Area Sin 0 + Numero Sin 15)" pattern="[0-9]{4}-[0-9]{6}" required/></textarea>
+                <input type="text" class="form-control" name="numero_telefono" placeholder="Codigo de Area Sin 0 + Numero Sin 15" pattern="[0-9]{10}" required/></textarea>
 
             <button type="submit" class="btn btn-primary">Crear Persona</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrear');">Cancelar</button>
@@ -120,6 +119,15 @@
     </div>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#numero_dni').on('change', function (e) {
+       $('#formDniCuil').val($('#numero_dni').val());
+    });
+});
+</script>
 
 <!--FIN BLOQUE CREAR NUEVA PERSONA -->
 
@@ -142,8 +150,6 @@
         <form id="formUpdate" onSubmit="return false;">
 
                 @csrf
-                <label for="legajo">Legajo :</label>
-                <input type="text" class="form-control" name="legajo"/>
 
                 <label for="nombre_persona">Nombre Persona :</label>
                 <input type="text" class="form-control" name="nombre_persona"/>
@@ -161,8 +167,12 @@
                 <label for="dni_persona">Nùmero de documento :</label>
                 <input type="text" class="form-control" name="dni_persona" placeholder="DNI Persona" required/></textarea>
 
-                <label for="cuil_persona">Número de CUIL :</label>
-                <input type="text" class="form-control" name="cuil_persona" placeholder="CUIL Persona" required/></textarea>
+                <label for="numeroPre">Número de CUIL :</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="numeroPre" placeholder="00" pattern="[0-9]{2}" required/>
+                  <input type="text" id="formDniCuil" name="dniCuilNumero" class="form-control" disabled required/>
+                  <input type="text" class="form-control" name="numeroPost" placeholder="0" pattern="[0-9]{1}" required/>
+                </div></textarea>
 
                 <label for="domicilio">Domicilio Persona :</label>
                 <input type="text" class="form-control" name="domicilio"/>
