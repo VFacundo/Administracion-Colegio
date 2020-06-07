@@ -3,9 +3,9 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Ciclo Lectivo Falta nro'])
+    @include('partials.buscador',['section'=>'Ciclo Lectivo' . " " . $ciclo[0]['anio']])
   <!-- Barra de Busqueda FIN-->
-  <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a></div>
+  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
@@ -29,7 +29,7 @@
               <div class="card-header" id="heading{{$curso->nombre_curso}}{{$curso->division}}">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}{{$curso->division}}" aria-expanded="false" aria-controls="collapseTwo">
-                    {{$curso->nombre_curso}} {{$curso->division}} 
+                    {{$curso->nombre_curso}} {{$curso->division}}
                   </button>
                 </h5>
               </div>
@@ -41,7 +41,7 @@
                         <div class="card-header" id="heading{{$curso->nombre_curso}}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}" aria-expanded="false" aria-controls="collapse">
-                              Materias 
+                              Materias
                             </button>
                               <a data-value="{{$curso->nombre_curso}}" onclick="activarEmergente('emergenteAgregarMateria'); listarMaterias({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar materia</a>
 
@@ -61,7 +61,7 @@
                                      @foreach ($curso['materias_curso'] as $materia_curso)
                                       <tr>
                                           <td>{{$materia_curso->nombre}}</td>
-                                          <td>{{$materia_curso->carga_horaria}} HS</td>                                        
+                                          <td>{{$materia_curso->carga_horaria}} HS</td>
                                           <td><a data-value="" onclick="" style="color:white;"class="btn btn-danger">Eliminar</a></td>
                                        </tr>
                                       <tr></tr>
@@ -70,7 +70,7 @@
                              </table>
                           </div>
                       </div>
-                      </div> 
+                      </div>
                   </div>
                 <!--BLOQUE MOSTRAR ALUMNOS DEL CURSO-->
                    <div id="accordion3">
@@ -78,14 +78,14 @@
                         <div class="card-header" id="heading{{$curso->nombre_curso}}{{$curso->id}}">
                           <h5 class="mb-0">
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}{{$curso->id}}" aria-expanded="false" aria-controls="collapse">
-                              Alumnos 
+                              Alumnos
                             </button>
                               <a data-value="{{$curso->id}}" onclick="activarEmergente('emergenteAgregarAlumno'); listarAlumnos({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar alumno</a>
 
                           </h5>
                         </div>
                       <div id="collapse{{$curso->nombre_curso}}{{$curso->id}}" class="collapse" aria-labelledby="heading{{$curso->nombre_curso}}{{$curso->id}}" data-parent="#accordion3">
-                          <div class="card-body">                              
+                          <div class="card-body">
                                <table id="tablaAlumnos" class="table table-striped">
                                   <thead>
                                       <tr>
@@ -109,7 +109,7 @@
                              </table>
                           </div>
                       </div>
-                      </div> 
+                      </div>
                   </div>
                    <!--BLOQUE MOSTRAR DOCENTES DEL CURSO-->
                      <div id="accordion4">
@@ -117,7 +117,7 @@
                           <div class="card-header" id="heading{{$curso->id}}">
                             <h5 class="mb-0">
                               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->id}}" aria-expanded="false" aria-controls="collapse">
-                                Docentes 
+                                Docentes
                               </button>
                               <a data-value="" onclick="" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar docente</a>
 
@@ -148,7 +148,7 @@
                              </table>
                             </div>
                         </div>
-                        </div> 
+                        </div>
                     </div>
                   <!--BLOQUE MOSTRAR PRECEPTORES DEL CURSO-->
                      <div id="accordion5">
@@ -187,11 +187,11 @@
                              </table>
                             </div>
                         </div>
-                        </div> 
-                    </div> 
+                        </div>
+                    </div>
               </div>
             </div>
-            </div> 
+            </div>
           </div>
         @endforeach
 
@@ -220,7 +220,7 @@
                 @csrf
                 <label for="materias">Materias :</label>
                 <div id="listaMaterias"style="min-height:80px;padding:15px;border:1px solid #ccc;overflow:auto;">
-                  
+
                 </div>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteAgregarMateria');">Cancelar</button>
         </form>
@@ -320,5 +320,3 @@
 </div>
 
 <!--FIN BLOQUE AGREGAR CURSO CICLO LECTIVO -->
-
-

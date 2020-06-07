@@ -6,7 +6,7 @@
   <!-- Barra de Busqueda -->
   @include('partials.buscador',['section'=>'Usuarios'])
   <!-- Barra de Busqueda FIN-->
-  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Usuario</a></div>
+  <div class="col-sm-2"></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
@@ -15,7 +15,7 @@
     </div><br />
   @endif
   <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table table-striped" id="tablaUsers">
     <thead>
         <tr>
           <td>ID</td>
@@ -45,7 +45,7 @@
             </td>
             <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Editar</a></td>
             <td>
-              <a class="btn btn-danger" onclick="confirmDestroyModal({{$user->id}},'eliminarRegistro','usuarios')">Eliminar</a>
+              <a class="btn btn-danger" onclick="confirmDestroyModal({{$user->id}},'eliminarRegistroUser','usuarios')">Eliminar</a>
             </td>
         </tr>
         @endforeach

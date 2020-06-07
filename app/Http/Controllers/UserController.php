@@ -186,12 +186,13 @@ class UserController extends Controller
         unset($respuesta['roles']);
         User::whereId($respuesta['id'])->update($respuesta);
         $userN = User::findOrFail($respuesta['id']);
+/*
         User::all()
               ->except($userN->id)
               ->each(function(User $user) use ($userN){
                 $user->notify(new UserNotification($userN));
               });
-
+*/
         return response()->json([
           '0' => '500']);
       }
@@ -227,9 +228,13 @@ class UserController extends Controller
     {
         $respuesta = $request->post();
         try{
-          Rol_usuario::where('id_usuario','=',$respuesta['id'])->delete();
           $usuarioRegistrado = User::findOrFail($respuesta['id']);
-          \Debugbar::info($usuarioRegistrado);
+          if(isset($usuarioRegistrado['id_persona'])){
+            return response()->json([
+                '0' => 'error',
+                '1' => 'El Usuario tiene una Persona Asociada']);
+          }
+          Rol_usuario::where('id_usuario','=',$respuesta['id'])->delete();
           $usuarioRegistrado->delete();
           return response()->json([
               '0' => '500']);
@@ -237,6 +242,15 @@ class UserController extends Controller
           return response()->json([
               '0' => 'error']);
         }
+    }
+
+    public function eliminarAsociadoPersona($id_persona)
+    {
+        $usuarioRegistrado = User::where('id_persona',$id_persona)->delete();
+        //if((Rol_usuario::where('id_usuario',$usuarioRegistrado['id'])->get())->isNotEmpty()){
+        //  Rol_usuario::where('id_usuario','=',$usuarioRegistrado['id'])->delete();
+        //}
+        //$usuarioRegistrado->delete();
     }
 
     public function update(Request $request){

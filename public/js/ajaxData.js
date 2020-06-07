@@ -39,6 +39,34 @@ function eliminarUser(id,controlador){
     console.log(id,controlador);
 }
 
+// id -> id del elemento a eliminar
+// Controlador -> nombre del Controlador
+function eliminarRegistroUser(id,controlador){
+var respuesta,
+    url = '/'+controlador+'/destroy',
+    dataRequest,btn = event.target,
+    btnDestroy = document.getElementsByClassName("toDestroy")[0];
+
+  dataRequest = {id:id};
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    if(response[0] != 500){
+      console.log("error");
+      btnDestroy.classList.remove("toDestroy");
+      document.getElementsByClassName('modal')[0].remove();
+      if(response[1]!== 'undefined'){
+        mostrarModal('tablaUsers',response[1],'Error Eliminar Usuario','null');
+      }else{
+        mostrarModal('tablaUsers','No se puede Eliminar el Usuario Seleccionado!','Eliminar Usuario','null');
+      }
+    }else{
+      btnDestroy.parentNode.parentNode.remove();
+      document.getElementsByClassName('modal')[0].remove();
+    }
+  });
+}
+
 function crearUser(){
   var btn = event.target,
       form = btn.parentNode,
@@ -154,9 +182,17 @@ function eliminarPersona(id_persona){
       console.log("error");
       btnDestroy.classList.remove("toDestroy");
       document.getElementsByClassName('modal')[0].remove();
-      mostrarModal('tablaPersonas','No fue posible eliminar la Persona Seleccionada!','Eliminar Persona','null');
+        if(response[1] === 'undefined'){
+          mostrarModal('tablaPersonas','No se pudo eliminar la Persona Seleccionada','Error Eliminar Persona','null');
+        }else{
+          mostrarModal('tablaPersonas',response[1],'Error Eliminar Persona','null');
+        }
     }else{
+      btnDestroy.classList.remove("toDestroy");
+      document.getElementsByClassName('modal')[0].remove();
       btnDestroy.parentNode.parentNode.remove();
+      console.log("no se muestr");
+      mostrarModal('tablaPersonas','La Persona se Elimino de Forma Correcta','Eliminar Persona','null');
     }
   });
 }

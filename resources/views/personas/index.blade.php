@@ -1,7 +1,6 @@
 @extends('layout')
 
 @section('content')
-
 <div class="d-flex flex-row table-before-row">
 <!-- Barra de Busqueda -->
 @include('partials.buscador',['section'=>'Personas'])

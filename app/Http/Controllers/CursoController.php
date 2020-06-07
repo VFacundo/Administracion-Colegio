@@ -29,7 +29,7 @@ class CursoController extends Controller
             ->join('materias', 'materia_cursos.id_materia' , '=', 'materias.id')
             ->where('cursos.id', '=', $cursos[$i]['id'] )->get();
 
-            $cursos[$i]['alumnos_curso'] = alumno::select('alumnos.*','personas.legajo','personas.nombre_persona'
+            $cursos[$i]['alumnos_curso'] = alumno::select('alumnos.*','personas.nombre_persona'
                                                             ,'personas.apellido_persona','personas.dni_persona', 'alumno_cursos.id_curso')
             ->join('alumno_cursos', 'alumno_cursos.id_alumno', '=', 'alumnos.id')
             ->join('personas', 'personas.id' , '=', 'alumnos.persona_asociada')
@@ -38,10 +38,9 @@ class CursoController extends Controller
             $cursos[$i]['docentes_curso'] = $this->getPersonalCurso($cursos[$i]['id'] , 1);
             $cursos[$i]['preceptores_curso'] = $this->getPersonalCurso($cursos[$i]['id'] , 3);
 
-          }
-
+          };
         return view('curso.index',compact('cursos'),compact('ciclo'));
-        
+
     }
 
     /**
@@ -59,7 +58,7 @@ class CursoController extends Controller
             ->join('personal_tipos', 'personals.id', '=', 'personal_tipos.id_personal')
             ->join('personal_cursos', 'personals.id', '=', 'personal_cursos.id_personal')
             ->join('personas', 'personals.id_persona' , '=', 'personas.id')
-            ->where('personal_tipos.id_tipo_personal', '=' , $id_tipo_personal)        
+            ->where('personal_tipos.id_tipo_personal', '=' , $id_tipo_personal)
             ->where('personal_cursos.id_curso', '=', $id_curso)->get();
     }
     /**
@@ -132,8 +131,8 @@ class CursoController extends Controller
                 $cursoInsert = curso::create($respuesta);
                 return response()->json([
                     '0' => '500',
-                    '1' => $cursoInsert,   
+                    '1' => $cursoInsert,
                     ]);
-        }                    
+        }
     }
 }

@@ -22,7 +22,7 @@ class CreateMateriasTable extends Migration
             $table->enum('estado_materia',['inactivo','activo']);
             $table->string('curso_correspondiente');
             $table->foreign('programa_materia')->references('id')->on('programa_materias');
-
+            $table->date('fecha_baja')->nullable();
             $table->timestamps();
         });
     }

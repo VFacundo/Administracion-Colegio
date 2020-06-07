@@ -81,7 +81,7 @@ class AlumnoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-  
+
     public function listar(Request $request){
         $respuesta = $request->post();
         $alumnos = Persona::select('personas.*','alumnos.*')
@@ -100,8 +100,8 @@ class AlumnoController extends Controller
                                       ->where('alumno_cursos.id_alumno' , '=', $respuesta['id_alumno'])->get();
         if (!($alum_cur->isNotEmpty())){
             $registro = ['id_alumno'=>$respuesta['id_alumno'], 'id_curso'=>$respuesta['id_curso']];
-            alumno_curso::create($registro);   
-        }                           
+            alumno_curso::create($registro);
+        }
         return response()->json(['0'=>'500']);
     }
 
@@ -129,7 +129,6 @@ class AlumnoController extends Controller
                                       ->where('alumno_cursos.id_curso' , '=' , $respuesta['id_curso'])
                                       ->get()
                                       ->first();
-        \Debugbar::info($alumno_curso);
 
 
         try{
@@ -140,9 +139,9 @@ class AlumnoController extends Controller
         return response()->json([
             '0' => 'error']);
       }
-        
 
-    } 
+
+    }
 
 
 }

@@ -5,7 +5,7 @@
   <!-- Barra de Busqueda -->
     @include('partials.buscador',['section'=>'Ciclos'])
   <!-- Barra de Busqueda FIN-->
-  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Ciclo Lectivo</a></div>
+  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Ciclo</a></div>
 </div>
 <div class="uper">
   @if(session()->get('success'))

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Persona;
+use App\personal;
+use App\alumno;
 use App\tipo_documento;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Auth\RegisterController;
@@ -49,21 +51,31 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
           'nombre_persona' => 'required|alpha|max:255',
           'apellido_persona' => 'required|alpha|max:255',
           'tipo_documento' => 'required',
           'dni_persona' => 'required|numeric|digits_between:7,8',
-          'cuil_persona' => 'required|numeric|digits_between:10,11',
+          'numeroPre' => 'required|numeric||digits_between:2,2',
+          'numeroPost' => 'required|numeric||digits_between:1,1',
           'domicilio' => 'required|max:255',
           'fecha_nacimiento' => 'required|date',
           'numero_telefono' => 'required',
         ]);
-          $personaInsert = Persona::create($validatedData);
+        $personaNueva = [
+          'nombre_persona' => $validatedData['nombre_persona'],
+          'apellido_persona' => $validatedData['apellido_persona'],
+          'tipo_documento' => $validatedData['tipo_documento'],
+          'dni_persona' => $validatedData['dni_persona'],
+          'cuil_persona' => $validatedData['numeroPre'] . $validatedData['dni_persona'] . $validatedData['numeroPost'],
+          'domicilio' => $validatedData['domicilio'],
+          'fecha_nacimiento' => $validatedData['fecha_nacimiento'],
+          'numero_telefono' => $validatedData['numero_telefono'],
+        ];
+          $personaInsert = Persona::create($personaNueva);
           $usuario = [
             'name' => $validatedData['dni_persona'],
-            'email' => $validatedData['nombre_persona'] . '@' . $validatedData['legajo'] . '.com',
+            'email' => $validatedData['nombre_persona'] . '@' . $validatedData['dni_persona'] . '.com',
             'password' => $validatedData['dni_persona'],
             'id_persona' => $personaInsert->id,
           ];
@@ -118,7 +130,6 @@ class PersonaController extends Controller
      public function actualizar(Request $request)
      {
        $respuesta = $request->post();
-       \Debugbar::info($respuesta);
 
        Validator::extend('estado_correcto', function($attribute, $value){
          if ((strcasecmp($value, "activo") === 0) || (strcasecmp($value, "inactivo") === 0)){
@@ -146,7 +157,6 @@ class PersonaController extends Controller
          foreach($errors->all() as $message){
            $arrayErrores[] = $message;
          }
-         \Debugbar::info($arrayErrores);
          return json_encode($arrayErrores);
        }else{
          Persona::whereId($respuesta['id'])->update($respuesta);
@@ -183,13 +193,26 @@ class PersonaController extends Controller
         $respuesta = $request->post();
         $persona = Persona::findOrFail($respuesta['id']);
 
+        if((Personal::where('id_persona',$respuesta['id'])->get())->isNotEmpty()){
+          return response()->json([
+              '0' => 'error',
+              '1' => 'La Persona esta asociada a un Personal']);
+        }
+        if((alumno::where('persona_asociada',$respuesta['id'])->get())->isNotEmpty()){
+          return response()->json([
+              '0' => 'error',
+              '1' => 'La Persona esta asociada a un Alumno']);
+        }
         try{
+          $usuarioAsociado = new UserController();
+          $usuarioAsociado->eliminarAsociadoPersona($respuesta['id']);
           $persona->delete();
           return response()->json([
               '0' => '500']);
         } catch (\Exception $e) {
           return response()->json([
-              '0' => 'error']);
+              '0' => 'error',
+              '1' => 'La Persona no se pudo Eliminar']);
         }
 
     }

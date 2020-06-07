@@ -17,6 +17,7 @@ class CreateCicloLectivoTable extends Migration
             $table->id();
             $table->year('anio');
             $table->string('nombre');
+            $table->date('fecha_baja')->nullable();
             $table->timestamps();
         });
     }
