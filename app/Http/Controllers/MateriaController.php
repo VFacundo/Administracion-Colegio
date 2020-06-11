@@ -19,7 +19,6 @@ class MateriaController extends Controller
     public function index()
     {
         $materias = materia::whereNull('materias.fecha_baja')->get();
-        $materias = materia::all();
         $programas = programa_materia::all();
         $personal = personal::select('personals.*','personas.nombre_persona','personas.apellido_persona')
                             ->join('personas', 'personas.id', '=' ,'personals.id_persona')->get();
@@ -66,8 +65,8 @@ class MateriaController extends Controller
         }elseif ($materia_existente->isNotEmpty()) {
             return response()->json([
                 '0' => 'La materia ya existe para este curso',
-                ]);
-        }else {
+                ]);     
+        }else { 
             if($validator->fails()){
                 $errors = $validator->errors();
                 foreach($errors->all() as $message){
@@ -83,7 +82,7 @@ class MateriaController extends Controller
                     '1' => $materiaInsert->id,
                     '2' => $materiaInsert->estado_materia,]);
             }
-        }
+        }                        
     }
 
     /**
@@ -141,9 +140,9 @@ class MateriaController extends Controller
                                       ->where('materia_cursos.id_materia' , '=', $respuesta['materias'][$i])->get();
             if (!($mat_cur->isNotEmpty())){
                  $registro = ['id_curso'=>$respuesta['id_curso'], 'id_materia'=>$respuesta['materias'][$i], 'horario_materia'=> '13'];
-                 materia_curso::create($registro);
-            }
-
+                 materia_curso::create($registro);    
+            }                           
+            
         }
         return response()->json(['0'=>'500']);
     }
@@ -163,11 +162,11 @@ class MateriaController extends Controller
         }
     }
 
-
+    
     public function editar(Request $Request) {
         $respuesta = $Request->post();
         $materia = materia::findOrFail($respuesta['id']);
-
+        
         return response()->json([
            'id' => $materia['id'],
            'nombre' => $materia['nombre'],
@@ -202,7 +201,7 @@ class MateriaController extends Controller
                                      ->join('ciclo_lectivos', 'ciclo_lectivos.id', '=', 'cursos.id_ciclo_lectivo')
                                      ->where('ciclo_lectivos.anio', '=', now())
                                      ->where('materias.nombre', '=', $respuesta['nombre'])
-                                     ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente'])
+                                     ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente']) 
                                      ->get();
 
         $materia_existente = materia::where('materias.nombre', '=', $respuesta['nombre'])
@@ -246,10 +245,10 @@ class MateriaController extends Controller
                         '0'=>'500',
                         '1'=> $respuesta['id'],
                         '2'=> $respuesta['estado_materia'],
-                        ]);
+                        ]);          
                 }
-            }
-        }
+            }    
+        }                 
 
     }
-}
+}    

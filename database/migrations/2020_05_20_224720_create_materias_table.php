@@ -18,11 +18,12 @@ class CreateMateriasTable extends Migration
             $table->string('nombre');
             $table->string('carga_horaria');
             $table->date('fecha_creacion');
+            $table->date('fecha_baja')->nullable();
             $table->unsignedBigInteger('programa_materia');
             $table->enum('estado_materia',['inactivo','activo']);
             $table->string('curso_correspondiente');
             $table->foreign('programa_materia')->references('id')->on('programa_materias');
-            $table->date('fecha_baja')->nullable();
+
             $table->timestamps();
         });
     }

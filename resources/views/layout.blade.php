@@ -18,6 +18,8 @@
     <script type="text/javascript" src="{{ asset('js/ajaxDataMateria.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataAlumno.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataCurso.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataPersonal.js') }}"></script>
+
 
 </head>
 <body>
@@ -139,6 +141,8 @@
             <a href="{{route('roles.index')}}" class="list-group-item">Roles y Permisos</a>
             <a href="{{route('ciclo.index')}}" class="list-group-item">Ciclo Lectivo</a>
             <a href="{{route('materia.index')}}" class="list-group-item">Materias</a>
+            <a href="{{route('alumno.index')}}" class="list-group-item">Alumnos</a>
+            <a href="{{route('personal.index')}}" class="list-group-item">Personal</a>
             <a href="#" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>
           </div>

@@ -26,6 +26,10 @@ Route::group(['middleware' => ['role:admin'],'auth'], function(){
   Route::get('/ciclo','CicloController@index')->name('ciclo.index');
   Route::get('/curso/{id}','CursoController@index')->name('curso.index');
   Route::get('/materias','MateriaController@index')->name('materia.index');
+  Route::get('/alumnos','AlumnoController@index')->name('alumno.index');
+  Route::get('/personal','PersonalController@index')->name('personal.index');
+
+
 });
 
 
@@ -65,6 +69,17 @@ Route::post('/materia/destroy','MateriaController@destroy')->name('materia.destr
 Route::post('/materia/editar','MateriaController@editar')->name('materia.editar');
 Route::post('/materia/restaurarMateria','MateriaController@restaurarMateria')->name('materia.restaurarMateria');
 Route::post('/materia/actualizar','MateriaController@actualizar')->name('materia.actualizar');
+Route::post('/alumno/store','AlumnoController@store')->name('alumno.store');
+Route::post('/alumno/listar_alumnos_personal','AlumnoController@listar_alumnos_personal')->name('alumno.listar_alumnos_personal');
+Route::post('/alumno/actualizar','AlumnoController@actualizar')->name('alumno.actualizar');
+Route::post('/alumno/eliminarAlumnoCurso','AlumnoController@eliminarAlumnoCurso')->name('alumno.eliminarAlumnoCurso');
+Route::post('/alumno/restaurarAlumno','AlumnoController@restaurarAlumno')->name('alumno.restaurarAlumno');
+Route::post('/personal/store','PersonalController@store')->name('personal.store');
+Route::post('/personal/listar_personal','PersonalController@listar_personal')->name('alumno.listar_personal');
+Route::post('/personal/actualizar','PersonalController@actualizar')->name('personal.actualizar');
+Route::post('/personal/editar','PersonalController@editar')->name('personal.editar');
+Route::post('/personal/destroy','PersonalController@destroy')->name('personal.destroy');
+Route::post('/personal/restaurarPersonal','PersonalController@restaurarPersonal')->name('personal.restaurarPersonal');
 
 
 Auth::routes();
