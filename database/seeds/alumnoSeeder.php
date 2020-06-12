@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Persona;
+use App\responsable;
 use Faker\Factory as Faker;
 
 class alumnoSeeder extends Seeder
@@ -20,12 +21,19 @@ class alumnoSeeder extends Seeder
         $cantidadPersonas = count($personas);
         $cantAlumnos = ((80*$cantidadPersonas)/100)/2;
 
-        for($i=1;$i<$cantAlumnos;$i++){
+        for($i=0;$i<$cantAlumnos;$i++){
+          DB::table('responsables')->insert([
+            'persona_asociada' => $personas[$i]['id'],
+          ]);
+        }
+
+        $responsables = responsable::all();
+
+        for($i=0;$i<$cantAlumnos;$i++){
           DB::table('alumnos')->insert([
             'legajo_alumno'=>$faker->unique()->numberBetween(1,9999),
-            'persona_asociada' => $personas[$i]['id'],
-            'id_calendario' => 1,
-            'persona_tutor' => $personas[$i+$cantAlumnos]['id']
+            'persona_asociada' => $personas[$i+$cantAlumnos]['id'],
+            'persona_tutor' => $responsables[$i]['id'],
           ]);
         }
     }

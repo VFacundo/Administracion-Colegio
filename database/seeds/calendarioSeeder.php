@@ -18,6 +18,7 @@ class calendarioSeeder extends Seeder
 	        'dia_numero' => 26,
 	        'mes_nombre' => 'mayo',
 	        'asistencia' => 1,
+          'id_alumno' => 1,
 		]);
 
     }

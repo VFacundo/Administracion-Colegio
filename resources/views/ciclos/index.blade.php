@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Ciclos'])
+    @include('partials.buscador',['section'=>'Ciclos','tableId'=>'tablaCiclos'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Ciclo</a></div>
 </div>
@@ -22,13 +22,13 @@
       </ul>
     </div><br/>
   @endif
-  <table id="tablaCiclos" class="table table-striped">
+  <table id="tablaCiclos" class="table cell-border stripe hover">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Año</td>
-          <td>Nombre</td>
-          <td colspan="3">Accion</td>
+          <th>ID</th>
+          <th>Año</th>
+          <th>Nombre</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <tbody>
@@ -37,13 +37,15 @@
             <td>{{$ciclo->id}}</td>
             <td>{{$ciclo->anio}}</td>
             <td>{{$ciclo->nombre}}</td>
-            <td><a id="btnUpdate" data-value="{{$ciclo->id}}" onclick="activarEmergente('emergenteUpdate'); updateCiclo(); " class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{$ciclo->id}}" href="{{route('curso.index', $ciclo->id)}}" class= 'btn btn-primary'>Ver Cursos</a></td>
-            <td><a data-value="{{$ciclo->id}}" onclick="confirmDestroyCiclo({{ ($ciclo->id )}})" class="btn btn-danger">Eliminar</a></td>
+            <td>
+              <a id="btnUpdate" data-value="{{$ciclo->id}}" onclick="activarEmergente('emergenteUpdate'); updateCiclo(); " class="btn btn-primary">Editar</a>
+              <a data-value="{{$ciclo->id}}" href="{{route('curso.index', $ciclo->id)}}" class= 'btn btn-primary'>Ver Cursos</a>
+              <a data-value="{{$ciclo->id}}" onclick="confirmDestroyCiclo({{ ($ciclo->id )}})" class="btn btn-danger">Eliminar</a>
+            </td>
          </tr>
-        <tr></tr>
       @endforeach
     </tbody>
+    
   </table>
 <div>
 @endsection

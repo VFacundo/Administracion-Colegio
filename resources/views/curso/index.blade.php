@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Ciclo Lectivo' . " " . $ciclo[0]['anio']])
+    @include('partials.buscador',['section'=>'Ciclo Lectivo' . " " . $ciclo[0]['anio'],'tableId'=>'null'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a></div>
 </div>
@@ -86,13 +86,18 @@
                         </div>
                       <div id="collapse{{$curso->nombre_curso}}{{$curso->id}}" class="collapse" aria-labelledby="heading{{$curso->nombre_curso}}{{$curso->id}}" data-parent="#accordion3">
                           <div class="card-body">
-                               <table id="tablaAlumnos" class="table table-striped">
+                            <script>
+                            $(document).ready(function() {
+                                $('#tablaAlumnos{{$curso->id}}').DataTable();
+                              } );
+                            </script>
+                               <table id="tablaAlumnos{{$curso->id}}" class="table table-striped">
                                   <thead>
                                       <tr>
-                                        <td>Legajo</td>
-                                        <td>Nombre y apellido</td>
-                                        <td>Numero de documento</td>
-                                        <td colspan="1">Accion</td>
+                                        <th>Legajo</th>
+                                        <th>Nombre y apellido</th>
+                                        <th>Numero de documento</th>
+                                        <th>Accion</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -103,9 +108,16 @@
                                           <td>{{$alumno_curso->dni_persona}}</td>
                                           <td><a data-value="" onclick="confirmDestroyAlumno('{{$alumno_curso->id}}','{{$alumno_curso->persona_asociada}}','{{$alumno_curso->id_curso}}')" style="color:white;"class="btn btn-danger">Eliminar del curso</a></td>
                                        </tr>
-                                      <tr></tr>
                                     @endforeach
                                   </tbody>
+                                  <tfoot>
+                                      <tr>
+                                        <th>Legajo</th>
+                                        <th>Nombre y apellido</th>
+                                        <th>Numero de documento</th>
+                                        <th>Accion</th>
+                                      </tr>
+                                  </tfoot>
                              </table>
                           </div>
                       </div>

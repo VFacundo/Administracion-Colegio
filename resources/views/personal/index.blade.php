@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Personal'])
+    @include('partials.buscador',['section'=>'Personal','tableId'=>'tablaPersonal'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear'); listarCrearPersonal();">Crear Personal</a></div>
 </div>
@@ -23,18 +23,18 @@
     </div><br/>
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaPersonal">
+  <table class="table cell-border stripe hover" id="tablaPersonal">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Nombre</td>
-          <td>Apellido</td>
-          <td>Legajo</td>
-          <td>Datos personales</td>
-          <td>Tipo(Titular/Suplente)</td>
-          <td>Fecha alta</td>
-          <td>Manejo de grupo</td>
-          <td colspan="2">Accion</td>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Legajo</th>
+          <th>Datos personales</th>
+          <th>Tipo(Titular/Suplente)</th>
+          <th>Fecha alta</th>
+          <th>Manejo de grupo</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <script>
@@ -53,11 +53,26 @@
             <td> </td>
             <td>{{date("d-m-Y", strtotime($personal->fecha_alta))}}</td>
             <td>{{$personal->manejo_de_grupo}}</td>
-            <td><a id="btnUpdate" data-value="{{ ($personal->id )}}" onclick="activarEmergente('emergenteUpdatePersonal'); updatePersonal()" class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{ ($personal->id )}}" onclick="confirmDestroyPersonal({{ ($personal->id )}})" class="btn btn-danger">Eliminar</a></td>
+            <td>
+              <a id="btnUpdate" data-value="{{ ($personal->id )}}" onclick="activarEmergente('emergenteUpdatePersonal'); updatePersonal()" class="btn btn-primary">Editar</a>
+              <a data-value="{{ ($personal->id )}}" onclick="confirmDestroyPersonal({{ ($personal->id )}})" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
       @endforeach
     </tbody>
+    <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Legajo</th>
+          <th>Datos personales</th>
+          <th>Tipo(Titular/Suplente)</th>
+          <th>Fecha alta</th>
+          <th>Manejo de grupo</th>
+          <th>Accion</th>
+        </tr>
+    </tfoot>
   </table>
   <div>
 <div>
@@ -79,7 +94,7 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" onSubmit="return false;" id="formCrearPersonal">  
+        <form method="post" onSubmit="return false;" id="formCrearPersonal">
 
         </form>
     </div>
@@ -117,7 +132,7 @@
                     <option value= "Bueno">Bueno</option>
                     <option value= "Excelente">Excelente</option>
                 </select></p>;
-              
+
             <button type="submit" class="btn btn-primary" onclick="setUpdatePersonal();">Modificar Personal</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdatePersonal');">Cancelar</button>
         </form>

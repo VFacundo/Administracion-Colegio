@@ -4,7 +4,7 @@
 
 <div class="row table-before-row">
   <!-- Barra de Busqueda -->
-  @include('partials.buscador',['section'=>'Usuarios'])
+  @include('partials.buscador',['section'=>'Usuarios','tableId'=>'tablaUsers'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"></div>
 </div>
@@ -15,15 +15,15 @@
     </div><br />
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaUsers">
+  <table class="table cell-border stripe hover" id="tablaUsers">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>UserName</td>
-          <td>EMail</td>
-          <td>Persona</td>
-          <td>Roles</td>
-          <td colspan="2">Accion</td>
+          <th>ID</th>
+          <th>UserName</th>
+          <th>EMail</th>
+          <th>Persona</th>
+          <th>Roles</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <script>
@@ -43,13 +43,23 @@
                 {{$roles->nombre_rol}} <br>
               @endforeach
             </td>
-            <td><a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Editar</a></td>
             <td>
+              <a id="btnUpdate" data-value="{{ ($user->id )}}" onclick="activarEmergente('emergenteUpdate'); updateUser()" class="btn btn-primary">Editar</a>
               <a class="btn btn-danger" onclick="confirmDestroyModal({{$user->id}},'eliminarRegistroUser','usuarios')">Eliminar</a>
             </td>
         </tr>
         @endforeach
     </tbody>
+    <tfood>
+        <tr>
+          <th>ID</th>
+          <th>UserName</th>
+          <th>EMail</th>
+          <th>Persona</th>
+          <th>Roles</th>
+          <th>Accion</th>
+        </tr>
+    </tfood>
   </table>
   <div>
 <div>

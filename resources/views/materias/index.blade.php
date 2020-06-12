@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Materias'])
+    @include('partials.buscador',['section'=>'Materias','tableId'=>'tablaMaterias'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearMateria');">Crear Materia</a></div>
 </div>
@@ -23,16 +23,16 @@
     </div><br/>
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaMaterias">
+  <table class="table cell-border stripe hover" id="tablaMaterias">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Nombre</td>
-          <td>Carga Horaria</td>
-          <td>Programa Materia</td>
-          <td>Estado</td>
-          <td>Curso Correspondiente</td>
-          <td colspan="2">Accion</td>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Carga Horaria</th>
+          <th>Programa Materia</th>
+          <th>Estado</th>
+          <th>Curso Correspondiente</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <tbody>
@@ -44,12 +44,25 @@
             <td>{{$materia->programa_materia}}</td>
             <td>{{$materia->estado_materia}}</td>
             <td>{{$materia->curso_correspondiente}}</td>
-            
-            <td><a id="btnUpdate" data-value="{{ ($materia->id )}}" onclick="activarEmergente('emergenteUpdateMateria'); updateMateria()" class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{ ($materia->id )}}" onclick="confirmDestroyMateria({{ ($materia->id )}})" class="btn btn-danger">Eliminar</a></td>
+
+            <td>
+              <a id="btnUpdate" data-value="{{ ($materia->id )}}" onclick="activarEmergente('emergenteUpdateMateria'); updateMateria()" class="btn btn-primary">Editar</a>
+              <a data-value="{{ ($materia->id )}}" onclick="confirmDestroyMateria({{ ($materia->id )}})" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
       @endforeach
     </tbody>
+    <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Carga Horaria</th>
+          <th>Programa Materia</th>
+          <th>Estado</th>
+          <th>Curso Correspondiente</th>
+          <th>Accion</th>
+        </tr>
+    </tfoot>
   </table>
   <div>
 <div>
@@ -72,14 +85,14 @@
         </div><br />
       @endif
         <form method="post" onSubmit="return false;" id="formCrearMateria">
-                
+
                 @csrf
                 <label for="nombre">Nombre :</label>
                 <input type="text" class="form-control" name="nombre" placeholder="Nombre materia" required/></textarea>
 
                 <label for="carga_horaria">Carga horaria semanal :</label>
                 <input type="text" class="form-control" name="carga_horaria" placeholder="Carga horaria semanal. Ej: 4" required/></textarea>
-                
+
                 <label for="curso">Curso :</label>
                 <select name="curso" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
                    <option value= "Primero">Primero</option>
@@ -95,7 +108,7 @@
                 @foreach($programas as $programa_materia)
                    <option value= "{{$programa_materia->id}}">{{$programa_materia->nombre_archivo}}</option>
                 @endforeach
-                </select></p>  
+                </select></p>
 
             <button type="submit" class="btn btn-primary" onclick="crearMateria();">Crear Materia</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteCrearMateria');">Cancelar</button>
@@ -130,7 +143,7 @@
 
                 <label for="carga_horaria">Carga horaria semanal :</label>
                 <input type="text" class="form-control" name="carga_horaria"required/></textarea>
-                
+
                 <label for="curso">Curso :</label>
                 <select name="curso" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">
                    <option value= "Primero">Primero</option>
@@ -152,7 +165,7 @@
                 @foreach($programas as $programa_materia)
                    <option value= "{{$programa_materia->id}}">{{$programa_materia->nombre_archivo}}</option>
                 @endforeach
-                </select></p>  
+                </select></p>
 
             <button type="submit" class="btn btn-primary" onclick="setUpdateMateria();">Modificar Materia</button>
             <button type="reset" class="btn btn-primary" onclick="activarEmergente('emergenteUpdateMateria');">Cancelar</button>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
 <!-- Barra de Busqueda -->
-@include('partials.buscador',['section'=>'Personas'])
+@include('partials.buscador',['section'=>'Personas','tableId'=>'tablaPersonas'])
 <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Persona</a></div>
 </div>
@@ -23,19 +23,20 @@
     </div><br/>
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaPersonas">
+
+  <table class="table cell-border stripe hover" id="tablaPersonas">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Nombre</td>
-          <td>Apellido</td>
-          <td>Tipo de documento</td>
-          <td>Número de documento</td>
-          <td>CUIL</td>
-          <td>Domicilio</td>
-          <td>Fecha Nacimiento</td>
-          <td>Numero Telefono</td>
-          <td colspan="2">Action</td>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Tipo de documento</th>
+          <th>Número de documento</th>
+          <th>CUIL</th>
+          <th>Domicilio</th>
+          <th>Fecha Nacimiento</th>
+          <th>Numero Telefono</th>
+          <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -50,14 +51,32 @@
             <td>{{$persona->domicilio}}</td>
             <td>{{date("d-m-Y", strtotime($persona->fecha_nacimiento))}}</td>
             <td>{{$persona->numero_telefono}}</td>
-            <td><a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Eliminar</a></td>
+            <td>
+              <a id="btnUpdate" data-value="{{ ($persona->id )}}" onclick="activarEmergente('emergenteUpdate'); updatePersona()" class="btn btn-primary">Editar</a>
+              <a data-value="{{ ($persona->id )}}" onclick="confirmDestroy({{ ($persona->id )}})" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
         @endforeach
     </tbody>
+    <tfood>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Tipo de documento</th>
+        <th>Número de documento</th>
+        <th>CUIL</th>
+        <th>Domicilio</th>
+        <th>Fecha Nacimiento</th>
+        <th>Numero Telefono</th>
+        <th>Action</th>
+      </tr>
+    </tfood>
   </table>
   <div>
 <div>
+
+
 @endsection
 
 <!--BLOQUE CREAR NUEVA PERSONA -->

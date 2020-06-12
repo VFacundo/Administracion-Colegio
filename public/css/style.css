@@ -68,8 +68,9 @@ tr{
 	padding-right: 0 !important;
 }
 
+
 table ,th ,td,tr{
-	border: 1px solid black !important;
+/*	border: 1px solid black;*/
 }
 
 table tr:first-child{
@@ -157,9 +158,31 @@ h3{
 }
 
 #cuilPersona{
-	
+
 }
 
+.imgNoticias{
+	max-width: 150px !important;
+}
+
+.dataTables_filter {
+  display: none;
+}
+
+.dataTables_length {
+	display: none; /* oculta seleccinar la cant de reg x tabla */
+}
+
+.separadorPermisos{
+	margin-top: 40px !important;
+	border-top: 2px solid !important;
+}
+
+/*
+.uper-top{
+	margin-top: 14px !important;
+}
+/*/
 /***********
 NAV MENU list
 /************/
@@ -212,5 +235,8 @@ NAV MENU list
 	#btnEmergente{
 		font-size: 0.8em;
 		right: 14px !important;
+	}
+	.imgNoticias{
+		max-width: 50px !important;
 	}
 }

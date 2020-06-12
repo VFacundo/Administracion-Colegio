@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex flex-row table-before-row">
   <!-- Barra de Busqueda -->
-    @include('partials.buscador',['section'=>'Alumnos'])
+    @include('partials.buscador',['section'=>'Alumnos','tableId'=>'tablaAlumnos'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear'); listarCrearAlumno();">Crear Alumno</a></div>
 </div>
@@ -23,17 +23,17 @@
     </div><br/>
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaAlumnos">
+  <table class="table cell-border stripe hover" id="tablaAlumnos">
     <thead>
         <tr>
-          <td>ID</td>
-          <td>Nombre</td>
-          <td>Apellido</td>
-          <td>Legajo</td>
-          <td>Responsable</td>
-          <td>Promedio</td>
-          <td>Asistencias</td>
-          <td colspan="2">Accion</td>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Legajo</th>
+          <th>Responsable</th>
+          <th>Promedio</th>
+          <th>Asistencias</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <script>
@@ -51,11 +51,25 @@
             <td><a href="#" onClick="return false;" title="Persona" data-toggle="popover" data-trigger="hover" data-html="true" data-content="{{$alumno->personaString}}">{{$alumno->persona}}</a></td>
             <td>Promedio</td>
             <td>Asistencias</td>
-            <td><a id="btnUpdate" data-value="{{ ($alumno->id )}}" onclick="activarEmergente('emergenteUpdateAlumno'); updateAlumno()" class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{ ($alumno->id )}}" onclick="confirmDestroyAlumno({{ ($alumno->id )}})" class="btn btn-danger">Eliminar</a></td>
+            <td>
+              <a id="btnUpdate" data-value="{{ ($alumno->id )}}" onclick="activarEmergente('emergenteUpdateAlumno'); updateAlumno()" class="btn btn-primary">Editar</a>
+              <a data-value="{{ ($alumno->id )}}" onclick="confirmDestroyAlumno({{ ($alumno->id )}})" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
       @endforeach
     </tbody>
+    <tfoot>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Legajo</th>
+          <th>Responsable</th>
+          <th>Promedio</th>
+          <th>Asistencias</th>
+          <th>Accion</th>
+        </tr>
+    </tfoot>
   </table>
   <div>
 <div>
@@ -77,8 +91,8 @@
           </ul>
         </div><br />
       @endif
-        <form method="post" onSubmit="return false;" id="formCrearAlumno">  
-              
+        <form method="post" onSubmit="return false;" id="formCrearAlumno">
+
         </form>
     </div>
   </div>

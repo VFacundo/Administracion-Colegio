@@ -7,12 +7,17 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sistema Administracion Colegio</title>
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <link rel="shortcut icon" type="image/png" sizes="32x32" href="{{ asset('/img/favicon-32x32.png') }}">
+  <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('/img/favicon-16x16.png') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js" defer></script>
+
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="{{ asset('js/emergente.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/ajaxData.js') }}"></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{ asset('js/emergente.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxData.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataRoles.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataCiclo.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataMateria.js') }}"></script>
@@ -143,7 +148,7 @@
             <a href="{{route('materia.index')}}" class="list-group-item">Materias</a>
             <a href="{{route('alumno.index')}}" class="list-group-item">Alumnos</a>
             <a href="{{route('personal.index')}}" class="list-group-item">Personal</a>
-            <a href="#" class="list-group-item">Noticias</a>
+            <a href="{{route('noticias.index')}}" class="list-group-item">Noticias</a>
             <a href="#" class="list-group-item">Notificaciones</a>
           </div>
         </div>
@@ -154,7 +159,6 @@
           @yield('content')
         </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!--Si la res es menor a 1000px la tabla ocupa toda la pantalla-->
         <script>
@@ -167,7 +171,7 @@
               }
             }
             });
-            
+
           if (win.width() < 1000) {
             $('#cuerpo-tabla').addClass('col-12');
             $('#cuerpo-tabla').removeClass('col-10');

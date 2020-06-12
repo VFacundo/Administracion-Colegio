@@ -3,10 +3,9 @@
 @section('content')
 
 <!--ROLES -->
-
 <div class="row table-before-row">
   <!-- Barra de Busqueda -->
-  @include('partials.buscador',['section'=>'Roles'])
+  @include('partials.buscador',['section'=>'Roles','tableId'=>'tablaRoles'])
   <!-- Barra de Busqueda FIN-->
   <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrear');">Agregar Rol</a></div>
 </div>
@@ -26,14 +25,14 @@
     </div><br/>
   @endif
   <div class="table-responsive">
-  <table class="table table-striped" id="tablaRoles">
+  <table class="table cell-border stripe hover" id="tablaRoles">
     <thead>
         <tr>
-          <td>Nombre Rol</td>
-          <td>Descripcion Rol</td>
-          <td>Estado de Rol</td>
-          <td>Permisos</td>
-          <td colspan="2">Accion</td>
+          <th>Nombre Rol</th>
+          <th>Descripcion Rol</th>
+          <th>Estado de Rol</th>
+          <th>Permisos</th>
+          <th>Accion</th>
         </tr>
     </thead>
     <tbody>
@@ -47,18 +46,31 @@
               {{$perm->nombre_permiso}} | {{date("d/m/Y", strtotime($perm->fecha_asignacion_permiso))}} <br>
             @endforeach
             </td>
-            <td><a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updateRol()" class="btn btn-primary">Editar</a></td>
-            <td><a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroyModal('{{ ($rol->nombre_rol)}}','eliminarRegistro','roles')" class="btn btn-danger">Eliminar</a></td>
+            <td>
+              <a id="btnUpdate" data-value="{{ ($rol->nombre_rol)}}" onclick="activarEmergente('emergenteUpdate'); updateRol()" class="btn btn-primary">Editar</a>
+              <a data-value="{{ ($rol->nombre_rol)}}" onclick="confirmDestroyModal('{{ ($rol->nombre_rol)}}','eliminarRegistro','roles')" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
         @endforeach
     </tbody>
+    <tfoot>
+        <tr>
+          <th>Nombre Rol</th>
+          <th>Descripcion Rol</th>
+          <th>Estado de Rol</th>
+          <th>Permisos</th>
+          <th>Accion</th>
+        </tr>
+    </tfoot>
   </table>
 <div>
 <!--PERMISOS -->
 
-  <div class="row">
-    <div class="col-sm-8"><h3>Permisos</h3></div>
-    <div class="col-sm-3"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergentePermisos');">Agregar Permiso</a></div>
+<div class="row table-before-row separadorPermisos">
+    <!-- Barra de Busqueda -->
+    @include('partials.buscador',['section'=>'Permisos','tableId'=>'tablaPermisos'])
+    <!-- Barra de Busqueda FIN-->
+    <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergentePermisos');">Agregar Permiso</a></div>
   </div>
   <div class="uper">
     @if(session()->get('success'))
@@ -76,14 +88,14 @@
       </div><br/>
     @endif
     <div class="table-responsive">
-    <table class="table table-striped" id="tablaPermisos">
+    <table class="table cell-border stripe hover" id="tablaPermisos">
       <thead>
           <tr>
-            <td>Nombre Permiso</td>
-            <td>Funcionalidad Permiso</td>
-            <td>Descripcion</td>
-            <td>Estado</td>
-            <td colspan="2">Accion</td>
+            <th>Nombre Permiso</th>
+            <th>Funcionalidad Permiso</th>
+            <th>Descripcion</th>
+            <th>Estado</th>
+            <th>Accion</th>
           </tr>
       </thead>
       <tbody>
@@ -93,11 +105,22 @@
               <td>{{$permiso->funcionalidad_permiso}}</td>
               <td>{{$permiso->descripcion_permiso}}</td>
               <td>{{$permiso->estado_permiso}}</td>
-              <td><a id="btnUpdate" data-value="{{ ($permiso->id)}}" onclick="activarEmergente('emergentePermisoUpdate'); updatePermiso();" class="btn btn-primary">Editar</a></td>
-              <td><a data-value="{{ ($permiso->id)}}" onclick="confirmDestroyModal({{ ($permiso->id)}},'eliminarRegistro','permisos')" class="btn btn-danger">Eliminar</a></td>
+              <td>
+                <a id="btnUpdate" data-value="{{ ($permiso->id)}}" onclick="activarEmergente('emergentePermisoUpdate'); updatePermiso();" class="btn btn-primary">Editar</a>
+                <a data-value="{{ ($permiso->id)}}" onclick="confirmDestroyModal({{ ($permiso->id)}},'eliminarRegistro','permisos')" class="btn btn-danger">Eliminar</a>
+              </td>
           </tr>
           @endforeach
       </tbody>
+      <tfoot>
+          <tr>
+            <th>Nombre Permiso</th>
+            <th>Funcionalidad Permiso</th>
+            <th>Descripcion</th>
+            <th>Estado</th>
+            <th>Accion</th>
+          </tr>
+      </tfoot>
     </table>
     <div>
 <div>

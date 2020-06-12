@@ -28,6 +28,7 @@ Route::group(['middleware' => ['role:admin'],'auth'], function(){
   Route::get('/materias','MateriaController@index')->name('materia.index');
   Route::get('/alumnos','AlumnoController@index')->name('alumno.index');
   Route::get('/personal','PersonalController@index')->name('personal.index');
+  Route::get('/noticias','NoticiaController@index')->name('noticias.index');
 
 
 });
