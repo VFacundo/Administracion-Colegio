@@ -21,4 +21,13 @@ class NoticiaController extends Controller
 
       return view('noticias.index',compact('noticias'));
     }
+
+    public function create(Request $request){
+      $respuesta = $request -> post();
+      \Debugbar::info($respuesta);
+
+      return response()->json([
+        '0' => '500'
+      ]);
+    }
 }

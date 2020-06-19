@@ -65,8 +65,8 @@ class MateriaController extends Controller
         }elseif ($materia_existente->isNotEmpty()) {
             return response()->json([
                 '0' => 'La materia ya existe para este curso',
-                ]);     
-        }else { 
+                ]);
+        }else {
             if($validator->fails()){
                 $errors = $validator->errors();
                 foreach($errors->all() as $message){
@@ -82,7 +82,7 @@ class MateriaController extends Controller
                     '1' => $materiaInsert->id,
                     '2' => $materiaInsert->estado_materia,]);
             }
-        }                        
+        }
     }
 
     /**
@@ -187,11 +187,11 @@ class MateriaController extends Controller
         }
     }
 
-    
+
     public function editar(Request $Request) {
         $respuesta = $Request->post();
         $materia = materia::findOrFail($respuesta['id']);
-        
+
         return response()->json([
            'id' => $materia['id'],
            'nombre' => $materia['nombre'],
@@ -226,7 +226,7 @@ class MateriaController extends Controller
                                      ->join('ciclo_lectivos', 'ciclo_lectivos.id', '=', 'cursos.id_ciclo_lectivo')
                                      ->where('ciclo_lectivos.anio', '=', now())
                                      ->where('materias.nombre', '=', $respuesta['nombre'])
-                                     ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente']) 
+                                     ->where('materias.curso_correspondiente', '=', $respuesta['curso_correspondiente'])
                                      ->get();
 
         $materia_existente = materia::where('materias.nombre', '=', $respuesta['nombre'])
@@ -270,10 +270,10 @@ class MateriaController extends Controller
                         '0'=>'500',
                         '1'=> $respuesta['id'],
                         '2'=> $respuesta['estado_materia'],
-                        ]);          
+                        ]);
                 }
-            }    
-        }                 
+            }
+        }
 
     }
 

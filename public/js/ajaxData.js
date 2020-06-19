@@ -35,6 +35,45 @@ function updateUser_backup(){
   console.log(document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 }
 
+function deleteRow(){//Marca la fila a borrar con una clase
+  var btn = event.target,tr;
+
+  //table = $('#'+idTabla).DataTable();
+  tr = $(btn).closest('tr');
+  $(tr).addClass('toDelete');
+  //table.row('.eliminar').remove().draw(false);
+}
+
+function confirmDeleteRow(idTabla){ //Borra la Fila definitivo
+  var table;
+  table = $('#'+idTabla).DataTable();
+  table.row('.toDelete').remove().draw(false);
+}
+
+function noDeleteRow(idTabla){//quita la clase para marcar el borrado
+  var table;
+  table = $('#'+idTabla).DataTable();
+  table.$('tr.toDelete').removeClass('toDelete');
+}
+
+function addRow(idTabla,datos){ //datos = { "clave" : "valor"}
+var table;
+
+  table = $('#'+idTabla).DataTable();
+  table.row.add(datos).draw();
+}
+
+function enviarMail(){
+  var form = event.target,url = '/verificar/verificar',dataRequest;
+
+  document.getElementById('btnSub').disabled = true;
+  form.insertAdjacentHTML('afterend','<br><spam>Le Enviamos un Correo, por favor revise su Casilla.</spam>')
+
+  dataRequest = {mail:form.email.value};
+  ajaxRequest(url,dataRequest);
+  console.log("enviado");
+}
+
 function eliminarUser(id,controlador){
     console.log(id,controlador);
 }
@@ -246,7 +285,7 @@ function ocultarModal(formName,emergente){
   //emergente.style.display="none";
   //document.getElementById(emergente).style.display="none";
   //activarEmergente('emergenteUpdate');-->antes
-  if(emergente != 'null'){
+  if(emergente != null){
         activarEmergente(emergente.id);
   }
 }

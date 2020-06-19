@@ -23,7 +23,8 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
+    protected $redirectTo = '/home';
+    protected $name;
 /*
     public function username()
     {
@@ -53,6 +54,7 @@ class LoginController extends Controller
  * @param  mixed  $user
  * @return mixed
  */
+ /**
     protected function authenticated(Request $request, $user){
       $userId = Auth::id();
       $usuario = User::findOrFail($userId);
@@ -63,7 +65,7 @@ class LoginController extends Controller
     //  }
       //return redirect()->route('personas.index');
     }
-
+**/
 
     /**
      * Where to redirect users after login.
@@ -79,5 +81,17 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->name = $this->findUsername();
+    }
+
+    public function findUsername(){
+      $login = request()->input('login');
+      $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+      request()->merge([$fieldType=>$login]);
+      return $fieldType;
+    }
+
+    public function username(){
+      return $this->name;
     }
 }

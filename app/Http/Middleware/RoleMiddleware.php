@@ -19,8 +19,10 @@ class RoleMiddleware
     {
         $user = User::findOrFail(Auth::id());
         if(strcasecmp($user['estado_usuario'],'inactivo') == 0){
-          Auth::logout();
-          abort(403,'Para ingresar al sistema debes Activar tu Cuenta!');
+          //Auth::logout();
+          //abort(403,'Para ingresar al sistema debes Activar tu Cuenta!');
+          //return redirect()->route('verificar.index',\Crypt::encrypt(['idUser'=>$user['id'],'idPersona'=>$user['idPersona']]));
+          return redirect()->route('verificar.index');
         }
         return $next($request);
     }

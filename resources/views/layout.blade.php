@@ -24,6 +24,7 @@
     <script type="text/javascript" src="{{ asset('js/ajaxDataAlumno.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataCurso.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataPersonal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ajaxDataNoticia.js') }}"></script>
 
 
 </head>
