@@ -132,19 +132,44 @@ class MateriaController extends Controller
         return response()->json(['materia_curso'=>$materia_curso]);
     }
 
+    public function listarAgregar(Request $request){
+        
+        if ($request->ajax()) { 
+            $respuesta = $request->post();
+            $materia_curso = materia::where('materias.curso_correspondiente', '=', $respuesta['nombre_curso'])->get();
+            return Datatables::of($materia_curso)
+                    ->addIndexColumn()
+                    ->addColumn('seleccionar', function($row){
+
+                           $btn = 'codigo del select';
+
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+    }
+
+
+
     public function agregarMateriaCurso(Request $request){
 
-        $respuesta = $request->post();
-        for ($i = 0; $i < count($respuesta['materias']); $i++ ){
+       $respuesta = $request->post();
+       for ($i = 0; $i < count($respuesta['materias']); $i++ ){
             $mat_cur = materia_curso::where('materia_cursos.id_curso', '=',$respuesta['id_curso'] )
                                       ->where('materia_cursos.id_materia' , '=', $respuesta['materias'][$i])->get();
+                         
             if (!($mat_cur->isNotEmpty())){
-                 $registro = ['id_curso'=>$respuesta['id_curso'], 'id_materia'=>$respuesta['materias'][$i], 'horario_materia'=> '13'];
-                 materia_curso::create($registro);    
+                 $registro = ['id_curso'=>$respuesta['id_curso'], 'id_materia'=>$respuesta['materias'][$i]];
+                 materia_curso::create($registro);
+            }else {
+                 return response()->json(['0'=>'ERROR! Una materia seleccionada ya se encuentra en el curso. Presione la tecla escape para salir.']);
             }                           
-            
+                
         }
+
         return response()->json(['0'=>'500']);
+
     }
 
     public function destroy(Request $request)
@@ -249,6 +274,26 @@ class MateriaController extends Controller
                 }
             }    
         }                 
+
+    }
+
+
+    public function eliminarMateriaCurso(Request $request) {
+        $respuesta = $request->post();
+
+        $materia_curso = materia_curso::where('materia_cursos.id_materia' , '=' , $respuesta['id_materia'])
+                                      ->where('materia_cursos.id_curso' , '=' , $respuesta['id_curso'])
+                                      ->get();
+
+        if ($materia_curso->isNotEmpty()){
+            $materia_curso->delete();
+            return response()->json([
+                '0' => '500']);
+        }else{
+            return response()->json([
+            '0' => 'error']);
+        }
+        
 
     }
 }    

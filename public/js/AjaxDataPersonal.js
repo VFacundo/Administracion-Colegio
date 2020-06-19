@@ -298,3 +298,218 @@ function restaurarPersonal(id_personal){
  
   });    
 }
+
+//////////////////////////////////////// AGREGAR PRECEPTOR A CURSO ////////////////////////////////////////////////////////////////////
+function listarPersonalPreceptor(id_curso) {
+  var btn = event.target,
+  id_personal,
+  nombre_personal,
+  apellido_personal,
+  texto,
+  url = '/personal/listar',
+  formUpdate = document.getElementById('formAsignarPreceptor');
+
+  removeErrors('formAsignarPreceptor');
+  dataRequest = {curso_id:btn.dataset.value,
+                };
+
+  document.getElementById('formAsignarPreceptor').innerHTML= '';
+  try{
+    document.getElementById('agregarPreceptor').remove();
+    document.getElementById('boton_cancelar').remove();
+  }catch(error){}
+  
+
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    
+    texto = '<label for="Preceptor">Preceptor :</label>'+
+            '<select name="preceptor" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
+            
+        for(var i = 0;i < response['personal'].length; i++){
+          id_personal = response['personal'][i]['id'];
+          nombre_personal = response['personal'][i]['nombre_persona'];
+          apellido_personal = response['personal'][i]['apellido_persona'];
+          texto += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
+        }   
+        
+        document.getElementById('formAsignarPreceptor').insertAdjacentHTML('beforeend', texto);         
+                 
+        emergenteAgregar = "'emergenteAgregarPreceptor'";  
+        
+        boton_agregarPreceptor = '<button data-value="'+ id_curso +'" id="agregarPreceptor" "type="submit" onclick="asignarPreceptorCurso();"class="btn btn-primary">Agregar a curso</button>'
+        boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregar +');">Cancelar</button>'
+        document.getElementById('formAsignarPreceptor').insertAdjacentHTML('afterend', boton_cancelar);
+        document.getElementById('formAsignarPreceptor').insertAdjacentHTML('afterend', boton_agregarPreceptor);
+    });
+}
+
+
+function asignarPreceptorCurso(){
+  var preceptorBox = document.getElementById('formAsignarPreceptor').preceptor,
+  preceptor_a_agregar, 
+  boton = event.target,
+  dataRequest,
+  url = '/personal/agregarPreceptorCurso';
+      
+  preceptor_a_agregar = preceptorBox.value;
+      
+  dataRequest = {id_personal: preceptor_a_agregar, 
+                 id_curso: boton.dataset.value,
+                 tipo_personal: "Preceptor"};
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    if(response[0] != 500){
+        console.log(response);
+        displayErrors(response,'formAsignarPreceptor');
+        //activarEmergente('emergenteAgregarPreceptor');
+    }else{  
+      console.log(response);
+      //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
+      activarEmergente('emergenteAgregarPreceptor');
+    }
+  });
+}
+
+
+////////////////////////////////////////// ASIGAR DOCENTE A MATERIA //////////////////////////////////////////
+function listarPersonalDocente(id_curso, id_materia) {
+  var btn = event.target,
+  id_personal,
+  nombre_personal,
+  apellido_personal,
+  texto,
+  url = '/personal/listar',
+  formUpdate = document.getElementById('formAsignarDocente');
+
+  removeErrors('formAsignarDocente');
+  dataRequest = {curso_id:btn.dataset.value,
+                 materia_id:btn.dataset.value,
+                };
+
+  document.getElementById('formAsignarDocente').innerHTML= '';
+  try{
+    document.getElementById('agregarDocente').remove();
+    document.getElementById('boton_cancelar').remove();
+  }catch(error){}
+  
+
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+
+    console.log(response);
+
+    doc_titular = "'docente_titular'";
+    doc_suplente = "'docente_suplente'";
+    titular = '<input type="checkbox" id="checkTitular" onchange="habilitar(this.checked , '+ doc_titular +' );"> Habilitar/Deshabilitar Titular'+
+            '<select name="docente_titular" id="docente_titular" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;" disabled=true>';
+            
+        for(var i = 0;i < response['personal'].length; i++){
+          id_personal = response['personal'][i]['id'];
+          nombre_personal = response['personal'][i]['nombre_persona'];
+          apellido_personal = response['personal'][i]['apellido_persona'];
+          titular += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
+        }   
+        
+        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', titular);         
+    
+
+    suplente = '<input type="checkbox" id="checkSuplente" onchange="habilitar(this.checked, '+ doc_suplente +');"> Habilitar/Deshabilitar Suplente'+
+               '<select name="docente_suplente" id="docente_suplente" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;" disabled=true>';
+            
+        for(var i = 0;i < response['personal'].length; i++){
+          id_personal = response['personal'][i]['id'];
+          nombre_personal = response['personal'][i]['nombre_persona'];
+          apellido_personal = response['personal'][i]['apellido_persona'];
+          suplente += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
+        }   
+                   
+        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', suplente);             
+
+      emergenteAgregar = "'emergenteAsignarDocente'";  
+        
+      boton_agregarDocente = '<button data-value="'+ id_curso +'" id="agregarDocente" "type="submit" onclick="asignarDocenteMateria('+ id_materia +'); "class="btn btn-primary" disabled=true >Agregar a curso</button>'
+      boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregar +');">Cancelar</button>'
+      document.getElementById('formAsignarDocente').insertAdjacentHTML('afterend', boton_cancelar);
+      document.getElementById('formAsignarDocente').insertAdjacentHTML('afterend', boton_agregarDocente);
+
+      
+
+    });
+}
+
+function habilitar(value,docente){
+
+  console.log(docente);
+  if(value==true){
+        // habilitamos
+        document.getElementById(docente).disabled=false;
+  }else if(value==false){
+        // deshabilitamos
+        document.getElementById(docente).disabled=true;
+  }
+
+  if ((document.getElementById('docente_titular').disabled == true) && (document.getElementById('docente_suplente').disabled == true)){
+        document.getElementById('agregarDocente').disabled=true;
+  }else {
+        document.getElementById('agregarDocente').disabled=false;
+  }
+
+
+      
+}
+
+function asignarDocenteMateria(id_materia){
+  var titularBox = document.getElementById('formAsignarDocente').docente_titular,
+  suplenteBox = document.getElementById('formAsignarDocente').docente_suplente,
+  checkBoxSuplente = docente_suplente.disabled,
+  checkBoxTitular = docente_titular.disabled,
+
+  titular_a_agregar,
+  suplente_a_agregar, 
+  boton = event.target,
+  dataRequest,
+  url = '/personal/asignarDocenteMateria';
+      
+  titular_a_agregar = titularBox.value;
+  removeErrors('formAsignarDocente');
+
+  if (checkBoxSuplente == true){
+    suplente_a_agregar = 0;
+  } else {
+    suplente_a_agregar = suplenteBox.value;    
+  }
+
+  if (checkBoxTitular == true){
+    titular_a_agregar = 0;
+  } else {
+    titular_a_agregar = titularBox.value;
+  }
+
+  dataRequest = {id_titular: titular_a_agregar,
+                 id_suplente: suplente_a_agregar, 
+                 id_curso: boton.dataset.value,
+                 id_materia: id_materia,
+                 tipo_personal: "Docente"};
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    if(response[0] != 500){
+        console.log(response);
+        displayErrors(response,'formAsignarDocente');
+        //activarEmergente('emergenteAgregarPreceptor');
+    }else{  
+      console.log(response);
+      //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
+      activarEmergente('emergenteAsignarDocente');
+    }
+  }); 
+
+
+
+      
+  
+}

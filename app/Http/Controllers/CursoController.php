@@ -29,6 +29,16 @@ class CursoController extends Controller
             ->join('materias', 'materia_cursos.id_materia' , '=', 'materias.id')
             ->where('cursos.id', '=', $cursos[$i]['id'] )->get();
 
+
+            $cursos[$i]['personal_materias'] = curso::select('cursos.*','materias.*', 'personas.nombre_persona','personas.apellido_persona', 'personal_materias.*')
+            ->join('materia_cursos', 'cursos.id', '=', 'materia_cursos.id_curso')
+            ->join('materias', 'materia_cursos.id_materia' , '=', 'materias.id')
+            ->join('personal_materias', 'personal_materias.id_materia' , '=', 'materias.id')
+            ->join('personals', 'personal_materias.id_personal' , '=', 'personals.id')
+            ->join('personas', 'personals.id_persona' , '=', 'personas.id')
+            ->where('cursos.id', '=', $cursos[$i]['id'] )->get();
+
+
             $cursos[$i]['alumnos_curso'] = alumno::select('alumnos.*','alumnos.legajo_alumno','personas.nombre_persona'
                                                             ,'personas.apellido_persona','personas.dni_persona', 'alumno_cursos.id_curso')
             ->join('alumno_cursos', 'alumno_cursos.id_alumno', '=', 'alumnos.id')
@@ -36,10 +46,11 @@ class CursoController extends Controller
             ->where('alumno_cursos.id_curso', '=', $cursos[$i]['id'] )->get('alumnos.*','personas.*');
 
             $cursos[$i]['docentes_curso'] = $this->getPersonalCurso($cursos[$i]['id'] , 1);
-            $cursos[$i]['preceptores_curso'] = $this->getPersonalCurso($cursos[$i]['id'] , 3);
+            $cursos[$i]['preceptores_curso'] = $this->getPersonalCurso($cursos[$i]['id'] , 2);
 
           }
 
+          
         return view('curso.index',compact('cursos'),compact('ciclo'));
         
     }
@@ -55,7 +66,7 @@ class CursoController extends Controller
     }
 
     public function getPersonalCurso($id_curso, $id_tipo_personal) {
-         return personal::select('personals.*','personas.*','personal_tipos.*')
+         return personal::select('personals.*','personas.nombre_persona','personas.apellido_persona','personas.dni_persona','personal_tipos.*')
             ->join('personal_tipos', 'personals.id', '=', 'personal_tipos.id_personal')
             ->join('personal_cursos', 'personals.id', '=', 'personal_cursos.id_personal')
             ->join('personas', 'personals.id_persona' , '=', 'personas.id')

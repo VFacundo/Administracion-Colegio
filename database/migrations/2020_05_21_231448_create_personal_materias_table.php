@@ -19,8 +19,8 @@ class CreatePersonalMateriasTable extends Migration
             $table->unsignedBigInteger('id_materia');
             $table->enum('tipo',['titular','suplente']);
             $table->date('fecha_alta');
-            $table->date('fecha_baja');
-            $table->unsignedBigInteger('suplente_de');
+            $table->date('fecha_baja')->nullable();
+            $table->unsignedBigInteger('suplente_de')->nullable();
             $table->foreign('id_personal')->references('id')->on('personals');
             $table->foreign('id_materia')->references('id')->on('materias');
             $table->foreign('suplente_de')->references('id')->on('personals');

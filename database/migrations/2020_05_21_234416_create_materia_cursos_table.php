@@ -16,11 +16,9 @@ class CreateMateriaCursosTable extends Migration
         Schema::create('materia_cursos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_curso');
-            $table->unsignedBigInteger('id_materia');
-            $table->unsignedBigInteger('horario_materia');
+            $table->unsignedBigInteger('id_materia');            
             $table->foreign('id_curso')->references('id')->on('cursos');
             $table->foreign('id_materia')->references('id')->on('materias');
-            $table->foreign('horario_materia')->references('id')->on('horario_materias');
             $table->timestamps();
         });
     }

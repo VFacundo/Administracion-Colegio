@@ -18,7 +18,6 @@ $factory->define(App\materia_curso::class, function (Faker $faker) {
 
     	'id_curso' => $id_curso,
     	'id_materia'=> $id_materia,
-    	'horario_materia' => $id_horario_materia
         
     ];
 });

@@ -17,6 +17,7 @@ class CreatePersonalCursosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_curso');
             $table->unsignedBigInteger('id_personal');
+            $table->date('fecha_baja')->nullable();
             $table->foreign('id_personal')->references('id')->on('personals');
             $table->foreign('id_curso')->references('id')->on('cursos');
             $table->timestamps();

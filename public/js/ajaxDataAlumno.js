@@ -2,52 +2,119 @@ function listarAlumnos(id_curso) {
   var btn = event.target,
   id_alumno,
   nombre_alumno,
-  texto,
+  texto = '',
   url = '/alumno/listar',
   formUpdate = document.getElementById('formAsignarAlumno');
 
   removeErrors('formAsignarAlumno');
   dataRequest = {curso_id:btn.dataset.value,
                 };
-  document.getElementById('listaAlumnos').innerHTML= '';
+  console.log(dataRequest); 
   try{
-  	document.getElementById('agregarAlumno').remove();
+    document.getElementById('boton_crear').remove();
+    document.getElementById('boton_cancelar').remove();
+
   }catch(error){}
-  
+
+  tabla = '<table id="tablaAsignarAlumnos" class="data-table table table-striped">'+
+                    '<thead>'+
+                      '<tr>'+
+                        '<th>Alumno</th>'+
+                       ' <th>Agregar</th>'+
+                      '</tr>'+
+                    '</thead>'+
+                    '<tbody>'+
+                    '</tbody>'+
+                    '<tfoot>'+
+                      '<tr>'+
+                        '<th>Alumno</th>'+
+                        '<th>Agregar</th>'+
+                      '</tr>'+
+                    '</tfoot>'+
+                  '</table>'+
+                  '</div>';
+
+  document.getElementById('formAsignarAlumno').insertAdjacentHTML('beforeend',tabla);
+
 
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
-  .then(function(response){
-    texto = '<select name="alumnos" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
-            ;
-        for(var i = 0;i < response['alumnos'].length; i++){
-                id_alumno = response['alumnos'][i]['id'];
-                nombre_alumno = response['alumnos'][i]['nombre_persona'];
-                apellido_alumno = response['alumnos'][i]['apellido_persona'];
-                texto += '<option value= "'+ id_alumno +'">'+nombre_alumno +' '+apellido_alumno +'</option>';
-          }    
-                document.getElementById('listaAlumnos').insertAdjacentHTML('beforeend', texto);
+   .then(function(response){
+    console.log(response);
+
+    
+    for(var i = 0;i < response['alumnos'].length; i++){
+        id_alumno = response['alumnos'][i]['id'];
+        nombre_alumno = response['alumnos'][i]['nombre_persona'];
+        apellido_alumno = response['alumnos'][i]['apellido_persona'];          
+        texto += '<tr>'+
+                '<td>'+ nombre_alumno +' '+ apellido_alumno +'</td>' + 
+                '<td> <input type="checkbox" name="alumnos" value="'+ id_alumno +'"> </td>'+
+                '</tr>';        
+    }
+
+        document.querySelector('#tablaAsignarAlumnos>tbody').insertAdjacentHTML('beforeend', texto);
         
-        boton_agregarAlumno = '<button data-value="'+ id_curso +'" id="agregarAlumno"type="submit" onclick="asignarAlumnoCurso();"class="btn btn-primary">Agregar a curso</button>'
-        document.getElementById('listaAlumnos').insertAdjacentHTML('afterend', boton_agregarAlumno);
+        emergenteAgregarAlumno = "'emergenteAgregarAlumno'";  
+        boton_crear = '<button data-value="'+ id_curso +'" id="boton_crear"type="submit" onclick="asignarAlumnoCurso(); limpiarTablaAlumnos();"class="btn btn-primary">Agregar a curso</button>'
+        boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregarAlumno +'); limpiarTablaAlumnos();  ">Cancelar</button>'
+        document.getElementById('tablaAsignarAlumnos').insertAdjacentHTML('afterend', boton_cancelar);
+        document.getElementById('tablaAsignarAlumnos').insertAdjacentHTML('afterend', boton_crear); 
+         
+
+        $('#tablaAsignarAlumnos').DataTable({
+                                       "oLanguage": {
+                                       "sSearch": "Buscar",
+                                       "sInfo": "Se muestran de _START_ a _END_ de _TOTAL_ Alumnos",
+                                       "sZeroRecords": "No se encontraron Resultados",
+                                       "sInfoEmpty": "No se encontraron Registros para Mostrar",
+                                       "oPaginate": {
+                                           "sNext": "Siguiente",
+                                           "sPrevious": "Anterior"
+                                        },
+                                    }
+        }); 
+
+       $('.dataTables_filter').show();  
+       
     });
+         
 }
+
+function limpiarTablaAlumnos(){
+
+  $('#tablaAsignarAlumnos').dataTable().fnDestroy();
+  document.getElementById('tablaAsignarAlumnos').remove(); 
+}
+
 
 function asignarAlumnoCurso(){
   var alumnoBox = document.getElementById('formAsignarAlumno').alumnos,
-  alumno_a_agregar,
+  alumnos_a_agregar = [],
   boton = event.target,
   dataRequest,
   url = '/alumno/agregarAlumnoCurso';
 
-  alumno_a_agregar = alumnoBox.value;
+  
+  for(var i = 0; i < alumnoBox.length; i++){
+      if (alumnoBox[i].checked){
+        alumnos_a_agregar[alumnos_a_agregar.length] = alumnoBox[i].value;
+      }
+  }
 
-  dataRequest = {id_alumno: alumno_a_agregar, id_curso: boton.dataset.value};
+  dataRequest = {alumnos: alumnos_a_agregar,
+                 id_curso: boton.dataset.value};
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
-    console.log(response);
-    activarEmergente('emergenteAgregarAlumno');
+    if(response[0] != 500){
+        console.log(response);
+        activarEmergente('emergenteAgregarAlumno');
+    }else{  
+      console.log(response);
+      //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
+      activarEmergente('emergenteAgregarAlumno');
+    }
   });
 }
 

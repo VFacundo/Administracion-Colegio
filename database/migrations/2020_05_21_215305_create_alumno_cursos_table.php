@@ -17,6 +17,7 @@ class CreateAlumnoCursosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_alumno');
             $table->unsignedBigInteger('id_curso');
+            $table->date('fecha_baja')->nullable();
             $table->foreign('id_alumno')->references('id')->on('alumnos');
             $table->foreign('id_curso')->references('id')->on('cursos');
 

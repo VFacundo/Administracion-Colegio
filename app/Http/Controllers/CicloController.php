@@ -142,10 +142,10 @@ class CicloController extends Controller
          $respuesta = $Request->post();
          $ciclo = ciclo_lectivo::findOrFail($respuesta['id']);
          //var_dump($_POST);
-     return response()->json([
-       'id' => $ciclo['id'],
-       'anio' => $ciclo['anio'],
-       'nombre' => $ciclo['nombre'],
+        return response()->json([
+            'id' => $ciclo['id'],
+            'anio' => $ciclo['anio'],
+            'nombre' => $ciclo['nombre'],
         ]);
     }
 
@@ -155,8 +155,13 @@ class CicloController extends Controller
             'anio' => 'required|min:4|max:4',
         ]);
         $cicloExistente = ciclo_lectivo::where('ciclo_lectivos.anio', '=' , $respuesta['anio'])->get();
+        \Debugbar::info($cicloExistente);
+        $cursos = curso::select('cursos.*')->where('cursos.id_ciclo_lectivo', '=', $respuesta['id'])->get();                              
 
-        if (($cicloExistente->isNotEmpty())){
+        if ($cursos->isNotEmpty()){
+            return response()->json([
+                    '0' => 'El ciclo no se puede editara porque tiene cursos asociados',]);
+        }elseif (($cicloExistente->isNotEmpty())){
             return response()->json([
                     '0' => 'El ciclo lectivo ya existe',]);
         }else{

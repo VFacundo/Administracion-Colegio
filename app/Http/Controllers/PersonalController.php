@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\alumno;
 use App\alumno_curso;
 use App\Persona;
 use App\personal;
+use App\personal_curso;
+use App\personal_tipo;
+use App\personal_materia;
+
+
 use Illuminate\Support\Facades\Validator;
 
 class PersonalController extends Controller
@@ -234,4 +240,141 @@ class PersonalController extends Controller
     }     
 
 
+    public function listar(Request $request){
+
+        $personal = Persona::select('personas.*', 'personals.id')
+                   ->join('personals', 'personas.id' , '=', 'personals.id_persona')
+                   ->get();
+   
+        return response()->json(['personal'=>$personal]);       
+    }
+
+
+    public function agregarPreceptorCurso(Request $request){
+
+        $respuesta = $request->post();
+        
+        $preceptor_cur = personal::select('personals.*','personas.nombre_persona','personas.apellido_persona','personas.dni_persona','personal_tipos.*')
+            ->join('personal_tipos', 'personals.id', '=', 'personal_tipos.id_personal')
+            ->join('personal_cursos', 'personals.id', '=', 'personal_cursos.id_personal')
+            ->join('personas', 'personals.id_persona' , '=', 'personas.id')
+            ->where('personal_tipos.id_tipo_personal', '=' , 2)        
+            ->where('personal_cursos.id_curso', '=', $respuesta['id_curso'])->get();
+       
+        if (!($preceptor_cur->isNotEmpty())){
+            $registro_pc = ['id_personal'=>$respuesta['id_personal'], 'id_curso'=>$respuesta['id_curso']];
+            $registro_pt = ['id_personal'=>$respuesta['id_personal'], 'id_tipo_personal'=>2, 'fecha_desde'=>'2013-01-01 08:00:00'];
+            
+            personal_curso::create($registro_pc);
+            personal_tipo::create($registro_pt);
+            return response()->json(['0'=>'500']);
+        }else{
+            return response()->json(['0'=>'ERROR! El curso ya posee un preceptor.']);
+
+        }
+
+    }
+
+    public function asignarDocenteMateria(Request $request){
+
+        $respuesta = $request->post();
+
+        $docenteTitular_materia = personal::select('personals.*')
+            ->join('personal_tipos', 'personals.id', '=', 'personal_tipos.id_personal')
+            ->join('personal_cursos', 'personals.id', '=', 'personal_cursos.id_personal')
+            ->join('personal_materias', 'personals.id', '=', 'personal_materias.id_personal')
+            ->join('personas', 'personals.id_persona' , '=', 'personas.id')
+            ->where('personal_tipos.id_tipo_personal', '=' , 1)
+            ->where('personal_materias.tipo', '=', 'titular')
+            ->where('personal_materias.id_materia', '=', $respuesta['id_materia'])        
+            ->where('personal_cursos.id_curso', '=', $respuesta['id_curso'])->get();
+                   
+           
+        $docenteSuplente_materia = personal::select('personals.*')
+                ->join('personal_tipos', 'personals.id', '=', 'personal_tipos.id_personal')
+                ->join('personal_cursos', 'personals.id', '=', 'personal_cursos.id_personal')
+                ->join('personal_materias', 'personals.id', '=', 'personal_materias.id_personal')
+                ->join('personas', 'personals.id_persona' , '=', 'personas.id')
+                ->where('personal_tipos.id_tipo_personal', '=' , 1)
+                ->where('personal_materias.tipo', '=', 'suplente')
+                ->where('personal_materias.id_materia', '=', $respuesta['id_materia'])        
+                ->where('personal_cursos.id_curso', '=', $respuesta['id_curso'])->get();
+     
+        if ($respuesta['id_suplente'] == $respuesta['id_titular']){
+            return response()->json(['0'=>'ERROR! Titular y suplente son la misma persona']);
+        
+        }elseif( ($docenteTitular_materia->isEmpty()) and ($docenteSuplente_materia->isEmpty() ) ){
+            
+            if ( ($docenteTitular_materia->isEmpty()) and ($respuesta['id_titular'] != 0) ){
+                
+                $registro_personal_curso = ['id_personal'=>$respuesta['id_titular'], 'id_curso'=>$respuesta['id_curso']];
+                $registro_personal_tipo = ['id_personal'=>$respuesta['id_titular'], 'id_tipo_personal'=>1, 'fecha_desde'=>'2013-01-01 08:00:00'];
+                $registro_personal_materia = ['id_personal'=>$respuesta['id_titular'], 'id_materia'=>$respuesta['id_materia'], 'tipo'=>'titular', 'fecha_alta'=>'2013-01-01 08:00:00'];
+
+                personal_curso::create($registro_personal_curso);
+                personal_tipo::create($registro_personal_tipo);
+                personal_materia::create($registro_personal_materia);
+            }
+
+            if ( ($docenteSuplente_materia->isEmpty()) and ($respuesta['id_suplente'] != 0)){
+                $registro_personal_curso = ['id_personal'=>$respuesta['id_suplente'], 'id_curso'=>$respuesta['id_curso']];
+                $registro_personal_tipo = ['id_personal'=>$respuesta['id_suplente'], 'id_tipo_personal'=>1, 'fecha_desde'=>'2013-01-01 08:00:00'];
+                
+                if (!($docenteTitular_materia->isNotEmpty())){
+                   $respuesta['id_titular'] = NULL;     
+                }
+
+                $registro_personal_materia = ['id_personal'=>$respuesta['id_suplente'], 'id_materia'=>$respuesta['id_materia'], 'tipo'=>'suplente', 'fecha_alta'=>'2013-01-01 08:00:00', 'suplente_de'=> $respuesta['id_titular']];
+
+                personal_curso::create($registro_personal_curso);
+                personal_tipo::create($registro_personal_tipo);
+                personal_materia::create($registro_personal_materia);
+            }   
+
+            return response()->json(['0'=>'500']);
+
+        }elseif (($docenteSuplente_materia->isEmpty()) and ($respuesta['id_suplente'] != 0)){
+
+            if($docenteTitular_materia[0]->id == $respuesta['id_suplente']){
+                return response()->json(['0'=>'ERROR! Titular y suplente son la misma persona']);
+            } else{
+                $registro_personal_curso = ['id_personal'=>$respuesta['id_suplente'], 'id_curso'=>$respuesta['id_curso']];
+                $registro_personal_tipo = ['id_personal'=>$respuesta['id_suplente'], 'id_tipo_personal'=>1, 'fecha_desde'=>'2013-01-01 08:00:00'];
+                
+                if (($docenteTitular_materia->isNotEmpty())){
+                   $respuesta['id_titular'] = $docenteTitular_materia[0]->id;    
+                }
+
+                $registro_personal_materia = ['id_personal'=>$respuesta['id_suplente'], 'id_materia'=>$respuesta['id_materia'], 'tipo'=>'suplente', 'fecha_alta'=>'2013-01-01 08:00:00', 'suplente_de'=> $respuesta['id_titular']];
+
+                personal_curso::create($registro_personal_curso);
+                personal_tipo::create($registro_personal_tipo);
+                personal_materia::create($registro_personal_materia);
+                return response()->json(['0'=>'500']);
+            }
+            
+        }elseif (($docenteTitular_materia->isEmpty()) and ($respuesta['id_titular'] != 0)){
+
+            if($docenteSuplente_materia[0]->id == $respuesta['id_titular']){
+                return response()->json(['0'=>'ERROR! Titular y suplente son la misma persona']);
+            } else{
+                $registro_personal_curso = ['id_personal'=>$respuesta['id_titular'], 'id_curso'=>$respuesta['id_curso']];
+                $registro_personal_tipo = ['id_personal'=>$respuesta['id_titular'], 'id_tipo_personal'=>1, 'fecha_desde'=>'2013-01-01 08:00:00'];
+                $registro_personal_materia = ['id_personal'=>$respuesta['id_titular'], 'id_materia'=>$respuesta['id_materia'], 'tipo'=>'titular', 'fecha_alta'=>'2013-01-01 08:00:00'];
+
+                personal_curso::create($registro_personal_curso);
+                personal_tipo::create($registro_personal_tipo);
+                personal_materia::create($registro_personal_materia);
+                return response()->json(['0'=>'500']);
+            }
+            
+        }else{
+             return response()->json(['0'=>'ERROR!']);
+
+        }
+
+    }       
+
 }
+
+

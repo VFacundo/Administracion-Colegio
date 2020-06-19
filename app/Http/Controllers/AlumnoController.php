@@ -188,15 +188,18 @@ class AlumnoController extends Controller
     public function agregarAlumnoCurso(Request $request){
 
         $respuesta = $request->post();
-        $alum_cur = alumno_curso::where('alumno_cursos.id_curso', '=', $respuesta['id_curso'] )
-                                      ->where('alumno_cursos.id_alumno' , '=', $respuesta['id_alumno'])->get();
-        if (!($alum_cur->isNotEmpty())){
-            $registro = ['id_alumno'=>$respuesta['id_alumno'], 'id_curso'=>$respuesta['id_curso']];
-            alumno_curso::create($registro);   
+        
+        for ($i = 0; $i < count($respuesta['alumnos']); $i++ ){
+            $alum_cur = alumno_curso::where('alumno_cursos.id_curso', '=', $respuesta['id_curso'] )
+                                      ->where('alumno_cursos.id_alumno' , '=', $respuesta['alumnos'][$i])->get();
+        
+            if (!($alum_cur->isNotEmpty())){
+                $registro = ['id_alumno'=>$respuesta['alumnos'][$i], 'id_curso'=>$respuesta['id_curso']];
+                alumno_curso::create($registro);   
+            }
         }                           
         return response()->json(['0'=>'500']);
     }
-
 
     public function editar(Request $Request)
      {
@@ -254,7 +257,7 @@ class AlumnoController extends Controller
                 $datos_responsable['persona_asociada'] = $respuesta['persona_tutor'];
                 //Se busca el id del responsable para poder hacer el update 
                 $responsableUpdate = responsable::findOrFail($alumno_existente[0]['persona_tutor']);
-                \Debugbar::info($responsableUpdate);
+                
                 //Update del responsable
                 responsable::whereId($responsableUpdate->id)->update($datos_responsable);
                 //Se reemplaza el id de persona por el id del responsable
@@ -281,7 +284,7 @@ class AlumnoController extends Controller
             $datos_responsable['persona_asociada'] = $respuesta['persona_tutor'];
             //Se busca el id del responsable para poder hacer el update 
             $responsableUpdate = responsable::findOrFail($alumno_existente[0]['persona_tutor']);
-            \Debugbar::info($responsableUpdate);
+            
             //Update del responsable
             responsable::whereId($responsableUpdate->id)->update($datos_responsable);
             //Se reemplaza el id de persona por el id del responsable
