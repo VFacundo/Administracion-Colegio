@@ -6,6 +6,7 @@
     "We have emailed your password reset link!": "Te enviamos el email para recuperar tu contraseña!",
     "Confirm Password": "Confirmar Contraseña",
     "Forgot Your Password?": "Olvido su Contraseña?",
-    "Remember Me": "Recordar"
+    "Remember Me": "Recordar",
+    "The password must be at least 8 characters.": "La contraseña debe ser de al menos 8 caracteres"
 
 }

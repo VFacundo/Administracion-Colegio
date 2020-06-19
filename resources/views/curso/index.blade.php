@@ -62,8 +62,8 @@
                                            "sPrevious": "Anterior"
                                         },
                                         }
-                                }); 
-                                $('.dataTables_filter').show();    
+                                });
+                                $('.dataTables_filter').show();
                               });
                             </script>
                              <table id="tablaMaterias{{$curso->id}}" class="table table-striped">
@@ -87,32 +87,35 @@
                                           foreach ($curso['personal_materias'] as $personal_materia):
 
                                           if (($materia_curso->nombre) == ($personal_materia->nombre)):
-                                              if($personal_materia->tipo == 'titular'): 
+                                              if($personal_materia->tipo == 'titular'):
                                                 echo  "<td>$personal_materia->nombre_persona $personal_materia->apellido_persona</td>";
                                                 $i ++;
-                                              elseif($personal_materia->tipo == 'suplente'): 
+                                              elseif($personal_materia->tipo == 'suplente'):
                                                 if ($i == 0):
                                                   echo "<td></td>";
                                                   $i = 2;
                                                 endif;
+                                                $i++;
                                                 echo  "<td>$personal_materia->nombre_persona $personal_materia->apellido_persona</td>";
-                                              endif;  
+                                              endif;
                                           endif;
 
                                           endforeach;
                                           if ($i == 0):
                                                   echo "<td></td>";
                                                   echo "<td></td>";
+                                          elseif ($i == 1):
+                                                  echo "<td></td>";
                                           endif;
                                           ?>
 
-                                          <td> 
-                                            <a data-value="" onclick="activarEmergente('emergenteAsignarDocente'); listarPersonalDocente('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar docente</a> 
-                                            <a data-value="" onclick="activarEmergente('emergenteAsignarHorario'); crearFormHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a> 
-                                            <a data-value="" onclick="confirmDestroyMateriaCurso('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-danger">Eliminar</a> 
+                                          <td>
+                                            <a data-value="" onclick="activarEmergente('emergenteAsignarDocente'); listarPersonalDocente('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar docente</a>
+                                            <a data-value="" onclick="activarEmergente('emergenteAsignarHorario'); crearFormHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a>
+                                            <a data-value="" onclick="confirmDestroyMateriaCurso('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-danger">Eliminar</a>
                                           </td>
                                        </tr>
-                                      
+
                                     @endforeach
                                   </tbody>
                                   <tfoot>
@@ -156,8 +159,8 @@
                                            "sPrevious": "Anterior"
                                         },
                                         }
-                                }); 
-                                $('.dataTables_filter').show();    
+                                });
+                                $('.dataTables_filter').show();
                             });
                             </script>
                                <table id="tablaAlumnos{{$curso->id}}" class="table table-striped">
@@ -262,7 +265,7 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 @csrf
 
-                
+
         </form>
     </div>
   </div>
@@ -289,7 +292,7 @@
       @endif
         <form method="post" onSubmit="return false;" id="formAsignarAlumno">
                 @csrf
-                
+
         </form>
     </div>
   </div>
@@ -401,9 +404,9 @@
         </div><br />
       @endif
         <form method="post" onSubmit="return false;" id="formAsignarHorario">
-                
+
                 @csrf
-                
+
 
         </form>
     </div>
@@ -429,7 +432,7 @@
       @endif
         <form method="post" onSubmit="return false;" id="formAsignarDocente">
                 @csrf
-                
+
         </form>
     </div>
   </div>
