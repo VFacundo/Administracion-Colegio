@@ -6,7 +6,8 @@
 
 ## Seminario de Integracion Profesional
 
-##Indice
+## Indice
+~~~
 * [Equipo docente](#equipo-docente)
 * [Integrantes del grupo](#integrantes-del-grupo)
 * [Acerca del proyecto](#acerca-del-proyecto)
@@ -15,21 +16,22 @@
 * [Instalación desde el código fuente](#instalacion-desde-el-codigo-fuente)
 * [Documentación](#documentacion)
 * [Licencia](#licencia)
+~~~
 
 ## Equipo docente
-Profesor  
-
+~~~
  Bibiana D. Rossi  
  David M. Petrocelli  
  Viviana P. Chapetto  
-  
+~~~  
 ## Integrantes del Grupo
-  
+  ~~~
   Viola Facundo - 133176  
   Joaquin Bert - 133168  
   Joaquin Tossello - 154590  
-    
-  ##Instalacion(Windows)  
+  ~~~
+  ## Instalacion(Windows)
+  ~~~
   -Descargar e Instalar:  
     https://git-scm.com/download/win  
     https://getcomposer.org/download/  
@@ -42,8 +44,10 @@ Profesor
         - Generar una Clave: php artisan key:generate
         - Ejecutar las migraciones y Seeders: php artisan migrate:fresh --seed
         - Correr el Servidor: php artisan serve  
-     
-  ##Documentacion
+  ~~~
+    
+  ## Documentacion  
+  ~~~
   -Especificacion General de Requerimientos
    - [Documento PDF](documentacion/egr/egr.pdf)  
    - [Proyecto EA](documentacion/egr/admin_colegio.ea)  
@@ -52,5 +56,6 @@ Profesor
    - [Carta de Aceptacion](documentacion/pps/carta_aceptacion.jpg)  
    - [Carta de Cumplimiento](documentacion/pps/carta_cumplimiento.jpg)  
    
- - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)
+ - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)  
+ ~~~
     
