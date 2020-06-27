@@ -151,7 +151,6 @@
             <a href="{{route('alumno.index')}}" class="list-group-item">Alumnos</a>
             <a href="{{route('personal.index')}}" class="list-group-item">Personal</a>
             <a href="{{route('noticias.index')}}" class="list-group-item">Noticias</a>
-            <a href="#" class="list-group-item">Notificaciones</a>
           </div>
         </div>
       <!-- NAV FIN -->
