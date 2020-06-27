@@ -1,4 +1,4 @@
-function listarAlumnos(id_curso) {
+function listarAlumnos(id_curso,anio) {
   var btn = event.target,
   id_alumno,
   nombre_alumno,
@@ -8,6 +8,7 @@ function listarAlumnos(id_curso) {
 
   removeErrors('formAsignarAlumno');
   dataRequest = {curso_id:btn.dataset.value,
+                anio:anio,
                 };
   console.log(dataRequest); 
   try{

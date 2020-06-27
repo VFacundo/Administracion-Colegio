@@ -61,7 +61,7 @@
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}" aria-expanded="false" aria-controls="collapse">
                               Materias
                             </button>
-                              <a data-value="{{$curso->nombre_curso}}" onclick="activarEmergente('emergenteAgregarMateria'); listarMaterias({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar materia</a>
+                              <a data-value="{{$curso->nombre_curso}}" onclick="activarEmergente('emergenteAgregarMateria'); listarMaterias({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary agregarMaterias">Agregar materia</a>
 
                           </h5>
                         </div>
@@ -128,9 +128,9 @@
                                           ?>
 
                                           <td>
-                                            <a data-value="" onclick="activarEmergente('emergenteAsignarDocente'); listarPersonalDocente('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar docente</a>
-                                            <a data-value="" onclick="controlarHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a>
-                                            <a data-value="" onclick="confirmDestroyMateriaCurso('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-danger">Eliminar</a>
+                                            <a  onclick="activarEmergente('emergenteAsignarDocente'); listarPersonalDocente('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar docente</a>
+                                            <a  onclick="controlarHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a>
+                                            <a  onclick="confirmDestroyMateriaCurso('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-danger eliminarMateria">Eliminar</a>
                                           </td>
                                        </tr>
 
@@ -158,7 +158,7 @@
                             <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse{{$curso->nombre_curso}}{{$curso->id}}" aria-expanded="false" aria-controls="collapse">
                               Alumnos
                             </button>
-                              <a data-value="{{$curso->id}}" onclick="activarEmergente('emergenteAgregarAlumno'); listarAlumnos({{$curso->id}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar alumno</a>
+                              <a data-value="{{$curso->id}}" onclick="activarEmergente('emergenteAgregarAlumno'); listarAlumnos({{$curso->id}}, {{$ciclo[0]->anio}});" style="width: 150px; position: absolute; right: 30px; top: 10px; color: white;"class="btn btn-primary">Agregar alumno</a>
 
                           </h5>
                         </div>
@@ -257,6 +257,12 @@
             </div>
           </div>
         @endforeach
+      <script type="text/javascript">
+        window.onload = function(){
+        disabledBotones("{{$ciclo[0]['estado']}}");
+      }
+    </script>
+
 
 <div>
 @endsection

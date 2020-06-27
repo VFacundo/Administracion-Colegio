@@ -176,9 +176,12 @@ class AlumnoController extends Controller
 
     public function listar(Request $request){
         $respuesta = $request->post();
+        \Debugbar::info($respuesta);
         $alumnos = Persona::select('personas.*','alumnos.*')
                    ->join('alumnos', 'personas.id' , '=', 'alumnos.persona_asociada')
                    ->leftjoin('alumno_cursos', 'alumno_cursos.id_alumno' , '=', 'alumnos.id')
+                   //->join('cursos', 'cursos.id' , '=', 'alumno_cursos.id_curso')
+                   //->where('cursos.anio', '<>', $respuesta['anio'])
                    ->whereNull('alumno_cursos.id_alumno')
                    ->get();
         return response()->json(['alumnos'=>$alumnos]);

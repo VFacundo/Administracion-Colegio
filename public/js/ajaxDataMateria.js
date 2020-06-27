@@ -670,3 +670,21 @@ function eliminarMateriaCurso(id_materia,id_curso){
     }
   });
 }
+
+///////////////////////////////////////////////////////////////////
+
+function disabledBotones(estado){
+var botones_eliminar =  document.getElementsByClassName("eliminarMateria"),
+botones_agregar =  document.getElementsByClassName("agregarMaterias");
+
+
+  if (estado != "inicial"){
+   for (var i = 0; i < botones_eliminar.length; i++ ){
+       botones_eliminar[i].classList.add("disabled");
+   }
+   for (var i = 0; i < botones_agregar.length; i++ ){
+       botones_agregar[i].classList.add("disabled");
+   }
+
+  }
+}

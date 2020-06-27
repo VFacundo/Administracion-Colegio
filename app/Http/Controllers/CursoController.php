@@ -50,7 +50,6 @@ class CursoController extends Controller
 
           }
 
-          
         return view('curso.index',compact('cursos'),compact('ciclo'));
         
     }
