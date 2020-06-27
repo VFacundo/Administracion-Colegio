@@ -18,6 +18,7 @@ class CreateCicloLectivoTable extends Migration
             $table->year('anio');
             $table->string('nombre');
             $table->date('fecha_baja')->nullable();
+            $table->enum('estado',['inicial','primer_trimestre','segundo_trimestre','tercer_trimestre','finalizado']);
             $table->timestamps();
         });
     }

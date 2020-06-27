@@ -215,3 +215,25 @@ function restaurarCiclo(id_ciclo){
  
   });    
 }
+////////////////////////////////// CAMBIAR ESTADO ///////////////////////////////////////////////////////////////////////////////////////////
+
+function cambiarEstado(id_ciclo){
+  var btn = event.target,
+  dataRequest,
+  url = '/ciclo/cambiarEstado';
+
+  dataRequest = {id_ciclo: id_ciclo};
+  respuesta = ajaxRequest(url,dataRequest);
+  respuesta.then(response => response.json())
+  .then(function(response){
+    if(response[0] != 500){
+      console.log("error");
+      displayErrors(response);
+    } else {
+      console.log("estado modificado");
+      location.reload();
+    }
+ 
+  }); 
+
+}

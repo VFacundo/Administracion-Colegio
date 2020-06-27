@@ -210,5 +210,42 @@ class CicloController extends Controller
             ]);
     }
 
+    public function cambiarEstado(Request $request){
+        $respuesta = $request->post();
+        $ciclo_lectivo = ciclo_lectivo::where('ciclo_lectivos.id', '=' ,$respuesta['id_ciclo'])->get();
+
+        \Debugbar::info($ciclo_lectivo);
+
+        if ($ciclo_lectivo[0]['estado'] == "inicial" ){
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['estado' => 'primer_trimestre']);
+             return response()->json([
+                '0' => '500',
+            ]);
+
+        }elseif ($ciclo_lectivo[0]['estado'] == "primer_trimestre" ){
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['estado' => 'segundo_trimestre']);
+            return response()->json([
+                '0' => '500',
+            ]);
+        }elseif ($ciclo_lectivo[0]['estado'] == "segundo_trimestre" ){
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['estado' => 'tercer_trimestre']);
+            return response()->json([
+                '0' => '500',
+            ]);
+        }elseif ($ciclo_lectivo[0]['estado'] == "tercer_trimestre" ){
+            ciclo_lectivo::whereId($respuesta['id_ciclo'])->update(['estado' => 'finalizado']);
+            return response()->json([
+                '0' => '500',
+            ]);
+        }else{
+            return response()->json([
+                '0' => 'ERROR!',
+            ]);
+
+        }    
+
+
+    }
+
 
 }

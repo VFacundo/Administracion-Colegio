@@ -5,7 +5,25 @@
   <!-- Barra de Busqueda -->
     @include('partials.buscador',['section'=>'Ciclo Lectivo' . " " . $ciclo[0]['anio'],'tableId'=>'null'])
   <!-- Barra de Busqueda FIN-->
-  <div class="col-sm-2"><a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a></div>
+  <div class="col-sm-auto" style="left:-50px;">
+    <a class="btn btn-primary" id="btnEmergente" onclick="activarEmergente('emergenteCrearCurso');">Crear Curso</a>
+    <?php
+      if ($ciclo[0]['estado'] == "inicial" ):
+       $nombre = "Cerrar 1er trimestre";
+      elseif ($ciclo[0]['estado'] == "primer_trimestre"):
+        $nombre = "Cerrar 2do trimestre";
+      elseif ($ciclo[0]['estado'] == "segundo_trimestre"):
+        $nombre = "Cerrar 3do trimestre";
+      elseif ($ciclo[0]['estado'] == "tercer_trimestre"):
+        $nombre = "Cerrar Ciclo Lectivo";
+      elseif ($ciclo[0]['estado'] == "finalizado"):
+        $nombre = "Finalizado";
+      endif;
+
+      echo '<a class="btn btn-primary" id="btnEstado" onclick="cambiarEstado('.$ciclo[0]['id'].')">'.$nombre.'</a>';
+
+    ?>
+  </div>
 </div>
 <div class="uper">
   @if(session()->get('success'))
@@ -111,7 +129,7 @@
 
                                           <td>
                                             <a data-value="" onclick="activarEmergente('emergenteAsignarDocente'); listarPersonalDocente('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar docente</a>
-                                            <a data-value="" onclick="activarEmergente('emergenteAsignarHorario'); crearFormHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a>
+                                            <a data-value="" onclick="controlarHorario('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-primary">Asignar horario</a>
                                             <a data-value="" onclick="confirmDestroyMateriaCurso('{{$curso->id}}','{{$materia_curso->id}}')" style="color:white;"class="btn btn-danger">Eliminar</a>
                                           </td>
                                        </tr>

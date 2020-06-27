@@ -58,6 +58,7 @@ Route::post('/ciclo/actualizar','CicloController@actualizar')->name('ciclo.actua
 Route::post('/ciclo/editar','CicloController@editar')->name('ciclo.editar');
 Route::post('/ciclo/destroy','CicloController@destroy')->name('ciclo.destroy');
 Route::post('/ciclo/restaurarCiclo','CicloController@restaurarCiclo')->name('ciclo.restaurarCiclo');
+Route::post('/ciclo/cambiarEstado','CicloController@cambiarEstado')->name('ciclo.cambiarEstado');
 Route::post('/curso/agregarCursoCiclo','CursoController@agregarCursoCiclo')->name('alumno.agregarCursoCiclo');
 Route::post('/materia/listar','MateriaController@listar')->name('materia.listar');
 Route::post('/materia/agregarMateriaCurso','MateriaController@agregarMateriaCurso')->name('materia.agregarMateriaCurso');
@@ -67,6 +68,9 @@ Route::post('/materia/editar','MateriaController@editar')->name('materia.editar'
 Route::post('/materia/restaurarMateria','MateriaController@restaurarMateria')->name('materia.restaurarMateria');
 Route::post('/materia/actualizar','MateriaController@actualizar')->name('materia.actualizar');
 Route::post('/materia/eliminarMateriaCurso','MateriaController@eliminarMateriaCurso')->name('materia.eliminarMateriaCurso');
+Route::post('/materia/asignarHorarioMateria','MateriaController@asignarHorarioMateria')->name('materia.asignarHorarioMateria');
+Route::post('/materia/updateHorarioMateria','MateriaController@updateHorarioMateria')->name('materia.updateHorarioMateria');
+Route::post('/materia/controlarHorario','MateriaController@controlarHorario')->name('materia.controlarHorario');
 Route::post('/alumno/listar','AlumnoController@listar')->name('alumno.listar');
 Route::post('/alumno/agregarAlumnoCurso','AlumnoController@agregarAlumnoCurso')->name('alumno.agregarAlumnoCurso');
 Route::post('/alumno/editar','AlumnoController@editar')->name('alumno.editar');

@@ -115,26 +115,31 @@ function asignarMateriaCurso(){
     }
 
     });
-
-
 }
 
-function crearFormHorario(id_curso, id_materia){
-var boton = event.target;
+function crearFormUpdateHorario(id_curso, id_materia, horarios){
+var i,
+ultimo,
+formUpdate = document.getElementById('formAsignarHorario');
 
-    emergente = "'emergenteAsignarHorario'";
+  emergente = "'emergenteAsignarHorario'";
+
+  document.getElementById("formAsignarHorario").innerHTML = '';
+
+
+  for (i = 0; i < horarios.length; i++){
     
-    text =     '<label for="dias">Dias :</label>'+
-                '<select name="dias" style= "border-radius: 5px; height: 30px;">'+
-                   '<option value="lunes"> Lunes </option>'+
-                   '<option value="martes"> Martes </option>'+
-                   '<option value="miercoles"> Miercoles</option>'+
-                   '<option value="jueves"> Jueves </option>'+
-                   '<option value="viernes"> Viernes</option>'+
+    text =     '<label for="dias'+ i +'">Dias :</label>'+
+                '<select name="dias'+ i +'" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value="Lunes"> Lunes </option>'+
+                   '<option value="Martes"> Martes </option>'+
+                   '<option value="Miercoles"> Miercoles</option>'+
+                   '<option value="Jueves"> Jueves </option>'+
+                   '<option value="Viernes"> Viernes</option>'+
                 '</select>'+
 
-                '<label for="hora_inicio">Hora Inicio :</label>'+
-                '<select name="hora_inicio" style= "border-radius: 5px; height: 30px;">'+
+                '<label for="hora_inicio'+ i +'">Hora Inicio :</label>'+
+                '<select name="hora_inicio'+ i +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value= "13:00:00">13:00</option>'+
                    '<option value= "14:00:00">14:00</option>'+
                    '<option value= "15:10:00">15:10</option>'+
@@ -142,8 +147,67 @@ var boton = event.target;
                    '<option value= "17:15:00">17:15</option>'+
                 '</select>'+
 
-                '<label for="hora_fin">Hora Fin :</label>'+
-                '<select name="hora_fin" style= "border-radius: 5px; height: 30px;">'+
+                '<label for="hora_fin'+ i +'">Hora Fin :</label>'+
+                '<select name="hora_fin'+ i +'" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value= "14:00:00">14:00</option>'+
+                   '<option value= "15:00:00">15:00</option>'+
+                   '<option value= "16:10:00">16:10</option>'+
+                   '<option value= "17:10:00">17:10</option>'+
+                   '<option value= "18:15:00">18:15</option>'+
+                '</select>'+
+
+                '<button type="submit" id="btn_remove'+ i +'" class="btn btn-primary glyphicon glyphicon-remove" onclick="removeHorario('+ i +')"></button></p>';
+      
+
+    document.getElementById('formAsignarHorario').insertAdjacentHTML('beforeend', text);
+
+    formUpdate.querySelector('select[name="dias'+ i +'"]').value = horarios[i][0]['dia_semana'];
+    formUpdate.querySelector('select[name="hora_inicio'+ i +'"]').value = horarios[i][0]['hora_inicio'];
+    formUpdate.querySelector('select[name="hora_fin'+ i +'"]').value = horarios[i][0]['hora_fin'];
+
+  }  
+  actualizar = "actualizar";
+  botones = '<button type="submit" class="btn btn-primary glyphicon glyphicon-plus" id="btn_mas" onclick="agregarHorario();"></button></p>'+
+
+  '<button type="submit" class="btn btn-primary" id="btn_siguiente" onclick="asignarHorarioMateria('+ id_curso +' , '+ id_materia +' , '+actualizar+')">Agregar Horario</button>'+
+  '<button type="reset" class="btn btn-primary" id="btn_cancelar" onclick="activarEmergente('+ emergente +');">Cancelar</button>';
+
+  ultimo = horarios.length - 1;
+  sessionStorage.setItem('horario', ultimo);
+  document.getElementById('btn_remove'+ ultimo).insertAdjacentHTML('afterend', botones);
+  document.getElementById('btn_remove0').remove();
+}
+
+function crearFormHorario(id_curso, id_materia){
+
+    document.getElementById("formAsignarHorario").innerHTML = '';
+
+    sessionStorage.setItem('horario', 0);
+    idHorario = sessionStorage.getItem('horario');
+     
+    emergente = "'emergenteAsignarHorario'";
+    crear = "crear";
+    
+    text =     '<label for="dias'+ idHorario   +'">Dias :</label>'+
+                '<select name="dias'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value="Lunes"> Lunes </option>'+
+                   '<option value="Martes"> Martes </option>'+
+                   '<option value="Miercoles"> Miercoles</option>'+
+                   '<option value="Jueves"> Jueves </option>'+
+                   '<option value="Viernes"> Viernes</option>'+
+                '</select>'+
+
+                '<label for="hora_inicio'+ idHorario   +'">Hora Inicio :</label>'+
+                '<select name="hora_inicio'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value= "13:00:00">13:00</option>'+
+                   '<option value= "14:00:00">14:00</option>'+
+                   '<option value= "15:10:00">15:10</option>'+
+                   '<option value= "16:10:00">16:10</option>'+
+                   '<option value= "17:15:00">17:15</option>'+
+                '</select>'+
+
+                '<label for="hora_fin'+ idHorario   +'">Hora Fin :</label>'+
+                '<select name="hora_fin'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value= "14:00:00">14:00</option>'+
                    '<option value= "15:00:00">15:00</option>'+
                    '<option value= "16:10:00">16:10</option>'+
@@ -153,27 +217,33 @@ var boton = event.target;
 
             '<button type="submit" class="btn btn-primary glyphicon glyphicon-plus" id="btn_mas" onclick="agregarHorario();"></button></p>'+
 
-            '<button type="submit" class="btn btn-primary" id="btn_siguiente" onclick="asignarHoraioMateria('+ id_curso +' '+ id_materia +')">Agregar Horario</button>'+
+            '<button type="submit" class="btn btn-primary" id="btn_siguiente" onclick="asignarHorarioMateria('+ id_curso +' , '+ id_materia +', '+crear+')">Agregar Horario</button>'+
             '<button type="reset" class="btn btn-primary" id="btn_cancelar" onclick="activarEmergente('+ emergente +');">Cancelar</button>';
 
         document.getElementById('formAsignarHorario').insertAdjacentHTML('beforeend', text);
-
 }
 
 function agregarHorario(){
 var boton = event.target;
 
-  horario =  '<div><label for="dias">Dias : </label>' +
-                '<select name="dias" style= "border-radius: 5px; height: 30px;">'+
-                   '<option value="lunes"> Lunes </option>'+
-                   '<option value="martes"> Martes </option>'+
-                   '<option value="miercoles"> Miercoles</option>' + 
-                  ' <option value="jueves"> Jueves </option>'+
-                  ' <option value="viernes"> Viernes</option>'+
+  idHorario = sessionStorage.getItem('horario');
+  console.log('horario', idHorario);
+  idHorario ++;
+
+
+  sessionStorage.setItem('horario', idHorario);
+
+  horario =  '<div><label for="dias'+ idHorario   +'">Dias : </label>' +
+                '<select name="dias'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
+                   '<option value="Lunes"> Lunes </option>'+
+                   '<option value="Martes"> Martes </option>'+
+                   '<option value="Miercoles"> Miercoles</option>' + 
+                  ' <option value="Jueves"> Jueves </option>'+
+                  ' <option value="Viernes"> Viernes</option>'+
                 '</select>'+
 
-                  '<label for="hora_inicio">Hora Inicio :</label>'+
-                  '<select name="hora_inicio" style= "border-radius: 5px; height: 30px;">'+
+                  '<label for="hora_inicio'+ idHorario   +'">Hora Inicio :</label>'+
+                  '<select name="hora_inicio'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value= "13:00:00">13:00</option>'+
                    '<option value= "14:00:00">14:00</option>'+
                    '<option value= "15:10:00">15:10</option>'+
@@ -181,8 +251,8 @@ var boton = event.target;
                    '<option value= "17:15:00">17:15</option>'+
                 '</select>'+
 
-                '<label for="hora_fin">Hora Fin :</label>'+
-                '<select name="hora_fin" style= "border-radius: 5px; height: 30px;">'+
+                '<label for="hora_fin'+ idHorario   +'">Hora Fin :</label>'+
+                '<select name="hora_fin'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value= "14:00:00">14:00</option>'+
                    '<option value= "15:00:00">15:00</option>'+
                    '<option value= "16:10:00">16:10</option>'+
@@ -190,22 +260,112 @@ var boton = event.target;
                    '<option value= "18:15:00">18:15</option>'+
                 '</select>'+
 
-              '<button type="submit" class="btn btn-primary glyphicon glyphicon-remove" onclick=""></button>'+
+              '<button type="submit" id="btn_remove'+ idHorario +'" class="btn btn-primary glyphicon glyphicon-remove" onclick="removeHorario('+ idHorario +')"></button>'+
               '</div>';
                 
         document.getElementById('btn_mas').insertAdjacentHTML('beforebegin', horario);
 }
 
-function asignarHorarioMateria(id_curso, id_materia){
-var boton = event.target;
+function removeHorario(id){
+var btn= event.target,
+formulario = document.getElementById('formAsignarHorario');
+formulario.querySelector('select[name="dias'+ id +'"]').remove();
+formulario.querySelector('label[for="dias'+ id +'"]').remove();
+formulario.querySelector('select[name="hora_inicio'+ id +'"]').remove();
+formulario.querySelector('label[for="hora_inicio'+ id +'"]').remove();
+formulario.querySelector('select[name="hora_fin'+ id +'"]').remove();
+formulario.querySelector('label[for="hora_fin'+ id +'"]').remove();
+document.getElementById('btn_remove'+id+'').remove();
 
-
-
-
+console.log(id);
 }
 
+function asignarHorarioMateria(id_curso, id_materia,accion){
+var boton = event.target,
+    formulario = document.getElementById('formAsignarHorario'),
+    indice,
+    hora_inicioBox,
+    hora_finBox,
+    diaBox,
+    hora_fin = [],
+    dia = [],
+    hora_inicio = [],
+    dataRequest,
+    url;
+
+    if(accion == "crear"){
+      url = '/materia/asignarHorarioMateria';
+    } else {
+      url = '/materia/updateHorarioMateria';
+    }
 
 
+    idHorario = sessionStorage.getItem('horario');
+
+    removeErrors('formAsignarHorario');
+    
+    for(var i = 0; i <= idHorario; i++){  
+        try{
+          diaBox = formulario.querySelector('select[name="dias'+ i +'"]').value;
+          hora_inicioBox = formulario.querySelector('select[name="hora_inicio'+ i +'"]').value;
+          hora_finBox = formulario.querySelector('select[name="hora_fin'+ i +'"]').value;
+          dia[dia.length] = diaBox;
+          hora_inicio[hora_inicio.length] = hora_inicioBox;
+          hora_fin[hora_fin.length] = hora_finBox;
+        } catch(e) {
+
+        }
+    }
+
+    dataRequest = {id_materia: id_materia,
+                   id_curso: id_curso,
+                   dias: dia,
+                   horas_inicio: hora_inicio,
+                   horas_fin: hora_fin};
+    respuesta = ajaxRequest(url,dataRequest);
+    respuesta.then(response => response.json())
+    .then(function(response){
+    if(response[0] != 500){
+        console.log("error");
+        displayErrors(response,'formAsignarHorario');
+       //btnDestroy.classList.remove("toDestroy");
+    }else{  
+      //console.log(response);
+      //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
+      activarEmergente('emergenteAsignarHorario');
+      //alert('Exito');
+    }
+
+    }); 
+}
+
+function controlarHorario(id_curso, id_materia){
+var boton = event.target,
+    formUpdate = document.getElementById('formAsignarHorario'),
+    id_curso = id_curso,
+    id_materia = id_materia,
+    url = '/materia/controlarHorario', respuesta,dataRequest,text;
+
+    removeErrors('formAsignarHorario');
+    dataRequest = {id_curso:id_curso,
+                   id_materia: id_materia}; //Datos a Enviar
+    respuesta = ajaxRequest(url,dataRequest)
+    respuesta.then(response => response.json())
+    .then(function(response){
+      if(response[0] != 500){
+
+        //console.log('res', response);
+        activarEmergente('emergenteAsignarHorario');
+        crearFormHorario(response['id_curso'], response['id_materia']);
+      }else{  
+        //console.log(response);
+        activarEmergente('emergenteAsignarHorario');
+        crearFormUpdateHorario(response['id_curso'], response['id_materia'],response['horarios']);
+
+      }
+
+    });
+}  
 
 
 function crearMateria(){
@@ -228,8 +388,6 @@ function crearMateria(){
     if(response[0] != 500){
       if(response[0] == 1) {
         emergente = "'emergenteCrearMateria'";
-        console.log(response);
-        console.log(response[1][0]['id']);
         label = '<label id="labelExiste" for="ciclo_existente">'+ form.nombre.value  +' de '+ form.curso.value  +' se encuentra dado de baja. Desea restaurarlo?</label>';
         boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'        
         boton_si = '<button id="Existe_si" data-value="" id="agregarAlumno"type="submit" onclick="restaurarMateria('+ response[1][0]['id'] +');"class="btn btn-primary">SI</button>'

@@ -7,6 +7,8 @@ use App\materia;
 use App\materia_curso;
 use App\personal;
 use App\programa_materia;
+use App\horario_materia;
+use App\materia_horario;
 use Illuminate\Support\Facades\Validator;
 
 class MateriaController extends Controller
@@ -277,7 +279,6 @@ class MateriaController extends Controller
 
     }
 
-
     public function eliminarMateriaCurso(Request $request) {
         $respuesta = $request->post();
 
@@ -296,4 +297,172 @@ class MateriaController extends Controller
         
 
     }
+
+    public function asignarHorarioMateria(Request $request){
+        $respuesta = $request->post();
+
+        $materia_curso = materia_curso::where('materia_cursos.id_materia' , '=' , $respuesta['id_materia'])
+                                      ->where('materia_cursos.id_curso' , '=' , $respuesta['id_curso'])
+                                      ->get();
+
+        $horas_semanales = materia::select('materias.carga_horaria')
+                                ->where('materias.id', '=' , $respuesta['id_materia'])
+                                ->get();                            
+                       
+        $hs_acumuladas = 0;
+        
+        for ($i = 0; $i < count($respuesta['dias']); $i++){
+            $inicio = (int)$respuesta['horas_fin'][$i];
+            $fin = (int)$respuesta['horas_inicio'][$i];
+            $hs_acumuladas += $inicio - $fin ;
+        }    
+
+        if ($hs_acumuladas > $horas_semanales[0]['carga_horaria']){
+            return response()->json([
+                '0' => 'ERROR! La cantidad de horas que intenta cargar es mayor a la carga horaria semanal.',
+            ]);
+
+        }else{
+
+            for ($i = 0; $i < count($respuesta['dias']); $i++){
+                
+                if ($respuesta['horas_inicio'][$i] >= $respuesta['horas_fin'][$i]){
+                    return response()->json([
+                        '0' => 'ERROR! La hora de inicio debe ser anterior a la hora de fin.'
+                    ]);
+                } else{
+                    //Se chequea si el horario ya existe, sino se lo crea
+                    $horario_existente = horario_materia::where('horario_materias.dia_semana' , '=', $respuesta['dias'][$i])
+                                                        ->where('horario_materias.hora_inicio', '=', $respuesta['horas_inicio'][$i])
+                                                        ->where('horario_materias.hora_fin', '=', $respuesta['horas_fin'][$i])
+                                                        ->get();
+                    if($horario_existente->isNotEmpty()){
+                        $id_horario = $horario_existente[0]['id'];
+                    }else{
+                        $registro = ['hora_inicio'=>$respuesta['horas_inicio'][$i],'hora_fin'=>$respuesta['horas_fin'][$i],'dia_semana'=>$respuesta['dias'][$i]];
+                        $horarioCreate = horario_materia::create($registro);
+                        $id_horario = $horarioCreate['id'];                
+                    }  
+
+                    $registro_materia_horario = ['id_horario'=>$id_horario,'id_materia_curso'=>$materia_curso[0]['id']];
+                    materia_horario::create($registro_materia_horario);
+                    
+                    
+
+                }
+            }
+
+        }
+
+         return response()->json([
+                    '0' => '500'
+                ]);
+    }
+
+    public function controlarHorario(Request $request){
+        $respuesta = $request->post();
+
+        $materia_curso = materia_curso::where('materia_cursos.id_materia' , '=' , $respuesta['id_materia'])
+                                      ->where('materia_cursos.id_curso' , '=' , $respuesta['id_curso'])
+                                      ->get();
+
+        $materia_horarios = materia_horario::where('materia_horarios.id_materia_curso', '=', $materia_curso[0]['id'])->get();
+
+        if ($materia_horarios->isNotEmpty()){
+
+            for ($i = 0; $i < count($materia_horarios); $i++){
+                $horario_materia[$i] =  horario_materia::select('horario_materias.*')
+                                                    ->where('horario_materias.id' , '=' , $materia_horarios[$i]['id_horario']) 
+                                                    ->get();
+            }
+
+
+            return response()->json([
+                '0' => '500',
+                'id_materia' => $respuesta['id_materia'],
+                'id_curso' => $respuesta['id_curso'],
+                'horarios' => $horario_materia,
+            ]);
+        }else{
+            return response()->json([
+                '0' => '1',
+                'id_materia' => $respuesta['id_materia'],
+                'id_curso' => $respuesta['id_curso'],
+            ]);
+
+
+        }
+
+    }    
+
+
+    public function updateHorarioMateria(Request $request){
+        $respuesta = $request->post();        
+
+        $materia_curso = materia_curso::where('materia_cursos.id_materia' , '=' , $respuesta['id_materia'])
+                                      ->where('materia_cursos.id_curso' , '=' , $respuesta['id_curso'])
+                                      ->get();
+
+        $materia_horarios = materia_horario::where('materia_horarios.id_materia_curso', '=', $materia_curso[0]['id'])->get();
+
+
+
+        for ($i = 0; $i < count($materia_horarios); $i++){
+                $materia_horarios[$i]->delete();
+            
+        }
+
+        $horas_semanales = materia::select('materias.carga_horaria')
+                                ->where('materias.id', '=' , $respuesta['id_materia'])
+                                ->get();                            
+                       
+        $hs_acumuladas = 0;
+        
+        for ($i = 0; $i < count($respuesta['dias']); $i++){
+            $inicio = (int)$respuesta['horas_fin'][$i];
+            $fin = (int)$respuesta['horas_inicio'][$i];
+            $hs_acumuladas += $inicio - $fin ;
+        }    
+
+        if ($hs_acumuladas > $horas_semanales[0]['carga_horaria']){
+            return response()->json([
+                '0' => 'ERROR! La cantidad de horas que intenta cargar es mayor a la carga horaria semanal.',
+            ]);
+
+        }else{
+            for ($i = 0; $i < count($respuesta['dias']); $i++){
+                
+                if ($respuesta['horas_inicio'][$i] >= $respuesta['horas_fin'][$i]){
+                    return response()->json([
+                        '0' => 'ERROR! La hora de inicio debe ser anterior a la hora de fin.'
+                    ]);
+                } else{
+                    //Se chequea si el horario ya existe, sino se lo crea
+                    $horario_existente = horario_materia::where('horario_materias.dia_semana' , '=', $respuesta['dias'][$i])
+                                                        ->where('horario_materias.hora_inicio', '=', $respuesta['horas_inicio'][$i])
+                                                        ->where('horario_materias.hora_fin', '=', $respuesta['horas_fin'][$i])
+                                                        ->get();
+                    if($horario_existente->isNotEmpty()){
+                        $id_horario = $horario_existente[0]['id'];
+                    }else{
+                        $registro = ['hora_inicio'=>$respuesta['horas_inicio'][$i],'hora_fin'=>$respuesta['horas_fin'][$i],'dia_semana'=>$respuesta['dias'][$i]];
+                        $horarioCreate = horario_materia::create($registro);
+                        $id_horario = $horarioCreate['id'];                
+                    }  
+
+                    $registro_materia_horario = ['id_horario'=>$id_horario,'id_materia_curso'=>$materia_curso[0]['id']];
+                    materia_horario::create($registro_materia_horario);
+                    
+                }
+            }
+        }    
+         return response()->json([
+                    '0' => '500'
+                ]); 
+
+    }
+
+
+
+
 }    
