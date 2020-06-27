@@ -56,6 +56,6 @@
    - [Manual de Instalacion](documentacion/manuales/Manual_de_Instalacion.pdf)  
    - [Manual de Usuario](documentacion/manuales/Manual_de_Usuario.pdf)  
    
- - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)  
+ - [Modelo de Negocios](documentacion/Modelo_de_Negocios.pdf)  
  - [PPT Ventas](documentacion/ppt_ventas.pdf) 
     
