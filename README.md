@@ -6,13 +6,12 @@
 
 ## Seminario de Integracion Profesional
 
-## Indice
-~~~
+## Indice  
+
 - [Equipo docente](#Equipo-docente)
 - [Integrantes del grupo](#Integrantes-del-Grupo)
 - [Instalacion](#Instalacion(Windows))
 - [Documentación](#documentacion)
-~~~
 
 ## Equipo docente
 ~~~
