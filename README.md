@@ -26,12 +26,13 @@
   Joaquin Tossello - 154590  
   ~~~
   ## Instalacion(Windows)
-  ~~~
+
   -Descargar e Instalar:  
-  ~~~
+
     [Git](https://git-scm.com/download/win)  
     [Composer](https://getcomposer.org/download/)  
     [Xampp](https://www.apachefriends.org/es/download.html)  
+    
   ~~~  
    -Clonar el Repositorio:
         - git clone https://github.com/VFacundo/Administracion-Colegio
