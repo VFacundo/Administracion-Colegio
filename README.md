@@ -28,12 +28,11 @@
   ## Instalacion(Windows)
 
   -Descargar e Instalar:  
-
-    [Git](https://git-scm.com/download/win)  
-    [Composer](https://getcomposer.org/download/)  
-    [Xampp](https://www.apachefriends.org/es/download.html)  
+    - [Git](https://git-scm.com/download/win)  
+    - [Composer](https://getcomposer.org/download/)  
+    - [Xampp](https://www.apachefriends.org/es/download.html)  
     
-   
+  ~~~ 
    -Clonar el Repositorio:
         - git clone https://github.com/VFacundo/Administracion-Colegio
         - Instalar las dependencias via Composer: php composer install  
@@ -41,7 +40,7 @@
         - Generar una Clave: php artisan key:generate
         - Ejecutar las migraciones y Seeders: php artisan migrate:fresh --seed
         - Correr el Servidor: php artisan serve  
-
+  ~~~
     
   ## Documentacion  
 
