@@ -42,7 +42,7 @@
   ~~~
     
   ## Documentacion  
-  ~~~
+
   -Especificacion General de Requerimientos
    - [Documento PDF](documentacion/egr/egr.pdf)  
    - [Proyecto EA](documentacion/egr/admin_colegio.ea)  
@@ -52,5 +52,4 @@
    - [Carta de Cumplimiento](documentacion/pps/carta_cumplimiento.jpg)  
    
  - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)  
- ~~~
     
