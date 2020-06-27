@@ -37,11 +37,25 @@ function updateUser_backup(){
 
 function deleteRow(){//Marca la fila a borrar con una clase
   var btn = event.target,tr;
+    tr = $(btn).closest('tr');
+    $(tr).addClass('toDelete');
+}
 
+function editRow(){//Marca la fila a editar con una clase
+  var btn = event.target,tr;
+    tr = $(btn).closest('tr');
+    $(tr).addClass('toEdit');
+}
+
+function noEditRow(){//quita la clase para marcar la edicion
   //table = $('#'+idTabla).DataTable();
-  tr = $(btn).closest('tr');
-  $(tr).addClass('toDelete');
-  //table.row('.eliminar').remove().draw(false);
+  $('tr.toEdit').removeClass('toEdit');
+}
+
+function confirmEditRow(idTabla,datos){ //edita la Fila definitivo
+  var table;
+  table = $('#'+idTabla).DataTable();
+  table.row('.toEdit').data(datos);
 }
 
 function confirmDeleteRow(idTabla){ //Borra la Fila definitivo
@@ -50,7 +64,12 @@ function confirmDeleteRow(idTabla){ //Borra la Fila definitivo
   table.row('.toDelete').remove().draw(false);
 }
 
-function noDeleteRow(idTabla){//quita la clase para marcar el borrado
+function noDeleteRow(){//quita la clase para marcar el borrado
+  //table = $('#'+idTabla).DataTable();
+  $('tr.toDelete').removeClass('toDelete');
+}
+
+function noDeleteRow2(idTabla){//quita la clase para marcar el borrado
   var table;
   table = $('#'+idTabla).DataTable();
   table.$('tr.toDelete').removeClass('toDelete');

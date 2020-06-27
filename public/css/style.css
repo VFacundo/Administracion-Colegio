@@ -69,9 +69,7 @@ tr{
 }
 
 
-table ,th ,td,tr{
-/*	border: 1px solid black;*/
-}
+table ,th ,td,tr{/* border: 1px solid black; */}
 
 table tr:first-child{
 	background-color: #99BAAA;
@@ -88,8 +86,12 @@ table tr:first-child{
   text-align: center;
 }
 
+.carousel-caption{
+	top: 10px !important;
+}
+
 .carousel {
-  height: 200px;
+  height: 110px;
 }
 
 .carousel-inner img {
@@ -140,7 +142,7 @@ h3{
 	position: absolute;
 	z-index: 10;
 	margin-left: 10px;
-	top : 80%;
+	top : 70%;
 }
 
 .div-btn-menu button{
@@ -176,6 +178,22 @@ h3{
 .separadorPermisos{
 	margin-top: 40px !important;
 	border-top: 2px solid !important;
+}
+
+#tablaNotas{
+	border-collapse: collapse !important;
+}
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid black;
+}
+
+#tablaNotas.dataTable.cell-border tbody th, #tablaNotas.dataTable.cell-border tbody td{
+	border: 1px solid black;
+}
+
+.error-input{
+	border-color: red !important;
 }
 
 /*

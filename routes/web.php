@@ -31,8 +31,12 @@ Route::get('/verificado','VerificarMailController@verificado')->name('verificar.
   Route::get('/alumnos','AlumnoController@index')->name('alumno.index');
   Route::get('/personal','PersonalController@index')->name('personal.index');
   Route::get('/noticias','NoticiaController@index')->name('noticias.index');
+  Route::get('/notas/{curso}-{materia}','NotasController@index')->name('notas.index');
 });
 
+Route::post('/noticias/actualizar','NoticiaController@actualizar')->name('noticias.actualizar');
+Route::post('/noticias/editar','NoticiaController@editar')->name('noticias.editar');
+Route::post('/noticias/destroy','NoticiaController@destroy')->name('noticias.destroy');
 Route::post('/noticias/create','NoticiaController@create')->name('noticias.create');
 Route::post('/verificar/verificar','VerificarMailController@verificar')->name('verificar.verificar');
 Route::post('/personas/destroy','PersonaController@destroy')->name('personas.destroy');

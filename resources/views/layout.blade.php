@@ -25,6 +25,7 @@
     <script type="text/javascript" src="{{ asset('js/ajaxDataCurso.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataPersonal.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ajaxDataNoticia.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/notas.js') }}"></script>
 
 
 </head>
@@ -66,10 +67,10 @@
                       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <span class="glyphicon glyphicon-bell">Notificaciones<span class="badge">{{count(auth()->user()->unreadNotifications)}}</span>
                       </a>
-                      <ul class="dropdown-menu" role="menu">
+                      <ul class="dropdown-menu" role="menu" style="width:180%">
                         <li>
                           @foreach(auth()->user()->unreadNotifications as $notification)
-                            <a href="#">{{$notification->data['mensaje']}}</a>
+                            <a href="#">{{$notification->data['mensaje']}}</a><br>
                           @endforeach
                         </li>
                       </ul>

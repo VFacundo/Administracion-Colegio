@@ -41,15 +41,15 @@
           </div>
           </div>
             <div class="col-md-3 text-center" style="float: right;">
-              <p class="text-lg-right" title="Autor">Autor: {{$noticia->persona_asociada}}</p>
+              <p class="text-lg-right" id="autorNoticia" title="Autor">Autor: {{$noticia->persona_asociada}}</p>
               <div class="col-sm-2 d-inline" style="float: right;">
-                <a id="btnUpdate" data-value="idNoticia" onclick="activarEmergente('emergenteUpdate');" title="Editar" class="btn btn-primary glyphicon glyphicon-pencil"></a>
-                <a class="btn btn-danger mt-1 glyphicon glyphicon-trash" title="Eliminar" onclick="deleteRow('tablaNoticias');confirmDestroyModal('1','eliminarRegistroUser','usuarios')"></a>
+                <a id="btnUpdate" data-value="{{$noticia->id}}" onclick="editRow();activarEmergente('emergenteUpdate');updateNoticia();" title="Editar" class="btn btn-primary glyphicon glyphicon-pencil"></a>
+                <a class="btn btn-danger mt-1 glyphicon glyphicon-trash" title="Eliminar" onclick="deleteRow();confirmDestroyModalNoBody('{{$noticia->id}}','eliminarNoticia','noticias')"></a>
               </div>
             </div>
             <p>{{$noticia->descripcion_noticia}}</p>
             <ul class="list-inline list-unstyled">
-    			      <li class="list-inline-item"><span><i class="glyphicon glyphicon-calendar"></i>{{date("d-m-Y", strtotime($noticia->fecha_origen))}}</span></li>
+    			      <li class="list-inline-item"><span id="fechaNoticia"><i class="glyphicon glyphicon-calendar"></i>{{date("d-m-Y", strtotime($noticia->fecha_origen))}}</span></li>
   			   </ul>
            <!-- style="clear:right" -->
          </div>
@@ -118,3 +118,34 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
 </div>
 
 <!--FIN BLOQUE CREAR NUEVA NOTICIA -->
+
+<!--BLOQUE EDITAR NOTICIA -->
+<div class="padreEmergente">
+  <div class="emergente" id="emergenteUpdate">
+    <div class="card-header">
+      Editar Noticia
+    </div>
+    <div class="card-body">
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+        </div><br />
+      @endif
+      <form id="formUpdate" onSubmit="setUpdateNoticia();return false">
+        <label for="titulo_noticia">Titulo :</label>
+        <input type="text" class="form-control" name="titulo_noticia"/>
+        <label for="descripcion_noticia">Descripcion :</label>
+        <input type="text" class="form-control" name="descripcion_noticia"/>
+
+        <button type="submit" class="btn btn-primary">Modificar Noticia</button>
+        <button type="reset" class="btn btn-primary" onclick="noEditRow();activarEmergente('emergenteUpdate');">Cancelar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--FIN BLOQUE EDITAR NOTICIA -->

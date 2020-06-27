@@ -85,6 +85,33 @@ function setUpdatePermiso(){
     });
 }
 
+/////////////////CONFIRMAR ELIMINAR GENERICO SIN BODY ///////////////////
+function confirmDestroyModalNoBody(id,metodo,controlador){
+var cModal, btnDestroy = event.target;
+
+btnDestroy.classList.add("toDestroy");
+document.body.insertAdjacentHTML('afterend','<div class="modal" tabindex="-1" role="dialog" style="display:block">'+
+          '<div class="modal-dialog" role="document">'+
+            '<div class="modal-content">'+
+              '<div class="modal-header">'+
+                '<h5 class="modal-title">Confirmar Eliminar</h5>'+
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="deleteModalD()">'+
+                '<span aria-hidden="true">&times;</span>'+
+                '</button>'+
+              '</div>'+
+              '<div class="modal-body">'+
+              '<b>La siguiente informacion sera Eliminada, desea continuar?</b><br>'+
+              '<b></b><br>'+
+              '</div>'+
+              '<div class="modal-footer">'+
+                '<button type="button" class="btn btn-primary" onclick="'+metodo+'('+"'"+id+"'"+','+"'"+controlador+"'"+');">Confirmar</button>'+
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="noDeleteRow();deleteModalD()">Cancelar</button>'+
+              '</div>'+
+              '</div>'+
+             '</div>'+
+            '</div>');
+}
+
 /////////////////CONFIRMAR ELIMINAR GENERICO ///////////////////
 function confirmDestroyModal(id,metodo,controlador){
 var cModal, btnDestroy = event.target;
