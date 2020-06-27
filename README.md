@@ -28,10 +28,11 @@
   ## Instalacion(Windows)
   ~~~
   -Descargar e Instalar:  
-    https://git-scm.com/download/win  
-    https://getcomposer.org/download/  
-    https://www.apachefriends.org/es/download.html  
-    
+  ~~~
+    [Git](https://git-scm.com/download/win)  
+    [Composer](https://getcomposer.org/download/)  
+    [Xampp](https://www.apachefriends.org/es/download.html)  
+  ~~~  
    -Clonar el Repositorio:
         - git clone https://github.com/VFacundo/Administracion-Colegio
         - Instalar las dependencias via Composer: php composer install  
@@ -44,12 +45,17 @@
   ## Documentacion  
 
   -Especificacion General de Requerimientos
-   - [Documento PDF](documentacion/egr/egr.pdf)  
-   - [Proyecto EA](documentacion/egr/admin_colegio.ea)  
+   - [Documento PDF](documentacion/egr/egr.docx)  
+   - [Proyecto EA](documentacion/egr/admin_colegio.EAP)  
  
  - PPS  
    - [Carta de Aceptacion](documentacion/pps/carta_aceptacion.jpg)  
    - [Carta de Cumplimiento](documentacion/pps/carta_cumplimiento.jpg)  
    
+ - Manuales
+   - [Manual de Instalacion](documentacion/Manual_de_instalacion.pdf)  
+   - [Manual de Usuario](documentacion/Manual_de_usuario.pdf)  
+   
  - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)  
+ - [PPT Ventas](documentacion/ppt_ventas.pdf) 
     
