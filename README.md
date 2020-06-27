@@ -8,14 +8,14 @@
 
 ## Indice
 ~~~
-* [Equipo docente](#equipo-docente)
-* [Integrantes del grupo](#integrantes-del-grupo)
-* [Acerca del proyecto](#acerca-del-proyecto)
-  * [Desarollado con](#desarrollado-con)
-  * [Demo en vivo](#demo-en-vivo)
-* [Instalación desde el código fuente](#instalacion-desde-el-codigo-fuente)
-* [Documentación](#documentacion)
-* [Licencia](#licencia)
+- [Equipo docente](#equipo-docente)
+- [Integrantes del grupo](#integrantes-del-grupo)
+- [Acerca del proyecto](#acerca-del-proyecto)
+- [Desarollado con](#desarrollado-con)
+- [Demo en vivo](#demo-en-vivo)
+- [Instalación desde el código fuente](#instalacion-desde-el-codigo-fuente)
+- [Documentación](#documentacion)
+- [Licencia](#licencia)
 ~~~
 
 ## Equipo docente
