@@ -53,8 +53,8 @@
    - [Carta de Cumplimiento](documentacion/pps/carta_cumplimiento.jpg)  
    
  - Manuales
-   - [Manual de Instalacion](documentacion/manuales/Manual_de_instalacion.pdf)  
-   - [Manual de Usuario](documentacion/manuales/Manual_de_usuario.pdf)  
+   - [Manual de Instalacion](documentacion/manuales/Manual_de_Instalacion.pdf)  
+   - [Manual de Usuario](documentacion/manuales/Manual_de_Usuario.pdf)  
    
  - [Modelo de Negocios](documentacion/modelo_de_negocios.pdf)  
  - [PPT Ventas](documentacion/ppt_ventas.pdf) 
