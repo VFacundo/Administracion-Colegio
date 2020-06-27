@@ -45,7 +45,7 @@
   ## Documentacion  
 
   -Especificacion General de Requerimientos
-   - [Documento PDF](documentacion/egr/egr.docx)  
+   - [Documento DOC](documentacion/egr/egr.docx)  
    - [Proyecto EA](documentacion/egr/admin_colegio.EAP)  
  
  - PPS  
