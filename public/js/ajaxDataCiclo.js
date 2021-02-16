@@ -10,7 +10,7 @@ function setUpdateCiclo(){
                 anio:formUpdate.anio.value,
                 nombre:'Ciclo Lectivo ' + form.anio.value,
                 };
-  console.log(dataRequest);              
+  console.log(dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
    .then(function(response){
@@ -67,7 +67,7 @@ function crearCiclo(){
       url = '/ciclo/store',
       respuesta,
       nuevaFila;
-  
+
   removeErrors('formAltaCiclo');
 
   //console.log(form.estados.value);
@@ -84,14 +84,14 @@ function crearCiclo(){
         console.log(response);
         console.log(response[1][0]['id']);
         label = '<label id="labelExiste" for="ciclo_existente">El ciclo lectivo '+ form.anio.value  +' se encuentra dado de baja. Desea restaurarlo?</label>';
-        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'        
+        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'
         boton_si = '<button id="Existe_si" data-value="" id="agregarAlumno"type="submit" onclick="restaurarCiclo('+ response[1][0]['id'] +');"class="btn btn-primary">SI</button>'
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', label);
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', boton_si);
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', boton_no);
       }else {
         console.log(response);
-        displayErrors(response,'formAltaCiclo'); 
+        displayErrors(response,'formAltaCiclo');
       }
     }else{
       console.log(response);
@@ -100,9 +100,9 @@ function crearCiclo(){
       '<td>'+ response[1] +'</td>' +
       '<td>'+ form.anio.value +'</td>' +
       '<td>Ciclo Lectivo ' + form.anio.value +'</td>' +
-      '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a></td>' +
-      '<td><a data-value="'+ response[1] +'" href="curso/'+ response[1] +'" class= "btn btn-primary">Ver Cursos</a></td>' +
-      '<td><a data-value="'+ response[1] +'" onclick="confirmDestroyCiclo('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>';
+      '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a>' +
+      '<a data-value="'+ response[1] +'" href="curso/'+ response[1] +'" class= "btn btn-primary">Ver Cursos</a>' +
+      '<a data-value="'+ response[1] +'" onclick="confirmDestroyCiclo('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>';
       mostrarModal('formAltaCiclo','El ciclo lectivo se creo exitosamente!','Crear Ciclo Lectivo','emergenteCrear');
     }
   });
@@ -165,7 +165,7 @@ function eliminarCicloLectivo(id_ciclo){
       btnDestroy = document.getElementsByClassName("toDestroy")[0];
   console.log(btnDestroy);
   dataRequest = {id_ciclo:id_ciclo,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
@@ -210,10 +210,10 @@ function restaurarCiclo(id_ciclo){
       '<td><a data-value="'+ response[1]['id'] +'" href="curso/'+ response[1]['id'] +'" class= "btn btn-primary">Ver Cursos</a></td>' +
       '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyCiclo('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
       mostrarModal('formAltaCiclo','El ciclo lectivo se dio nuevamente de alta!','Crear Ciclo Lectivo','emergenteCrear');
-        
+
     }
- 
-  });    
+
+  });
 }
 ////////////////////////////////// CAMBIAR ESTADO ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -233,7 +233,7 @@ function cambiarEstado(id_ciclo){
       console.log("estado modificado");
       location.reload();
     }
- 
-  }); 
+
+  });
 
 }

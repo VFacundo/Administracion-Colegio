@@ -4,7 +4,7 @@ function crearPermiso(){
       dataRequest,
       url = '/permisos/store',
       respuesta,
-      nuevaFila;
+      nuevaFila,datos;
 
   //console.log(form.estados.value);
   dataRequest = {
@@ -22,16 +22,15 @@ function crearPermiso(){
       displayErrors(response,'formAltaPermiso');
        //btnDestroy.classList.remove("toDestroy");
     }else{
-
-    document.getElementById('tablaPermisos').children[1].insertAdjacentHTML('beforeend','<tr>'+
-          '<td>'+form.nombre_permiso.value+'</td>'+
-          '<td>'+form.funcionalidad_permiso.value+'</td>'+
-          '<td>'+form.descripcion_permiso.value+'</td>'+
-          '<td>'+form.estados.value+'</td>'+
-          '<td><a id="btnUpdate" data-value="'+response[1]+'" onclick="activarEmergente('+'emergentePermisoUpdate'+'); updatePermiso();" class="btn btn-primary">Edit</a></td>'+
-          '<td><a data-value="'+response[1]+'" onclick="confirmDestroy('+response[1]+')" class="btn btn-danger">Delete</a></td>'+
-      '</tr>');
-
+      datos = [
+        form.nombre_permiso.value,
+        form.funcionalidad_permiso.value,
+        form.descripcion_permiso.value,
+        form.estados.value,
+        '<a id="btnUpdate" data-value="'+response[1]+'" onclick="activarEmergente('+'emergentePermisoUpdate'+'); updatePermiso();" class="btn btn-primary">Editar</a>'+
+        '<a data-value="'+response[1]+'" onclick="confirmDestroy('+response[1]+')" class="btn btn-danger">Eliminar</a>',
+      ]
+      addRow('tablaPermisos',datos);
       activarEmergente('emergentePermisos');
     }
   });
@@ -228,16 +227,17 @@ function crearRol(){
       for (var i = 0; i < response[1].length; i++) {
         regPermisos = response[1][i]['nombre_permiso']+' | '+response[1][i]['fecha_asignacion_permiso']+'<br>';
       }
-      nuevoReg ='<tr>'+
-                  '<td>'+dataRequest['nombre_rol']+'</td>'+
-                  '<td>'+dataRequest['descripcion_rol']+'</td>'+
-                  '<td>'+dataRequest['estado_rol']+'</td>'+
-                  '<td>'+regPermisos+'</td>'+
-                '</tr>';
+      nuevoReg = [ dataRequest['nombre_rol'],
+                  dataRequest['descripcion_rol'],
+                  dataRequest['estado_rol'],
+                  regPermisos,
+                ];
+      //addRow("tablaRoles",nuevoReg);
                 // regPermisos;
-      document.getElementById('tablaRoles').children[1].insertAdjacentHTML('beforeend',nuevoReg);
-        console.log(nuevoReg);
+      //document.getElementById('tablaRoles').children[1].insertAdjacentHTML('beforeend',nuevoReg);
+      //  console.log(nuevoReg);
         activarEmergente('emergenteCrear');
+        location.reload();
     }
   });
 }

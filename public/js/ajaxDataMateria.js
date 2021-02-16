@@ -9,7 +9,7 @@ function listarMaterias(id_curso) {
   removeErrors('formAsignarMateria');
   dataRequest = {nombre_curso:btn.dataset.value,
                 };
-  console.log(dataRequest); 
+  console.log(dataRequest);
   try{
     document.getElementById('boton_crear').remove();
     document.getElementById('boton_cancelar').remove();
@@ -42,24 +42,24 @@ function listarMaterias(id_curso) {
    .then(function(response){
     console.log(response);
 
-    
+
     for(var i = 0;i < response['materia_curso'].length; i++){
         id_materia = response['materia_curso'][i]['id'];
-        nombre_materia = response['materia_curso'][i]['nombre'];          
+        nombre_materia = response['materia_curso'][i]['nombre'];
         texto += '<tr>'+
-                '<td>'+ nombre_materia +'</td>' + 
+                '<td>'+ nombre_materia +'</td>' +
                 '<td> <input type="checkbox" name="materias" value="'+ id_materia +'"> </td>'+
-                '</tr>';        
+                '</tr>';
     }
 
         document.querySelector('#tablaAsignarMaterias>tbody').insertAdjacentHTML('beforeend', texto);
-        
-        emergenteAgregarMateria = "'emergenteAgregarMateria'";  
+
+        emergenteAgregarMateria = "'emergenteAgregarMateria'";
         boton_crear = '<button data-value="'+ id_curso +'" id="boton_crear"type="submit" onclick="asignarMateriaCurso(); limpiarTabla(); "class="btn btn-primary">Agregar a curso</button>'
         boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregarMateria +'); limpiarTabla();  ">Cancelar</button>'
         document.getElementById('tablaAsignarMaterias').insertAdjacentHTML('afterend', boton_cancelar);
-        document.getElementById('tablaAsignarMaterias').insertAdjacentHTML('afterend', boton_crear); 
-         
+        document.getElementById('tablaAsignarMaterias').insertAdjacentHTML('afterend', boton_crear);
+
 
         $('#tablaAsignarMaterias').DataTable({
                                        "oLanguage": {
@@ -72,18 +72,18 @@ function listarMaterias(id_curso) {
                                            "sPrevious": "Anterior"
                                         },
                                     }
-        }); 
+        });
 
-       $('.dataTables_filter').show();  
-       
+       $('.dataTables_filter').show();
+
     });
-         
-}   
+
+}
 
 function limpiarTabla(){
 
   $('#tablaAsignarMaterias').dataTable().fnDestroy();
-  document.getElementById('tablaAsignarMaterias').remove(); 
+  document.getElementById('tablaAsignarMaterias').remove();
 }
 
 function asignarMateriaCurso(){
@@ -92,13 +92,13 @@ function asignarMateriaCurso(){
 	boton = event.target,
 	dataRequest,
 	url = '/materia/agregarMateriaCurso';
-	
-   
+
+
 	for(var i = 0; i < materiasBox.length; i++){
 			if (materiasBox[i].checked){
 				materias_a_agregar[materias_a_agregar.length] = materiasBox[i].value;
 			}
-		}	
+		}
 
 	dataRequest = {materias: materias_a_agregar, id_curso: boton.dataset.value};
 	respuesta = ajaxRequest(url,dataRequest);
@@ -108,7 +108,7 @@ function asignarMateriaCurso(){
       	console.log("error");
       	displayErrors(response,'formAsignarMateria');
        //btnDestroy.classList.remove("toDestroy");
-    }else{	
+    }else{
    		console.log(response);
       //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
    		activarEmergente('emergenteAgregarMateria');
@@ -128,7 +128,7 @@ formUpdate = document.getElementById('formAsignarHorario');
 
 
   for (i = 0; i < horarios.length; i++){
-    
+
     text =     '<label for="dias'+ i +'">Dias :</label>'+
                 '<select name="dias'+ i +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value="Lunes"> Lunes </option>'+
@@ -157,7 +157,7 @@ formUpdate = document.getElementById('formAsignarHorario');
                 '</select>'+
 
                 '<button type="submit" id="btn_remove'+ i +'" class="btn btn-primary glyphicon glyphicon-remove" onclick="removeHorario('+ i +')"></button></p>';
-      
+
 
     document.getElementById('formAsignarHorario').insertAdjacentHTML('beforeend', text);
 
@@ -165,7 +165,7 @@ formUpdate = document.getElementById('formAsignarHorario');
     formUpdate.querySelector('select[name="hora_inicio'+ i +'"]').value = horarios[i][0]['hora_inicio'];
     formUpdate.querySelector('select[name="hora_fin'+ i +'"]').value = horarios[i][0]['hora_fin'];
 
-  }  
+  }
   actualizar = "actualizar";
   botones = '<button type="submit" class="btn btn-primary glyphicon glyphicon-plus" id="btn_mas" onclick="agregarHorario();"></button></p>'+
 
@@ -184,10 +184,10 @@ function crearFormHorario(id_curso, id_materia){
 
     sessionStorage.setItem('horario', 0);
     idHorario = sessionStorage.getItem('horario');
-     
+
     emergente = "'emergenteAsignarHorario'";
     crear = "crear";
-    
+
     text =     '<label for="dias'+ idHorario   +'">Dias :</label>'+
                 '<select name="dias'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value="Lunes"> Lunes </option>'+
@@ -237,7 +237,7 @@ var boton = event.target;
                 '<select name="dias'+ idHorario   +'" style= "border-radius: 5px; height: 30px;">'+
                    '<option value="Lunes"> Lunes </option>'+
                    '<option value="Martes"> Martes </option>'+
-                   '<option value="Miercoles"> Miercoles</option>' + 
+                   '<option value="Miercoles"> Miercoles</option>' +
                   ' <option value="Jueves"> Jueves </option>'+
                   ' <option value="Viernes"> Viernes</option>'+
                 '</select>'+
@@ -262,7 +262,7 @@ var boton = event.target;
 
               '<button type="submit" id="btn_remove'+ idHorario +'" class="btn btn-primary glyphicon glyphicon-remove" onclick="removeHorario('+ idHorario +')"></button>'+
               '</div>';
-                
+
         document.getElementById('btn_mas').insertAdjacentHTML('beforebegin', horario);
 }
 
@@ -303,8 +303,8 @@ var boton = event.target,
     idHorario = sessionStorage.getItem('horario');
 
     removeErrors('formAsignarHorario');
-    
-    for(var i = 0; i <= idHorario; i++){  
+
+    for(var i = 0; i <= idHorario; i++){
         try{
           diaBox = formulario.querySelector('select[name="dias'+ i +'"]').value;
           hora_inicioBox = formulario.querySelector('select[name="hora_inicio'+ i +'"]').value;
@@ -329,14 +329,14 @@ var boton = event.target,
         console.log("error");
         displayErrors(response,'formAsignarHorario');
        //btnDestroy.classList.remove("toDestroy");
-    }else{  
+    }else{
       //console.log(response);
       //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
       activarEmergente('emergenteAsignarHorario');
       //alert('Exito');
     }
 
-    }); 
+    });
 }
 
 function controlarHorario(id_curso, id_materia){
@@ -357,7 +357,7 @@ var boton = event.target,
         //console.log('res', response);
         activarEmergente('emergenteAsignarHorario');
         crearFormHorario(response['id_curso'], response['id_materia']);
-      }else{  
+      }else{
         //console.log(response);
         activarEmergente('emergenteAsignarHorario');
         crearFormUpdateHorario(response['id_curso'], response['id_materia'],response['horarios']);
@@ -365,12 +365,12 @@ var boton = event.target,
       }
 
     });
-}  
+}
 
 
 function crearMateria(){
   var btn = event.target,
-  url = '/materia/store';
+  url = '/materia/store',datos;
 
   removeErrors('formCrearMateria');
   //console.log(form.estados.value);
@@ -389,7 +389,7 @@ function crearMateria(){
       if(response[0] == 1) {
         emergente = "'emergenteCrearMateria'";
         label = '<label id="labelExiste" for="ciclo_existente">'+ form.nombre.value  +' de '+ form.curso.value  +' se encuentra dado de baja. Desea restaurarlo?</label>';
-        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'        
+        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'
         boton_si = '<button id="Existe_si" data-value="" id="agregarAlumno"type="submit" onclick="restaurarMateria('+ response[1][0]['id'] +');"class="btn btn-primary">SI</button>'
         document.getElementById("emergenteCrearMateria").insertAdjacentHTML('beforeend', label);
         document.getElementById("emergenteCrearMateria").insertAdjacentHTML('beforeend', boton_si);
@@ -397,25 +397,28 @@ function crearMateria(){
       }else {
         console.log(response);
         displayErrors(response,'formCrearMateria');
-      } 
+      }
     }else{
         console.log(response);
         emergente = "'emergenteUpdate'";
-        document.getElementById("tablaMaterias").insertRow(-1).innerHTML =
-        '<td>'+ response[1] +'</td>' +
-        '<td>'+ form.nombre.value +'</td>' +
-        '<td>'+ form.carga_horaria.value +'</td>' +
-        '<td>' + form.programa_materia.value +'</td>' +
-        '<td>' + response[2] +'</td>' +
-        '<td>' + form.curso.value +'</td>' +
-        '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a></td>' +
-        '<td><a data-value="'+ response[1] +'" onclick="confirmDestroyMateria('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>';
 
-        mostrarModal('formUpdateMateria','La materia se creo exitosamente!','Crear Materia','emergenteUpdateMateria');
+        datos = [
+          response[1],
+          form.nombre.value,
+          form.carga_horaria.value,
+          form.programa_materia.value,
+          response[2],
+          form.curso.value,
+          '<a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a>'+
+          '<a data-value="'+ response[1] +'" onclick="confirmDestroyMateria('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>',
+        ]
 
+        addRow('tablaMaterias',datos);
+
+        mostrarModal('formCrearMateria','La materia se creo exitosamente!','Crear Materia','emergenteCrearMateria');
 
     }
-  
+
   });
 }
 
@@ -452,7 +455,7 @@ document.body.insertAdjacentHTML('afterend','<div class="modal" tabindex="-1" ro
 
 
 function modalBodyMateria(id_materia){
-var url = '/materia/editar', 
+var url = '/materia/editar',
     respuesta,
     dataRequest,
     bModal;
@@ -481,7 +484,7 @@ function eliminarMateria(id_materia){
       btnDestroy = document.getElementsByClassName("toDestroy")[0];
   console.log(btnDestroy);
   dataRequest = {id_materia:id_materia,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
@@ -501,7 +504,7 @@ function restaurarMateria(id_materia){
   var btn = event.target,
   ciclo_a_restaurar,
   dataRequest,
-  url = '/materia/restaurarMateria';
+  url = '/materia/restaurarMateria',datos;
 
   dataRequest = {id_materia: id_materia};
   respuesta = ajaxRequest(url,dataRequest);
@@ -514,20 +517,24 @@ function restaurarMateria(id_materia){
       document.getElementById('labelExiste').remove();
       document.getElementById('Existe_no').remove();
       document.getElementById('Existe_si').remove();
-      document.getElementById("tablaMaterias").insertRow(-1).innerHTML =
-      '<td>'+ response[1]['id'] +'</td>' +
-      '<td>'+ response[1]['nombre']+'</td>' +
-      '<td>' + response[1]['carga_horaria'] +'</td>' +
-      '<td>' + response[1]['programa_materia'] +'</td>' +
-      '<td>' + response[1]['estado_materia'] +'</td>' +
-      '<td>' + response[1]['curso_correspondiente'] +'</td>' +
-      '<td><a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a></td>' +
-      '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyMateria('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
-     // mostrarModal('formCrearMateria','La materia se dio nuevamente de alta!','Crear Materia','emergenteCrearMateria');
-       activarEmergente('emergenteCrearMateria');
+
+      datos = [
+          response[1]['id'] ,
+          response[1]['nombre'],
+          response[1]['carga_horaria'],
+          response[1]['programa_materia'],
+          response[1]['estado_materia'],
+          response[1]['curso_correspondiente'],
+          '<a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a>'+
+          '<a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyMateria('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>',
+      ]
+
+      addRow('tablaMaterias',datos);
+      mostrarModal('formCrearMateria','La materia se dio nuevamente de alta!','Crear Materia','emergenteCrearMateria');
+
     }
- 
-  });    
+
+  });
 }
 
 ////////////////// ENVIAR DATOS ACTUALIZADOS MATERIA ////////////////////
@@ -546,7 +553,7 @@ function setUpdateMateria(){
                  estado_materia: form.estado_materia.value,
                  curso_correspondiente:form.curso.value,
                 };
-  console.log('dataRequest', dataRequest);              
+  console.log('dataRequest', dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
    .then(function(response){
@@ -655,7 +662,7 @@ function eliminarMateriaCurso(id_materia,id_curso){
   console.log(btnDestroy);
   dataRequest = {id_materia:id_materia,
                  id_curso: id_curso,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){

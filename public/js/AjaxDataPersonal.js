@@ -8,7 +8,7 @@ function listarCrearPersonal() {
   formUpdate = document.getElementById('formAsignarPersonal');
 
   removeErrors('formCrearPersonal');
-  
+
   document.getElementById('formCrearPersonal').innerHTML= '';
   try{
     document.getElementById('crearPersonal').remove();
@@ -26,7 +26,7 @@ function listarCrearPersonal() {
 
     S_personal = '<label for="personal">Personal :</label>' +
     '<select name="personal" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
-            
+
       for(var i = 0;i < response['personas_personal'].length; i++){
         id_personal = response['personas_personal'][i]['id'];
         nombre_personal = response['personas_personal'][i]['nombre_persona'];
@@ -47,12 +47,12 @@ function listarCrearPersonal() {
     boton_cancelar = '<button type="reset" class="btn btn-primary" id="cancelar" onclick="activarEmergente('+ emergenteCrearPersonal +');">Cancelar</button>'
 
     document.getElementById('formCrearPersonal').insertAdjacentHTML('beforeend', legajo);
-    document.getElementById('formCrearPersonal').insertAdjacentHTML('beforeend', S_personal);    
+    document.getElementById('formCrearPersonal').insertAdjacentHTML('beforeend', S_personal);
     document.getElementById('formCrearPersonal').insertAdjacentHTML('beforeend', S_manejo);
     document.getElementById('formCrearPersonal').insertAdjacentHTML('afterend', boton_cancelar);
     document.getElementById('formCrearPersonal').insertAdjacentHTML('afterend', boton_crearPersonal);
-    
-        
+
+
     });
 }
 
@@ -65,8 +65,8 @@ function crearPersonal(){
   legajoBox = document.getElementById('formCrearPersonal').legajo_personal,
   personal_a_crear,
   manejo_de_grupo,
-  legajoPersonal,
-  
+  legajoPersonal,data,
+
   personal_a_crear = personalBox.value;
   manejo_de_grupo = manejoBox.value;
   legajoPersonal = legajoBox.value;
@@ -89,7 +89,7 @@ function crearPersonal(){
         console.log(response);
         //console.log(response[1][0]['id']);
         label = '<label id="labelExiste" for="personal_existente">El legajo '+ legajoPersonal +' se encuentra dado de baja y puede estar asociado a otra persona que la seleccionada. Desea restaurarlo?</label>';
-        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'        
+        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'
         boton_si = '<button id="Existe_si" data-value="" id="agregarPersonal "type="submit" onclick="restaurarPersonal('+ response[1][0]['id'] +');"class="btn btn-primary">SI</button>'
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', label);
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', boton_si);
@@ -97,28 +97,32 @@ function crearPersonal(){
       }else {
         console.log(response);
         displayErrors(response,'formCrearPersonal');
-      }         
+      }
     }else{
         console.log(response);
         emergente = "'emergenteUpdatePersonal'";
-        document.getElementById("tablaPersonal").insertRow(-1).innerHTML =
-        '<td>'+ response[1]['id'] +'</td>' +
-        '<td>'+ response[2]['nombre_persona'] +'</td>' +
-        '<td>'+ response[2]['apellido_persona'] +'</td>' +
-        '<td>' + legajoPersonal +'</td>' +
-        '<td>Ver datos personales</td>' +
-        '<td> </td>' +
-        '<td>'+ response[1]['fecha_alta'] +'</td>' +
-        '<td>'+ response[1]['manejo_de_grupo'] +'</td>' +
-        '<td><a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updatePersonal(); " class="btn btn-primary">Editar</a></td>' +
-        '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyPersonal('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
- 
+
+        data = [
+          response[1]['id'],
+          response[2]['nombre_persona'],
+          response[2]['apellido_persona'],
+          legajoPersonal,
+          'Ver datos personales',
+          ' ',
+          response[1]['fecha_alta'],
+          response[1]['manejo_de_grupo'],
+          '<a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updatePersonal(); " class="btn btn-primary">Editar</a>'+
+          '<a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyPersonal('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a>',
+        ];
+
+        addRow("tablaPersonal",data);
+
         mostrarModal('formCrearPersonal','Creado Correctamente!','Crear Personal','emergenteCrear');
 
         //activarEmergente('emergenteCrearPersonal');
 
     }
-  
+
   });
 
 }
@@ -138,7 +142,7 @@ function setUpdatePersonal(){
                  legajo_personal:form.legajo_personal.value,
                  manejo_de_grupo:form.manejo_de_grupo.value,
                 };
-  console.log('dataRequest', dataRequest);              
+  console.log('dataRequest', dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
    .then(function(response){
@@ -162,7 +166,7 @@ function setUpdatePersonal(){
         '<td>'+ response[1]['manejo_de_grupo'] +'</td>' +
         '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updatePersonal(); " class="btn btn-primary">Editar</a></td>' +
         '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyPersonal('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
- 
+
       mostrarModal('formUpdatePersonal','Modificado Correctamente!','Modificar Personal','emergenteUpdatePersonal');
     }
     });
@@ -247,7 +251,7 @@ function eliminarPersonal(id_personal){
       btnDestroy = document.getElementsByClassName("toDestroy")[0];
   console.log(btnDestroy);
   dataRequest = {id_personal:id_personal,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
@@ -267,7 +271,7 @@ function eliminarPersonal(id_personal){
 function restaurarPersonal(id_personal){
   var btn = event.target,
   dataRequest,
-  url = '/personal/restaurarPersonal';
+  url = '/personal/restaurarPersonal',data;
 
   dataRequest = {id_personal: id_personal};
   respuesta = ajaxRequest(url,dataRequest);
@@ -280,23 +284,26 @@ function restaurarPersonal(id_personal){
       document.getElementById('labelExiste').remove();
       document.getElementById('Existe_no').remove();
       document.getElementById('Existe_si').remove();
-      document.getElementById("tablaPersonal").insertRow(-1).innerHTML =
-      '<td>'+ response[1]['id'] +'</td>' +
-      '<td>'+ response[2]['nombre_persona'] +'</td>' +
-      '<td>'+ response[2]['apellido_persona'] +'</td>' +
-      '<td>' + response[1]['legajo_personal'] +'</td>' +
-      '<td>Ver datos personales</td>' +
-      '<td> </td>' +
-      '<td>'+ response[1]['fecha_alta'] +'</td>' +
-      '<td>'+ response[1]['manejo_de_grupo'] +'</td>' +
-      '<td><a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updatePersonal(); " class="btn btn-primary">Editar</a></td>' +
-      '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyPersonal('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
- 
+
+      data = [
+        response[1]['id'],
+        response[2]['nombre_persona'],
+        response[2]['apellido_persona'],
+        response[1]['legajo_personal'],
+        'Ver datos personales',
+        ' ',
+        response[1]['fecha_alta'],
+        response[1]['manejo_de_grupo'],
+        '<a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updatePersonal(); " class="btn btn-primary">Editar</a> '+
+        '<a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyPersonal('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a>'
+      ];
+
+      addRow("tablaPersonal",data);
       mostrarModal('formCrearPersonal','El personal se dio nuevamente de alta!','Crear Personal','emergenteCrear');
-        
+
     }
- 
-  });    
+
+  });
 }
 
 //////////////////////////////////////// AGREGAR PRECEPTOR A CURSO ////////////////////////////////////////////////////////////////////
@@ -318,26 +325,26 @@ function listarPersonalPreceptor(id_curso) {
     document.getElementById('agregarPreceptor').remove();
     document.getElementById('boton_cancelar').remove();
   }catch(error){}
-  
+
 
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
-    
+
     texto = '<label for="Preceptor">Preceptor :</label>'+
             '<select name="preceptor" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
-            
+
         for(var i = 0;i < response['personal'].length; i++){
           id_personal = response['personal'][i]['id'];
           nombre_personal = response['personal'][i]['nombre_persona'];
           apellido_personal = response['personal'][i]['apellido_persona'];
           texto += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
-        }   
-        
-        document.getElementById('formAsignarPreceptor').insertAdjacentHTML('beforeend', texto);         
-                 
-        emergenteAgregar = "'emergenteAgregarPreceptor'";  
-        
+        }
+
+        document.getElementById('formAsignarPreceptor').insertAdjacentHTML('beforeend', texto);
+
+        emergenteAgregar = "'emergenteAgregarPreceptor'";
+
         boton_agregarPreceptor = '<button data-value="'+ id_curso +'" id="agregarPreceptor" "type="submit" onclick="asignarPreceptorCurso();"class="btn btn-primary">Agregar a curso</button>'
         boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregar +');">Cancelar</button>'
         document.getElementById('formAsignarPreceptor').insertAdjacentHTML('afterend', boton_cancelar);
@@ -348,14 +355,14 @@ function listarPersonalPreceptor(id_curso) {
 
 function asignarPreceptorCurso(){
   var preceptorBox = document.getElementById('formAsignarPreceptor').preceptor,
-  preceptor_a_agregar, 
+  preceptor_a_agregar,
   boton = event.target,
   dataRequest,
   url = '/personal/agregarPreceptorCurso';
-      
+
   preceptor_a_agregar = preceptorBox.value;
-      
-  dataRequest = {id_personal: preceptor_a_agregar, 
+
+  dataRequest = {id_personal: preceptor_a_agregar,
                  id_curso: boton.dataset.value,
                  tipo_personal: "Preceptor"};
   respuesta = ajaxRequest(url,dataRequest);
@@ -365,7 +372,7 @@ function asignarPreceptorCurso(){
         console.log(response);
         displayErrors(response,'formAsignarPreceptor');
         //activarEmergente('emergenteAgregarPreceptor');
-    }else{  
+    }else{
       console.log(response);
       //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
       activarEmergente('emergenteAgregarPreceptor');
@@ -394,7 +401,7 @@ function listarPersonalDocente(id_curso, id_materia) {
     document.getElementById('agregarDocente').remove();
     document.getElementById('boton_cancelar').remove();
   }catch(error){}
-  
+
 
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
@@ -406,37 +413,37 @@ function listarPersonalDocente(id_curso, id_materia) {
     doc_suplente = "'docente_suplente'";
     titular = '<input type="checkbox" id="checkTitular" onchange="habilitar(this.checked , '+ doc_titular +' );"> Habilitar/Deshabilitar Titular'+
             '<select name="docente_titular" id="docente_titular" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;" disabled=true>';
-            
+
         for(var i = 0;i < response['personal'].length; i++){
           id_personal = response['personal'][i]['id'];
           nombre_personal = response['personal'][i]['nombre_persona'];
           apellido_personal = response['personal'][i]['apellido_persona'];
           titular += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
-        }   
-        
-        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', titular);         
-    
+        }
+
+        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', titular);
+
 
     suplente = '<input type="checkbox" id="checkSuplente" onchange="habilitar(this.checked, '+ doc_suplente +');"> Habilitar/Deshabilitar Suplente'+
                '<select name="docente_suplente" id="docente_suplente" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;" disabled=true>';
-            
+
         for(var i = 0;i < response['personal'].length; i++){
           id_personal = response['personal'][i]['id'];
           nombre_personal = response['personal'][i]['nombre_persona'];
           apellido_personal = response['personal'][i]['apellido_persona'];
           suplente += '<option value= "'+ id_personal +'">'+nombre_personal +' '+apellido_personal +'</option>';
-        }   
-                   
-        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', suplente);             
+        }
 
-      emergenteAgregar = "'emergenteAsignarDocente'";  
-        
+        document.getElementById('formAsignarDocente').insertAdjacentHTML('beforeend', suplente);
+
+      emergenteAgregar = "'emergenteAsignarDocente'";
+
       boton_agregarDocente = '<button data-value="'+ id_curso +'" id="agregarDocente" "type="submit" onclick="asignarDocenteMateria('+ id_materia +'); "class="btn btn-primary" disabled=true >Agregar a curso</button>'
       boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregar +');">Cancelar</button>'
       document.getElementById('formAsignarDocente').insertAdjacentHTML('afterend', boton_cancelar);
       document.getElementById('formAsignarDocente').insertAdjacentHTML('afterend', boton_agregarDocente);
 
-      
+
 
     });
 }
@@ -459,7 +466,7 @@ function habilitar(value,docente){
   }
 
 
-      
+
 }
 
 function asignarDocenteMateria(id_materia){
@@ -469,18 +476,18 @@ function asignarDocenteMateria(id_materia){
   checkBoxTitular = docente_titular.disabled,
 
   titular_a_agregar,
-  suplente_a_agregar, 
+  suplente_a_agregar,
   boton = event.target,
   dataRequest,
   url = '/personal/asignarDocenteMateria';
-      
+
   titular_a_agregar = titularBox.value;
   removeErrors('formAsignarDocente');
 
   if (checkBoxSuplente == true){
     suplente_a_agregar = 0;
   } else {
-    suplente_a_agregar = suplenteBox.value;    
+    suplente_a_agregar = suplenteBox.value;
   }
 
   if (checkBoxTitular == true){
@@ -490,7 +497,7 @@ function asignarDocenteMateria(id_materia){
   }
 
   dataRequest = {id_titular: titular_a_agregar,
-                 id_suplente: suplente_a_agregar, 
+                 id_suplente: suplente_a_agregar,
                  id_curso: boton.dataset.value,
                  id_materia: id_materia,
                  tipo_personal: "Docente"};
@@ -501,15 +508,15 @@ function asignarDocenteMateria(id_materia){
         console.log(response);
         displayErrors(response,'formAsignarDocente');
         //activarEmergente('emergenteAgregarPreceptor');
-    }else{  
+    }else{
       console.log(response);
       //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
       activarEmergente('emergenteAsignarDocente');
     }
-  }); 
+  });
 
 
 
-      
-  
+
+
 }

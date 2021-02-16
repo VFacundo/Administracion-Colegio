@@ -10,7 +10,7 @@ function listarAlumnos(id_curso,anio) {
   dataRequest = {curso_id:btn.dataset.value,
                 anio:anio,
                 };
-  console.log(dataRequest); 
+  console.log(dataRequest);
   try{
     document.getElementById('boton_crear').remove();
     document.getElementById('boton_cancelar').remove();
@@ -43,25 +43,25 @@ function listarAlumnos(id_curso,anio) {
    .then(function(response){
     console.log(response);
 
-    
+
     for(var i = 0;i < response['alumnos'].length; i++){
         id_alumno = response['alumnos'][i]['id'];
         nombre_alumno = response['alumnos'][i]['nombre_persona'];
-        apellido_alumno = response['alumnos'][i]['apellido_persona'];          
+        apellido_alumno = response['alumnos'][i]['apellido_persona'];
         texto += '<tr>'+
-                '<td>'+ nombre_alumno +' '+ apellido_alumno +'</td>' + 
+                '<td>'+ nombre_alumno +' '+ apellido_alumno +'</td>' +
                 '<td> <input type="checkbox" name="alumnos" value="'+ id_alumno +'"> </td>'+
-                '</tr>';        
+                '</tr>';
     }
 
         document.querySelector('#tablaAsignarAlumnos>tbody').insertAdjacentHTML('beforeend', texto);
-        
-        emergenteAgregarAlumno = "'emergenteAgregarAlumno'";  
+
+        emergenteAgregarAlumno = "'emergenteAgregarAlumno'";
         boton_crear = '<button data-value="'+ id_curso +'" id="boton_crear"type="submit" onclick="asignarAlumnoCurso(); limpiarTablaAlumnos();"class="btn btn-primary">Agregar a curso</button>'
         boton_cancelar ='<button id="boton_cancelar" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergenteAgregarAlumno +'); limpiarTablaAlumnos();  ">Cancelar</button>'
         document.getElementById('tablaAsignarAlumnos').insertAdjacentHTML('afterend', boton_cancelar);
-        document.getElementById('tablaAsignarAlumnos').insertAdjacentHTML('afterend', boton_crear); 
-         
+        document.getElementById('tablaAsignarAlumnos').insertAdjacentHTML('afterend', boton_crear);
+
 
         $('#tablaAsignarAlumnos').DataTable({
                                        "oLanguage": {
@@ -74,18 +74,18 @@ function listarAlumnos(id_curso,anio) {
                                            "sPrevious": "Anterior"
                                         },
                                     }
-        }); 
+        });
 
-       $('.dataTables_filter').show();  
-       
+       $('.dataTables_filter').show();
+
     });
-         
+
 }
 
 function limpiarTablaAlumnos(){
 
   $('#tablaAsignarAlumnos').dataTable().fnDestroy();
-  document.getElementById('tablaAsignarAlumnos').remove(); 
+  document.getElementById('tablaAsignarAlumnos').remove();
 }
 
 
@@ -96,7 +96,7 @@ function asignarAlumnoCurso(){
   dataRequest,
   url = '/alumno/agregarAlumnoCurso';
 
-  
+
   for(var i = 0; i < alumnoBox.length; i++){
       if (alumnoBox[i].checked){
         alumnos_a_agregar[alumnos_a_agregar.length] = alumnoBox[i].value;
@@ -111,7 +111,7 @@ function asignarAlumnoCurso(){
     if(response[0] != 500){
         console.log(response);
         activarEmergente('emergenteAgregarAlumno');
-    }else{  
+    }else{
       console.log(response);
       //mostrarModal('formAsignarMateria','La materia se creo exitosamente!','Crear Materia','emergenteAgregarMateria');
       activarEmergente('emergenteAgregarAlumno');
@@ -191,7 +191,7 @@ function eliminarAlumnoCurso(id_alumno,id_curso){
   console.log(btnDestroy);
   dataRequest = {id_alumno:id_alumno,
                  id_curso: id_curso,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
@@ -217,7 +217,7 @@ function listarCrearAlumno() {
   formUpdate = document.getElementById('formAsignarAlumno');
 
   removeErrors('formCrearAlumno');
-  
+
   document.getElementById('formCrearAlumno').innerHTML= '';
   try{
     document.getElementById('crearAlumno').remove();
@@ -233,7 +233,7 @@ function listarCrearAlumno() {
 
     S_alumno = '<label for="alumno">Alumno :</label>' +
     '<select name="persona_asociada" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
-            
+
         for(var i = 0;i < response['persona_alumno'].length; i++){
                 id_alumno = response['persona_alumno'][i]['id'];
                 nombre_alumno = response['persona_alumno'][i]['nombre_persona'];
@@ -243,25 +243,25 @@ function listarCrearAlumno() {
 
     S_tutor = '<label for="tutor">Responsable :</label>' +
     '<select name="persona_responsable" style= "border-radius: 5px; height: 30px; width: -webkit-fill-available;">';
-            
+
         for(var i = 0;i < response['persona_tutor'].length; i++){
               id_tutor = response['persona_tutor'][i]['id'];
               nombre_tutor = response['persona_tutor'][i]['nombre_persona'];
               apellido_tutor = response['persona_tutor'][i]['apellido_persona'];
               S_tutor += '<option value= "'+ id_tutor +'">'+nombre_tutor +' '+apellido_tutor +'</option>';
-          }   
+          }
 
     emergenteCrearAlumno = "'emergenteCrear'"
     boton_crearAlumno = '<button type="submit" class="btn btn-primary" id="crearAlumno" onclick="crearAlumno();">Crear Alumno</button>';
     boton_cancelar = '<button type="reset" class="btn btn-primary" id="cancelar" onclick="activarEmergente('+ emergenteCrearAlumno +');">Cancelar</button>'
 
     document.getElementById('formCrearAlumno').insertAdjacentHTML('beforeend', legajo);
-    document.getElementById('formCrearAlumno').insertAdjacentHTML('beforeend', S_alumno);    
+    document.getElementById('formCrearAlumno').insertAdjacentHTML('beforeend', S_alumno);
     document.getElementById('formCrearAlumno').insertAdjacentHTML('beforeend', S_tutor);
     document.getElementById('formCrearAlumno').insertAdjacentHTML('afterend', boton_cancelar);
     document.getElementById('formCrearAlumno').insertAdjacentHTML('afterend', boton_crearAlumno);
-    
-        
+
+
     });
 }
 /////////////////////////////////////////////// CREAR ALUMNO /////////////////////////////////////////////////////////////////
@@ -274,7 +274,7 @@ function crearAlumno(){
   alumno_a_crear,
   responsable_alumno,
   legajoAlumno,
-  dataRequest;
+  dataRequest,data;
 
   alumno_a_crear = alumnoBox.value;
   responsable_alumno = responsableBox.value;
@@ -297,7 +297,7 @@ function crearAlumno(){
         console.log(response);
         //console.log(response[1][0]['id']);
         label = '<label id="labelExiste" for="alumno_existente">El legajo '+ legajoAlumno +' se encuentra dado de baja y puede estar asociado a otra persona que la seleccionada. Desea restaurarlo?</label>';
-        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'        
+        boton_no = '<button id="Existe_no" type="reset" class="btn btn-primary" onclick="activarEmergente('+ emergente +');">NO</button>'
         boton_si = '<button id="Existe_si" data-value="" id="agregarAlumno"type="submit" onclick="restaurarAlumno('+ response[1][0]['id'] +');"class="btn btn-primary">SI</button>'
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', label);
         document.getElementById("emergenteCrear").insertAdjacentHTML('beforeend', boton_si);
@@ -305,26 +305,27 @@ function crearAlumno(){
       }else {
         console.log(response);
         displayErrors(response,'formCrearAlumno');
-      }         
+      }
     }else{
         console.log(response);
         emergente = "'emergenteUpdateAlumno'";
-        document.getElementById("tablaAlumnos").insertRow(-1).innerHTML =
-        '<td>'+ response[1] +'</td>' +
-        '<td>'+ response[2]['nombre_persona'] +'</td>' +
-        '<td>'+ response[2]['apellido_persona'] +'</td>' +
-        '<td>' + legajoAlumno +'</td>' +
-        '<td>'+ response[3]['nombre_persona'] +' '+ response[3]['apellido_persona'] +'</td>' +
-        '<td>Promerdio</td>' +
-        '<td>Asistencia</td>' +
-        '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateAlumno(); " class="btn btn-primary">Editar</a></td>' +
-        '<td><a data-value="'+ response[1] +'" onclick="confirmDestroyAlumno('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>';
- 
+        data = [
+          response[1],
+          response[2]['nombre_persona'],
+          response[2]['apellido_persona'],
+          legajoAlumno,
+          response[3]['nombre_persona'] +' '+ response[3]['apellido_persona'],
+          'Promedio',
+          'Asistencia',
+          '<a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateAlumno(); " class="btn btn-primary">Editar</a></td>'+
+          '<a data-value="'+ response[1] +'" onclick="confirmDestroyAlumno('+ response[1] +')" class="btn btn-danger">Eliminar</a>'
+        ];
+        addRow("tablaAlumnos",data);
         mostrarModal('formCrearAlumno','El alumno se creo exitosamente!','Crear Alumno','emergenteCrear');
         //activarEmergente('emergenteCrearAlumno');
 
     }
-  
+
   });
 
 }
@@ -345,7 +346,7 @@ function setUpdateAlumno(){
                  legajo_alumno:form.legajo_alumno.value,
                  persona_tutor:form.persona_tutor.value,
                 };
-  console.log('dataRequest', dataRequest);              
+  console.log('dataRequest', dataRequest);
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
    .then(function(response){
@@ -368,7 +369,7 @@ function setUpdateAlumno(){
       '<td>Asistencia</td>' +
       '<td><a id="btnUpdate" data-value="'+ response[1] +'" onclick="activarEmergente('+ emergente +');  updateAlumno(); " class="btn btn-primary">Editar</a></td>' +
       '<td><a data-value="'+ response[1] +'" onclick="confirmDestroyAlumno('+ response[1] +')" class="btn btn-danger">Eliminar</a></td>';
-   
+
 
       mostrarModal('formUpdateAlumno','Modificado Correctamente!','Modificar Alumno','emergenteUpdateAlumno');
     }
@@ -455,7 +456,7 @@ function eliminarAlumno(id_alumno){
       btnDestroy = document.getElementsByClassName("toDestroy")[0];
   console.log(btnDestroy);
   dataRequest = {id_alumno:id_alumno,
-                }; 
+                };
   respuesta = ajaxRequest(url,dataRequest);
   respuesta.then(response => response.json())
   .then(function(response){
@@ -475,7 +476,7 @@ function eliminarAlumno(id_alumno){
 function restaurarAlumno(id_alumno){
   var btn = event.target,
   dataRequest,
-  url = '/alumno/restaurarAlumno';
+  url = '/alumno/restaurarAlumno',datos;
 
   dataRequest = {id_alumno: id_alumno};
   respuesta = ajaxRequest(url,dataRequest);
@@ -488,19 +489,24 @@ function restaurarAlumno(id_alumno){
       document.getElementById('labelExiste').remove();
       document.getElementById('Existe_no').remove();
       document.getElementById('Existe_si').remove();
-      document.getElementById("tablaAlumnos").insertRow(-1).innerHTML =
-      '<td>'+ response[1]['id'] +'</td>' +
-      '<td>'+ response[2]['nombre_persona']+'</td>' +
-      '<td>' + response[2]['apellido_persona'] +'</td>' +
-      '<td>' + response[1]['legajo_alumno'] +'</td>' +
-      '<td>' + response[3]['nombre_persona'] +' ' + response[3]['apellido_persona'] +'</td>' +
-      '<td> Asistencia </td>' +
-      '<td> Promedio </td>' +
-      '<td><a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a></td>' +
-      '<td><a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyAlumno('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>';
+
+      datos = [
+          response[1]['id'],
+          response[2]['nombre_persona'],
+          response[2]['apellido_persona'],
+          response[1]['legajo_alumno'],
+          response[3]['nombre_persona'] + response[3]['apellido_persona'] ,
+          'Asistencia',
+          'Promedio',
+          '<a id="btnUpdate" data-value="'+ response[1]['id'] +'" onclick="activarEmergente('+ emergente +');  updateCiclo(); " class="btn btn-primary">Editar</a>'+
+          '<a data-value="'+ response[1]['id'] +'" onclick="confirmDestroyAlumno('+ response[1]['id'] +')" class="btn btn-danger">Eliminar</a></td>',
+        ]
+
+        addRow('tablaAlumnos',datos);
+
       mostrarModal('formCrearAlumno','El alumno se dio nuevamente de alta!','Crear Alumno','emergenteCrear');
-        
+
     }
- 
-  });    
+
+  });
 }
